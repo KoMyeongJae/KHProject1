@@ -7,13 +7,35 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import QABbs.QABbsDao;
+import QABbs.iQABbsDao;
+
 public class QaDeleteCtlr extends HttpServlet {
 	
 	private static final long serialVersionUID = -2449117978091952460L;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		iQABbsDao dao = QABbsDao.getInstance();
+		
+		String command = req.getParameter("command");
+		
+		//vie
+		if(command.equals("delete")) {
+			resp.sendRedirect("Q_list.jsp");
+		}
+		// db에 입력후 이동
+		else if(command.equals("deleteAf")) {
+			String sseq = req.getParameter("seq");
+			int seq = Integer.parseInt(sseq);
+			boolean count = dao.deleteQbs(seq);
+		
+		if(count == false) {
+			System.out.println("추가되지 못했습니다");
+			resp.sendRedirect("Q_list.jsp");
+			}
+			resp.sendRedirect("Q_list.jsp");
+		}
 		super.doGet(req, resp);
 	}
 
