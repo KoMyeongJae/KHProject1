@@ -7,6 +7,13 @@
 <title>Main Page</title>
 </head>
 <body>
+<%
+String id = request.getParameter("id");
+
+out.print(id + "님 반갑습니다");
+
+
+%>
 
 </body>
 </html>

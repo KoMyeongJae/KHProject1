@@ -13,8 +13,6 @@ import QABbs.iQABbsDao;
 
 public class QaAddCtlr extends HttpServlet {
 	
-	private static final long serialVersionUID = -9167729097211571956L;
-
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		iQABbsDao dao = QABbsDao.getInstance();

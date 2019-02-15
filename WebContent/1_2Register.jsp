@@ -25,6 +25,7 @@
 	<div align="Center">
 		<div id="wrap">
 			<form action="UserAddCtlr" name="userinput" onsubmit="return checkIt()" method="post">
+				<input type="hidden" name="command" value="addAf">
 				<div id="body">
 						<table>
 							<colgroup>
@@ -36,20 +37,21 @@
 							<tr>
 								<th>User ID</th>
 								<td>
-									<input type="text" name="id" maxlength="12">
-									<input type="button" name="confirm_id" value="ID Check" onclick="javascript:openConfirmid(this.form);"  class="inputBtn">
+									<input type="text" id="id" name="id" maxlength="12">
+									<input type="button" id="idcheck" value="ID_Check" onclick="idchek()"  class="inputBtn">
+									<p id="idable"></p>
 								</td>
 							</tr>
 							<tr>
 								<th>Password</th>
 								<td>
-									<input type="password" name="pwd" maxlength="12" minlength="6" placeholder="6자리 이상 입력">
+									<input type="password" name="pwd" id="pwd" maxlength="12" minlength="6" placeholder="6자리 이상 입력">
 								</td>
 							</tr>
 							<tr>
 								<th>Retype Password</th>
 								<td>
-									<input type="password" name="pwd2" maxlength="12" minlength="6" placeholder="6자리 이상 입력">
+									<input type="password" id="pwd2" maxlength="12" minlength="6" placeholder="6자리 이상 입력">
 								</td>
 							</tr>
 							<tr>
@@ -71,7 +73,7 @@
 							</tr>
 							<tr>
 								<th>PHONE</th>
-								<td><input type="text" name="blog" class="w300" maxlength="50" placeholder="ex)01012345678"></td>
+								<td><input type="text" name="phone" class="w300" maxlength="50" placeholder="ex)01012345678"></td>
 							</tr>
 							<tr>
 								<th>ADDRESS</th>
@@ -92,9 +94,9 @@
 						</table>
 				</div>
 				<div id="footer">
-					<input type="submit" name="confirm" class="inputBtn" value="Register" />
-					<input type="reset" name="reset" class="inputBtn" value="Retype" />
-					<input type="button" value="Cancle" class="inputBtn" onclick="javascript:window.location='main.jsp'" />
+					<input type="submit" class="inputBtn" value="Register">
+					<input type="reset" name="reset" class="inputBtn" value="Retype">
+					<input type="button" value="Cancle" class="inputBtn" onclick="javascript:window.location='1_1Login.jsp'">
 				</div>
 			</form>
 		</div>
@@ -104,7 +106,30 @@
 <!-- CSS 사용 -->
 <!-- <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 <script  src="js/index.js"></script> -->
-    
+<script type="text/javascript">
+$(document).ready(function name() {
+	// ID 조회한 결과를 가져오는 부분 마저 해야됩니다
+	$("#idcheck").click(function () {
+		 $.ajax({
+			url:"1_2_1UserIdCheck.jsp",
+			type:'get',
+			data:"id="+$("#id").val(),
+			success:function(data, status, xhr){
+				alert(data.trim());
+				$("#idable").text(data);
+			},
+			error:function(xhr, status, error){
+				alert("Fail");
+			},
+			complete:function(xhr, statussss){
+				
+			}
+		});
+
+	});
+});
+/**/
+</script>
 <script>
 function DaumPostcode() {
     new daum.Postcode({
