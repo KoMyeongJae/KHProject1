@@ -13,16 +13,14 @@ public class QaListCtlr extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		String command = req.getParameter("command");
-		
-		if(command.equals("QA_list")) {
-			resp.sendRedirect("3_QA_list.jsp");
-		}
+		// TODO Auto-generated method stub
+		super.doGet(req, resp);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		
+		// TODO Auto-generated method stub
+		super.doPost(req, resp);
 	}
 
 	
