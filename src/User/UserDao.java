@@ -100,38 +100,47 @@ public class UserDao implements iUserDao {
 	}
 
 	@Override
-	public boolean login_User(String id, String pwd) {
-		String sql = " SELECT ID, PWD FROM MEMBER "
-					+ " WHERE ID = ? ";
+	public UserDto login_User(UserDto dto) {
+		String sql = " SELECT ID, PWD, NAME, BIRTH, ADDRESS, EMAIL, PHONE, "
+					+ " AUTH, MEMSHIP, LIKEIT_INFO FROM MEMBER "
+					+ " WHERE ID = ? AND PWD = ? ";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 		
-		String rs_id = "";
-		String rs_pwd = "";
-		boolean TF = false;
+		UserDto user = null;
 		
 		try {
 			conn = DB_Connection.getConection();
 			System.out.println("1/6 login_User Suc");
+			System.out.println(dto.getId() + "  " + dto.getPwd());
 			
 			psmt = conn.prepareStatement(sql);
-			psmt.setString(1, id.trim());
+			psmt.setString(1, dto.getId());
+			psmt.setString(2, dto.getPwd());
 			
 			rs = psmt.executeQuery();
 			System.out.println("2/6 login_User Suc");
 			
-			while(rs.next()) {
-				rs_id = rs.getString(1);
-				rs_pwd = rs.getString(2);
+			if(rs.next()) {
+				String id = rs.getString(1);
+				String name = rs.getString(3);
+				String birth = rs.getString(4);
 				
-				if(rs_id.equals(id) && rs_pwd.equals(pwd)) {
-					TF = true;
-				}else {
-					TF = false;
-				}
+				String addr = rs.getString(5);
+				String address[] = addr.split(",");
+				
+				String email = rs.getString(6);
+				String phone = rs.getString(7);
+				int auth = rs.getInt(8);
+				int memship = rs.getInt(9);
+				
+				String likeit_info = rs.getString(10);
+				
+				user = new UserDto(id, null, name, email, birth, phone, address, auth, memship, likeit_info);
 			}
+			
 			System.out.println("3/6 login_User Suc");
 						
 		} catch (SQLException e) {
@@ -141,7 +150,7 @@ public class UserDao implements iUserDao {
 			DB_Close.close(conn, psmt, rs);
 		}
 		
-		return TF;
+		return user;
 	}
 	
 	

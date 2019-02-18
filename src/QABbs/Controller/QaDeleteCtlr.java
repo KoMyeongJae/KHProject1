@@ -22,7 +22,7 @@ public class QaDeleteCtlr extends HttpServlet {
 		
 		//vie
 		if(command.equals("delete")) {
-			resp.sendRedirect("Q_list.jsp");
+			resp.sendRedirect("3_QA_list.jsp");
 		}
 		// db에 입력후 이동
 		else if(command.equals("deleteAf")) {
@@ -32,9 +32,9 @@ public class QaDeleteCtlr extends HttpServlet {
 		
 		if(count == false) {
 			System.out.println("추가되지 못했습니다");
-			resp.sendRedirect("Q_list.jsp");
+			resp.sendRedirect("3_QA_list.jsp");
 			}
-			resp.sendRedirect("Q_list.jsp");
+			resp.sendRedirect("3_QA_list.jsp");
 		}
 		super.doGet(req, resp);
 	}

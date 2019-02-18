@@ -21,7 +21,7 @@ public class QaAddCtlr extends HttpServlet {
 		
 		//view
 		if(command.equals("add")) {
-			resp.sendRedirect("Q_write.jsp");
+			resp.sendRedirect("3_QA_write.jsp");
 		}
 		// DB에 입력 후 이동
 		else if(command.equals("addAf")) {			
@@ -29,9 +29,9 @@ public class QaAddCtlr extends HttpServlet {
 			boolean count = dao.writeQAB(new QABbsDto());
 			if(count == false) {
 				System.out.println("추가되지 못했습니다");
-				resp.sendRedirect("Q_list.jsp");
+				resp.sendRedirect("3_QA_list.jsp");
 			}
-			resp.sendRedirect("Q_list.jsp");
+			resp.sendRedirect("3_QA_list.jsp");
 		}
 		
 		super.doGet(req, resp);

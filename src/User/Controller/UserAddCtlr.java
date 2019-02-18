@@ -40,8 +40,9 @@ public class UserAddCtlr extends HttpServlet {
 			String email = req.getParameter("email");
 			String phone = req.getParameter("phone");
 			String address[] = req.getParameterValues("address");
+			String likeit_info = "";
 			
-			UserDto dto = new UserDto(id, pwd, name, email, birth, phone, address, 3, 0);
+			UserDto dto = new UserDto(id, pwd, name, email, birth, phone, address, 3, 0, likeit_info);
 			
 			iUserDao dao = UserDao.getInstance();
 			boolean isS = dao.add_User(dto);

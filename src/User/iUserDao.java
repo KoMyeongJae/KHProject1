@@ -6,6 +6,6 @@ public interface iUserDao {
 	
 	public boolean getId_User(String id);
 	
-	public boolean login_User(String id, String pwd);
+	public UserDto login_User(UserDto dto);
 	
 }

@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import User.UserDao;
+import User.UserDto;
 import User.iUserDao;
 
 public class UserLoginCtlr extends HttpServlet {
@@ -24,13 +25,16 @@ public class UserLoginCtlr extends HttpServlet {
 		
 		System.out.println("id : " + id + ", pwd : " + pwd);
 		
-		iUserDao dao = UserDao.getInstance();
-		boolean TF = dao.login_User(id, pwd);
 		
-		if(TF) {
-			req.setAttribute("id", id);
+		
+		iUserDao dao = UserDao.getInstance();
+		UserDto dto = dao.login_User(new UserDto(id, pwd, null, null, null, null, null, 0, 0, null));
+		
+		if(dto != null && !dto.getId().equals("")) {
+			req.setAttribute("login", dto);
 			req.getRequestDispatcher("1_3MainPage.jsp").forward(req, resp);
-		}else {
+		}
+		else {
 			PrintWriter pw = resp.getWriter();
 			pw.println("<script>");
 			pw.println("alert(\"You are wrong\")");
@@ -38,7 +42,7 @@ public class UserLoginCtlr extends HttpServlet {
 			pw.println("</script>");
 			pw.close();
 			
-			resp.sendRedirect("1_1Login.jsp");
+			return;
 		}
 		
 	}

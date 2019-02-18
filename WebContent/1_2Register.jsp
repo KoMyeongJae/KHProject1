@@ -17,7 +17,44 @@
 	
 	<!-- 주소검색 사용 -->
  	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
-
+ 	
+ 	<script type="text/javascript">
+	function checkIt() {
+		var userinput = eval("document.userinput");
+		if(!userinput.id.value) {
+			alert("ID를 입력하세요");
+			return false;
+		}
+		if(!userinput.pwd.value) {
+			alert("비밀번호를 입력하세요");
+			return false;
+		}
+		if(userinput.pwd.value != userinput.pwd2.value) {
+			alert("비밀번호가 달라요");
+			return false;
+		}
+		if(!userinput.name.value) {
+			alert("이름을 입력하세요");
+			return false;
+		}
+		if(!userinput.birth.value) {
+			alert("생년월일을 입력하세요");
+			return false;
+		}
+		if(!userinput.email.value) {
+			alert("이메일을 입력하세요");
+			return false;
+		}
+		if(!userinput.phone.value) {
+			alert("전화번호를 입력하세요");
+			return false;
+		}
+		if(!userinput.address.values) {
+			alert("주소를 입력하세요");
+			return false;
+		}
+	}
+	</script>
 </head>
 <body>
 
@@ -51,7 +88,7 @@
 							<tr>
 								<th>Retype Password</th>
 								<td>
-									<input type="password" id="pwd2" maxlength="12" minlength="6" placeholder="6자리 이상 입력">
+									<input type="password" id="pwd2" name="pwd2" maxlength="12" minlength="6" placeholder="6자리 이상 입력">
 								</td>
 							</tr>
 							<tr>
@@ -64,12 +101,14 @@
 							<tr>
 								<th>BIRTH</th>
 								<td>
-									<input type="text" id="birth1" name="birth" placeholder="ex)1990/12/06 or Select Calendar">
+									<input type="text" id="birth" name="birth" placeholder="ex)1990/12/06 or Select Calendar">
 								</td>
 							</tr>
 							<tr>
 								<th>E-Mail</th>
-								<td><input type="text" name="email" class="w300" maxlength="30" placeholder="ex)abcd@gmail.com"></td>
+								<td>
+									<input type="text" name="email" class="w300" maxlength="30" placeholder="ex)abcd@gmail.com">
+								</td>
 							</tr>
 							<tr>
 								<th>PHONE</th>
@@ -108,7 +147,6 @@
 <script  src="js/index.js"></script> -->
 <script type="text/javascript">
 $(document).ready(function name() {
-	// ID 조회한 결과를 가져오는 부분 마저 해야됩니다
 	$("#idcheck").click(function () {
 		 $.ajax({
 			url:"1_2_1UserIdCheck.jsp",
@@ -169,7 +207,7 @@ function DaumPostcode() {
 
 <script type="text/javascript">
 $(function () {
-	$("#birth1").datepicker({
+	$("#birth").datepicker({
 		dateFormat:"yy/mm/dd",
 		dayNamesMin:["일", "월", "화", "수", "목", "금", "토"],
 		monthNames:["1월", "2월", "3월", "4월", "5월", "6월",
