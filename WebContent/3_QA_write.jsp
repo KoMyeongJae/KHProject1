@@ -4,9 +4,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Main Page</title>
+<title>Insert title here</title>
 </head>
 <body>
+<h1>글쓰기</h1>
+
+<input type="hidden" name="command" value="addAf">
 
 </body>
 </html>
