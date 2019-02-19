@@ -2,6 +2,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
+request.setCharacterEncoding("utf-8");
+
+UserDto dto = (UserDto)request.getAttribute("detail_user");
+
 Object ologin = session.getAttribute("login");
 UserDto user = null;
 if(ologin == null){	// session 정보가 사라진 상태
@@ -15,24 +19,32 @@ if(ologin == null){	// session 정보가 사라진 상태
 }
 user = (UserDto)ologin;
 
-String name = user.getName();
+String id = dto.getId();
+String name = dto.getName();
+String birth = dto.getBirth();
+String email = dto.getEmail();
+String phone = dto.getPhone();
+String address[] = dto.getAddress();
 %>
 <!DOCTYPE HTML>
 <html>
 <head>
-	<title>MainPage</title>
+	<title>MyPage</title>
 	<meta charset="utf-8">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 	<link rel="stylesheet" href="assets/css/main.css">
+	
+
+	
 </head>
 <body class="homepage is-preload">
 	<div id="page-wrapper">
-
 		<!-- Header -->
 		<section id="header">
 			<div class="container">
 				<!-- Logo : Logo 를 누르면 MainPage 로 이동하게 만들기 -->
-				<h1 id="logo"><a href="#">TRIP</a></h1>
+				<h1 id="logo"><a href="1_3MainPage.jsp">TRIP</a></h1>
 				<p>Take a Trip to Anywhere you want to go</p>
 				
 				<!-- Nav -->
@@ -91,86 +103,138 @@ String name = user.getName();
 				<div class="row">
 				
 					<!-- Content banner 제외 부분에 본인코드 부분 작성하면 됩니다 -->
-						<div id="content" class="col-8 col-12-medium">
-							<!-- banner -->
-							<div class="box post">
-								<div id="banner">
-									<div class="container">
-										<p> <strong>Festival Calendar</strong><br>
-										여러 나라의 행사 일정을 확인해보세요.<br>
-										관심이 가는 행사는 찜해두기로 저장하세요.</p>
-									</div>
-								</div>
-							</div>
+					<div id="content" class="col-8 col-12-medium">
+						
+						<!-- Post -->
+						<article class="box post">
+							<header>
+								<h2>기본정보</h2>
+							</header>
+							<table>
+								<tr>
+									<th>ID</th>
+									<td>
+										<input type="text" name="id" value="<%=id %>" readonly="readonly">
+									</td>
+								</tr>
+								<tr>
+									<th>NAME</th>
+									<td>
+										<input type="text" name="name" value="<%=name %>" readonly="readonly">
+									</td>
+								</tr>
+								<tr>
+									<th>BIRTH</th>
+									<td>
+										<input type="text" name="birth" value="<%=birth %>" readonly="readonly">
+									</td>
+								</tr>
+								<tr>
+									<th>EMAIL</th>
+									<td>
+										<input type="text" name="email" value="<%=email %>" readonly="readonly" class="w300">
+									</td>
+								</tr>
+								<tr>
+									<th>PHONE</th>
+									<td>
+										<input type="text" name="phone" value="<%=phone %>" readonly="readonly" class="w300">
+									</td>
+								</tr>
+								<tr>
+									<th>ADDRESS</th>
+									<td>
+										<input type="text" name="address" value="<%=address[0]%>" readonly="readonly">
+									</td>
+								</tr>
+								<tr>
+									<th></th>
+									<td>
+										<input type="text" name="address" value="<%=address[1]%>" readonly="readonly">
+									</td>
+								</tr>
+							</table>
 							
-							<!-- Post -->
-								<article class="box post">
-									<header>
-										<h2>행사 일정 달력 놓을거야</h2>
-									</header>
-									<a href="#" class="image featured"><img src="images/pic04.jpg" alt="" /></a>
-									<h3>I mean isn't it possible?</h3>
-									<p>Phasellus laoreet massa id justo mattis pharetra. Fusce suscipit
-									ligula vel quam viverra sit amet mollis tortor congue. Sed quis mauris
-									sit amet magna accumsan tristique. Curabitur leo nibh, rutrum eu malesuada
-									in, tristique at erat lorem ipsum dolor sit amet lorem ipsum sed consequat
-									magna tempus veroeros lorem sed tempus aliquam lorem ipsum veroeros
-									consequat magna tempus lorem ipsum consequat Phasellus laoreet massa id
-									justo mattis pharetra. Fusce suscipit ligula vel quam viverra sit amet
-									mollis tortor congue. Sed quis mauris sit amet magna accumsan tristique.
-									Curabitur leo nibh, rutrum eu malesuada in tristique.</p>
-									<ul class="actions">
-										<li><a href="#" class="button icon fa-file">Continue Reading</a></li>
-									</ul>
-								</article>
-						</div>
+							<div align="right">
+							<table>
+								<tr>
+									<td>
+										<form action="UserUpdate" method="post">
+											<input type="hidden" name="command" value="update_pwd_view">
+											<input type="hidden" name="id" value="<%=id%>">
+											<input type="submit" value="비밀번호 수정">
+										</form>
+									</td>
+									<td>
+										<form action="UserUpdate" method="post">
+											<input type="hidden" name="command" value="update_view">
+											<input type="hidden" name="id" value="<%=id%>">
+											<input type="submit" value="회원정보 수정">
+										</form>
+									</td>
+									<td>
+										<form action="UserDeleteCtlr" method="post">
+											<input type="hidden" name="command" value="out_user">
+											<input type="hidden" name="id" value="<%=id %>">
+											<input type="submit" value="회원 탈퇴">
+										</form>
+									</td>
+								</tr>
+							</table>
+								
+								
+								
+							</div>
+						</article>
+					</div>
 
 					<!-- Sidebar -->
-						<div id="sidebar" class="col-4 col-12-medium">
-						
-							<!-- Excerpts -->
-								<section>
-									<ul class="divided">
-										<li>
-										
-											<!-- Excerpt -->
-												<article class="box excerpt">
-													<header>
-														<h3>My Information</h3>
-													</header>
-													<font size="3">안녕하세요       <%=name %>님</font><br><br>
-													<!-- 가입일 넣을까? => DB 건드려야되요 -->
-													<a href="UserDetailCtlr?id=<%=user.getId() %>"><font size="2">내 정보 보기</font></a>
-													&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-													<a href="1_4Logout.jsp"><font size="2">로그아웃</font></a>
-												</article>
-										</li>
-										<li>
-											<!-- Excerpt -->
-												<article class="box excerpt">
-													<header>
-														<span class="date">환율 차트 뿌려주자</span>
-														<h3><a href="#">Exchange rate</a></h3>
-													</header>
-													<p>You can see the exchange rate here.</p>
-												</article>
+					<div id="sidebar" class="col-4 col-12-medium">
 
-										</li>
-										<li>
+						<!-- Excerpts -->
+						<section>
+							<ul class="divided">
+								<li>
 
-											<!-- Excerpt -->
-												<article class="box excerpt">
-													<header>
-														<span class="date">뭘 또 뿌려줄까나</span>
-														<h3><a href="#">Whatever you want</a></h3>
-													</header>
-													<p>Tell me what you want to add here.</p>
-												</article>
+									<!-- Excerpt -->
+										<article class="box excerpt">
+											<header>
+												<h3>My Information</h3>
+											</header>
+											<font size="3">안녕하세요       <%=name %>님</font><br><br>
+											<!-- 가입일 넣을까? => DB 건드려야되요 -->
+											<a href="#"><font size="2">내 정보 보기</font></a>
+											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+											<a href="1_4Logout.jsp"><font size="2">로그아웃</font></a><br>
+											<a href="#"><font size="2">Wish List</font></a>
+										</article>
+								</li>
+								<li>
+									<!-- Excerpt -->
+										<article class="box excerpt">
+											<header>
+												<span class="date">환율 차트 뿌려주자</span>
+												<h3><a href="#">Exchange rate</a></h3>
+											</header>
+											<p>You can see the exchange rate here.</p>
+										</article>
 
-										</li>
-									</ul>
-								</section>
-						</div>
+								</li>
+								<li>
+
+									<!-- Excerpt -->
+										<article class="box excerpt">
+											<header>
+												<span class="date">뭘 또 뿌려줄까나</span>
+												<h3><a href="#">Whatever you want</a></h3>
+											</header>
+											<p>Tell me what you want to add here.</p>
+										</article>
+
+								</li>
+							</ul>
+						</section>
+					</div>
 				</div>
 			</div>
 		</section>
@@ -237,9 +301,6 @@ String name = user.getName();
 <script src="assets/js/breakpoints.min.js"></script>
 <script src="assets/js/util.js"></script>
 <script src="assets/js/main.js"></script>
-
-
-
 
 </body>
 </html>

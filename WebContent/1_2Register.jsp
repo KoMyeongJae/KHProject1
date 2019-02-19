@@ -53,6 +53,10 @@
 			alert("주소를 입력하세요");
 			return false;
 		}
+		if($("#detailAddress").val() == ""){
+			alert("상세주소를 입력해주세요");
+			return false;
+		}
 	}
 	</script>
 </head>
@@ -117,7 +121,8 @@
 							<tr>
 								<th>ADDRESS</th>
 								<td>
-									<input type="text" id="postcode" name="address" placeholder="우편번호">
+									<input type="hidden" id="postcode" name="addressnot" placeholder="우편번호">
+									<input type="text" id="address1" name="address" placeholder="주소">
 									<input type="button" onclick="DaumPostcode()" value="Search">
 									<span>주소검색을 이용하세요</span>
 								</td>
@@ -125,9 +130,8 @@
 							<tr>
 								<th></th>
 								<td>
-									<input type="text" id="address1" name="address" placeholder="주소" size="8">
 									<input type="text" id="detailAddress" name="address" placeholder="상세주소" size="12">
-									<input type="text" id="extraAddress" name="address" placeholder="참고항목" size="8">
+									<input type="hidden" id="extraAddress" name="addressnot" placeholder="참고항목" size="8">
 								</td>
 							</tr>
 						</table>

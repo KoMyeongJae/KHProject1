@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import User.UserDao;
 import User.UserDto;
@@ -18,6 +19,11 @@ public class UserLoginCtlr extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		
+	}
+
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		req.setCharacterEncoding("utf-8");
 		
 		String id = req.getParameter("id");
@@ -31,7 +37,13 @@ public class UserLoginCtlr extends HttpServlet {
 		UserDto dto = dao.login_User(new UserDto(id, pwd, null, null, null, null, null, 0, 0, null));
 		
 		if(dto != null && !dto.getId().equals("")) {
-			req.setAttribute("login", dto);
+			HttpSession session = null;
+			session = req.getSession();
+			session.setAttribute("login", dto);
+			session.setMaxInactiveInterval(3*60*60);
+			
+//			req.setAttribute("login", dto);
+//			System.out.println(dto.getPwd());
 			req.getRequestDispatcher("1_3MainPage.jsp").forward(req, resp);
 		}
 		else {
@@ -44,13 +56,6 @@ public class UserLoginCtlr extends HttpServlet {
 			
 			return;
 		}
-		
-	}
-
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		super.doPost(req, resp);
 	}
 	
 	

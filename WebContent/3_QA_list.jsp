@@ -130,7 +130,7 @@ if(list == null || list.size() == 0){
 </div>
 
 <hr>
-<a href="Q_write.jsp">글쓰기</a>
+<a href="3_QA_write.jsp">글쓰기</a>
 
 <script type="text/javascript">
 function searchBbs() {
