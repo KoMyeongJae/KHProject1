@@ -17,31 +17,30 @@ public class QaAddCtlr extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
 		iQABbsDao dao = QABbsDao.getInstance();
-		
-		String command = req.getParameter("command");
-		
-		//view
-		if(command.equals("add")) {
-			resp.sendRedirect("Q_write.jsp");
-		}
-		// DB에 입력 후 이동
-		else if(command.equals("addAf")) {			
+		;
+		String id = req.getParameter("id");
+		String title = req.getParameter("title");
+		String content = req.getParameter("content");
+		req.setAttribute("id", id);
+		req.setAttribute("title", title);
+		req.setAttribute("content", content);
+												
+			boolean count = dao.writeQAB(new QABbsDto(id,title,content));
 			
-			boolean count = dao.writeQAB(new QABbsDto());
 			if(count == false) {
 				System.out.println("추가되지 못했습니다");
-				resp.sendRedirect("Q_list.jsp");
+				resp.sendRedirect("3Q_list.jsp");
 			}
-			resp.sendRedirect("Q_list.jsp");
-		}
+			resp.sendRedirect("3Q_writeAf.jsp");
+		
 		
 		super.doGet(req, resp);
 	}
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
 		super.doPost(req, resp);
 	}
 	

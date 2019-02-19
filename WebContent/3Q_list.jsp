@@ -21,6 +21,7 @@ public String arrow(int depth){
 
 %>
 <%
+List<QABbsDto> list = (List<QABbsDto>)request.getAttribute("3Q_list"); 
 Object ologin = session.getAttribute("login");
 UserDto user = null;
 if(ologin == null){
@@ -63,11 +64,11 @@ if(searchWord == null){
 	choice = "sel";
 }
 iQABbsDao dao = QABbsDao.getInstance();
-List<QABbsDto> list = dao.getQABbsList(searchWord, choice);
+/* List<QABbsDto> list = dao.getQABbsSearchList(searchWord,choice); */
 %>
 
-<%-- <h2>환영합니다 <%=user.getId() %>님 반갑습니다</h2>
- --%>
+<h2>환영합니다 <%=user.getId() %>님 반갑습니다</h2>
+ 
  
  <h1>Q&A 게시판</h1>
  
@@ -99,7 +100,7 @@ if(list == null || list.size() == 0){
 				<%if(qbs.getDel() == 1){ %>
 					이 글은 작성자에 의해서 삭제되었습니다.
 				<%}else{ %>
-					<a href="Q_detail.jsp?seq=<%=qbs.getSeq() %>">
+					<a href="QaDetailCtlr.java?seq=<%=qbs.getSeq() %>">
 						<%=qbs.getTitle() %>
 					</a>
 				<%} %>
@@ -130,7 +131,7 @@ if(list == null || list.size() == 0){
 </div>
 
 <hr>
-<a href="Q_write.jsp">글쓰기</a>
+<a href="3Q_write.jsp">글쓰기</a>
 
 <script type="text/javascript">
 function searchBbs() {
@@ -145,7 +146,7 @@ function searchBbs() {
 		document.getElementById("choice").value = 'sel';
 	}
 	
-	location.href = "Q_list.jsp?searchWord=" + word + "&choice=" + choice;
+	location.href = "3Q_list.jsp?searchWord=" + word + "&choice=" + choice;
 	
 }
 

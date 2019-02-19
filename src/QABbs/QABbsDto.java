@@ -86,6 +86,13 @@ public class QABbsDto implements Serializable {
 		this.pbpv = pbpv;
 		this.parent = parent;
 	}
+	
+	public QABbsDto(String id,String title,String content) {
+		super();
+		this.id = id;
+		this.title = title;
+		this.content = content;
+	}
 
 	public int getSeq() {
 		return seq;

@@ -27,7 +27,7 @@ public class QABbsDao implements iQABbsDao {
 	}
 
 	@Override
-	public List<QABbsDto> getQABbsList(String searchWord, String choice) {
+	public List<QABbsDto> getQABbsSearchList(String searchWord, String choice) {
 		String sql = " SELET SEQ, ID, REF, STEP, DEPTH, "
 				+ " TITLE, CONTENT, WDATE, PARENT, "
 				+ " DEL, READCOUNT, PBPV "
@@ -343,5 +343,59 @@ public class QABbsDao implements iQABbsDao {
 			DB_Close.close(conn, psmt, null);
 		}
 		return count>0?true:false;
+	}
+
+	@Override
+	public List<QABbsDto> getQABbsList() {
+		String sql = " SELET SEQ, ID, REF, STEP, DEPTH, "
+				+ " TITLE, CONTENT, WDATE, PARENT, "
+				+ " DEL, READCOUNT, PBPV "
+				+ "FROM QABBS ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		
+		List<QABbsDto> list = new ArrayList<>();
+		
+		try {
+			conn = DB_Connection.getConection();
+			System.out.println("1/6 getQABbsList suc");
+			
+			psmt = conn.prepareStatement(sql);
+			System.out.println("2/6 getQABbsList suc");
+			
+			rs = psmt.executeQuery();
+			System.out.println("3/6 getQABbsList suc");
+			
+			while(rs.next()) {
+				QABbsDto dto = new QABbsDto(
+						rs.getInt(1),
+						rs.getString(2),
+						rs.getString(3),
+						rs.getString(4),
+						rs.getString(5),
+						rs.getInt(6),
+						rs.getInt(7),
+						rs.getInt(8),
+						rs.getInt(9),
+						rs.getInt(10),
+						rs.getInt(11),
+						rs.getInt(12)					
+						);
+				list.add(dto);
+			}
+			System.out.println("4/6 getQABbsList suc");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println(" getQABbsList fail");
+			e.printStackTrace();
+		}finally {
+			DB_Close.close(conn, psmt, rs);
+		}
+		
+		
+		return list;
 	}
 }
