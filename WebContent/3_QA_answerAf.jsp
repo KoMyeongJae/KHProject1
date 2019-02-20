@@ -1,4 +1,3 @@
-
 <%@page import="QABbs.QABbsDto"%>
 <%@page import="QABbs.QABbsDao"%>
 <%@page import="QABbs.iQABbsDao"%>
@@ -11,38 +10,34 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-<h1>글 수정</h1>
-
 <%
 String sseq = request.getParameter("seq");
-int seq = Integer.parseInt(sseq.trim());
+int seq = Integer.parseInt(sseq);
 
+String id = request.getParameter("id");
 String title = request.getParameter("title");
 String content = request.getParameter("content");
 
-
 iQABbsDao dao = QABbsDao.getInstance();
-boolean isS = dao.updateQbs(seq, title, content);
 
+boolean isS = dao.Q_answer(seq, new QABbsDto(id,title,content));
 if(isS){
-	%>
+%>
 	<script type="text/javascript">
-	alert("글 삭제 성공했습니다");
-	location.href = '3Q_list.jsp';
+	alert("댓글 입력 성공!");
+	location.href = "3_QA_list.jsp";
 	</script>
-	<%
-}else{	
-	%>
+<%
+}else{
+%>
 	<script type="text/javascript">
-	alert("글을 삭제하지 못했습니다");
-	location.href = '3Q_detail.jsp';
+	alert("댓글 입력하지 못했습니다. 다시 입력해 주십시오");
+	location.href = "3_QA_list.jsp";
 	</script>
-	<%
-}	
+<%
+}
 %>
 
-<a href="3Q_list.jsp"></a>
 
 </body>
 </html>

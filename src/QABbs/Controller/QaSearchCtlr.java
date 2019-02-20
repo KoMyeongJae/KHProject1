@@ -20,16 +20,25 @@ public class QaSearchCtlr extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		iQABbsDao dao = QABbsDao.getInstance();
+		/*
+		 * //db로 가서 데이터를 가져온다 
+		 * String searchWord = req.getParameter("searchWord"); String
+		 * choice = req.getParameter("choice");
+		 */
 		
-		//db로 가서 데이터를 가져온다
-		String searchWord = req.getParameter("searchWord");
-		String choice = req.getParameter("choice");
-		List<QABbsDto> list = dao.getQABbsSearchList(searchWord, choice);
+		String searchWord = "";
+		String choice = "sel";
+		
+		
+			List<QABbsDto> list = dao.getQABbsSearchList(searchWord, choice);
+			System.out.println(list.toString());
+		
 		
 		req.setAttribute("3Q_list",list);
 		
-		req.getRequestDispatcher("3Q_list.jsp").forward(req, resp);
-		super.doGet(req, resp);
+		req.getRequestDispatcher("3_QA_list.jsp").forward(req, resp);
+		
+		
 	}
 
 	@Override

@@ -17,20 +17,28 @@ public class QaDeleteCtlr extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
+
 		iQABbsDao dao = QABbsDao.getInstance();		
 	
-			String sseq = req.getParameter("seq");
-			int seq = Integer.parseInt(sseq);
-			boolean count = dao.deleteQbs(seq);
+
+		String sseq = req.getParameter("seq");
+		int seq = Integer.parseInt(sseq);
+		boolean count = dao.deleteQbs(seq);
+		
+		// db에 입력후 이동
+		 if(count == true) {
+			 
 			req.setAttribute("seq", seq);
-		
-		if(count == false) {
-			System.out.println("추가되지 못했습니다");
-			resp.sendRedirect("3Q_list.jsp");
+			System.out.println("삭제완료");
+			resp.sendRedirect("3_QA_list.jsp");
+		 }
+		else if(count == false) {
+			System.out.println("삭제하지 못했습니다");
+
+			resp.sendRedirect("3_QA_list.jsp");
 			}
-			resp.sendRedirect("3Q_delete.jsp");
-		
-		super.doGet(req, resp);
+
+	
 	}
 
 	@Override

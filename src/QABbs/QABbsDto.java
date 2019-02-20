@@ -60,18 +60,20 @@ public class QABbsDto implements Serializable {
 	private String content;
 	private String wdate;
 	private int readcount;
+	private int del;
+	private int pbpv;	//공개 비공개
 	private int ref;	// 그룹번호
 	private int step;	// 행번호
-	private int depth;	// 깊이
-	private int del;
-	private int pbpv; //공개 비공개
+	private int depth;	// 깊이 
 	private int parent;
 	
 	public QABbsDto() {
 	}
 
-	public QABbsDto(int seq, String id, String title, String content, String wdate, int readcount, int ref, int step,
-			int depth, int del, int pbpv, int parent) {
+	
+	
+	public QABbsDto(int seq, String id, String title, String content, String wdate, int readcount, int del, int pbpv,
+			int ref, int step, int depth, int parent) {
 		super();
 		this.seq = seq;
 		this.id = id;
@@ -79,14 +81,16 @@ public class QABbsDto implements Serializable {
 		this.content = content;
 		this.wdate = wdate;
 		this.readcount = readcount;
+		this.del = del;
+		this.pbpv = pbpv;
 		this.ref = ref;
 		this.step = step;
 		this.depth = depth;
-		this.del = del;
-		this.pbpv = pbpv;
 		this.parent = parent;
 	}
-	
+
+
+
 	public QABbsDto(String id,String title,String content) {
 		super();
 		this.id = id;
@@ -205,3 +209,4 @@ public class QABbsDto implements Serializable {
 	
 
 }
+

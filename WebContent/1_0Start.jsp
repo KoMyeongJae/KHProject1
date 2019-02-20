@@ -4,9 +4,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Main Page</title>
+<title>Insert title here</title>
 </head>
 <body>
-
+<%
+response.sendRedirect("1_1Login.jsp");
+%>
 </body>
 </html>

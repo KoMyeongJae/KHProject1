@@ -63,7 +63,7 @@ user = (UserDto)ologin;
 
 </div>
 
-<a href="3Q_list.jsp">글목록</a>
+<a href="3_QA_list.jsp">글목록</a>
 
 </body>
 </html>

@@ -4,7 +4,6 @@ import java.util.List;
 
 public interface iQABbsDao {
 	
-	public List<QABbsDto> getQABbsList();
 	public List<QABbsDto> getQABbsSearchList(String searchWord, String choice);
 	public boolean writeQAB(QABbsDto Qbs);
 	

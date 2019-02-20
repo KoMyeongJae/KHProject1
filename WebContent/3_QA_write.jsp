@@ -17,7 +17,8 @@ UserDto user = (UserDto)ologin;
 
 <div class="center">
 
-<form action="QaAddCtlr.java" method="get">
+<form action="QaAddCtlr" method="get">
+<input type="hidden" name="command" value="addAf">
 
 <table border="1" class="specalt">
 <col width="200"><col width="500"> 
@@ -43,7 +44,7 @@ UserDto user = (UserDto)ologin;
 </tr>
 <tr>
 	<td colspan="2">
-		<input type="submit" value="글쓰기">
+		<input type="submit" value="질문 등록하기">
 	</td>
 </tr>
 
@@ -53,7 +54,7 @@ UserDto user = (UserDto)ologin;
 
 </div>
 
-<a href="3Q-list.jsp">글목록</a>
+<a href="3_QA_list.jsp">글목록</a>
 
 </body>
 </html>

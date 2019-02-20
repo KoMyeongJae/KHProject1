@@ -1,7 +1,7 @@
-<%@page import="User.UserDto"%>
-<%@page import="QABbs.QABbsDto"%>
 <%@page import="QABbs.QABbsDao"%>
 <%@page import="QABbs.iQABbsDao"%>
+<%@page import="QABbs.QABbsDto"%>
+<%@page import="User.UserDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -71,7 +71,7 @@ name="content"><%=qbbs.getContent() %>
 </tr>
 </table>
 
-<form action="3Q_answer.jsp" method="post">
+<form action="3_QA_answer.jsp" method="post">
 <input type="hidden" name="seq" value="<%=qbbs.getSeq() %>">
 <input type="submit" value="댓글">
 </form>
@@ -97,10 +97,8 @@ function deletebbs(seq) {
 }
 function updatebbs(seq) {
 	alert(seq);	
-	location.href = "3Q_update.jsp?seq=" + seq;
+	location.href = "3_QA_update.jsp?seq=" + seq;
 }
 </script>
-
-
 </body>
 </html>

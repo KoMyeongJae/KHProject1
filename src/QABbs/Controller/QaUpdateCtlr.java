@@ -16,10 +16,9 @@ public class QaUpdateCtlr extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
 		iQABbsDao dao = QABbsDao.getInstance();
-		
-		
-		
+				
 		String sseq = req.getParameter("seq");
 		int seq = Integer.parseInt(sseq);
 		String title = req.getParameter("title");
@@ -31,13 +30,11 @@ public class QaUpdateCtlr extends HttpServlet {
 		boolean count = dao.updateQbs(seq, title, content);
 		if(count == false){
 			System.out.println("변경실패");
-			resp.sendRedirect("3Q_detail.jsp");
+			resp.sendRedirect("3_QA_detail.jsp");
 		}
 			
 			System.out.println("변경완료");
-			resp.sendRedirect("3Q_updateAf.jsp");
-		
-		super.doGet(req, resp);
+			resp.sendRedirect("3_QA_list.jsp");
 	}
 
 	@Override

@@ -19,20 +19,19 @@ if(isS){
 	%>
 	<script type="text/javascript">
 	alert("글 삭제 성공했습니다");
-	location.href = '3Q_list.jsp';
+	location.href = '3_QA_list.jsp';
 	</script>
 	<%
 }else{	
 	%>
 	<script type="text/javascript">
 	alert("글을 삭제하지 못했습니다");
-	location.href = '3Q_detail.jsp';
+	location.href = '3_QA_detail.jsp';
 	</script>
 	<%
 }
 
 
 %>
-
 </body>
 </html>

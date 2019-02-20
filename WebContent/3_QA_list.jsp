@@ -1,5 +1,5 @@
-<%@page import="QABbs.QABbsDto"%>
 <%@page import="java.util.List"%>
+<%@page import="QABbs.QABbsDto"%>
 <%@page import="QABbs.QABbsDao"%>
 <%@page import="QABbs.iQABbsDao"%>
 <%@page import="User.UserDto"%>
@@ -21,7 +21,7 @@ public String arrow(int depth){
 
 %>
 <%
-List<QABbsDto> list = (List<QABbsDto>)request.getAttribute("3Q_list"); 
+
 Object ologin = session.getAttribute("login");
 UserDto user = null;
 if(ologin == null){
@@ -41,6 +41,7 @@ user = (UserDto)ologin;
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
 </head>
 <body>
 <%
@@ -64,16 +65,17 @@ if(searchWord == null){
 	choice = "sel";
 }
 iQABbsDao dao = QABbsDao.getInstance();
-/* List<QABbsDto> list = dao.getQABbsSearchList(searchWord,choice); */
+List<QABbsDto> list = dao.getQABbsSearchList(searchWord,choice); 
 %>
 
 <h2>환영합니다 <%=user.getId() %>님 반갑습니다</h2>
  
  
- <h1>Q&A 게시판</h1>
+<h1>Q&A 게시판</h1>
  
- <div align="center">
-
+<div align="center">
+<form action="" method="post">
+<input type="hidden" name="command" >
 <table border="1">
 <col width="70"><col width="500"><col width="150">
 
@@ -100,7 +102,7 @@ if(list == null || list.size() == 0){
 				<%if(qbs.getDel() == 1){ %>
 					이 글은 작성자에 의해서 삭제되었습니다.
 				<%}else{ %>
-					<a href="QaDetailCtlr.java?seq=<%=qbs.getSeq() %>">
+					<a href="3_QA_detailCtlr.jsp?seq=<%=qbs.getSeq() %>">
 						<%=qbs.getTitle() %>
 					</a>
 				<%} %>
@@ -111,9 +113,13 @@ if(list == null || list.size() == 0){
 	}
 }
 %>
-
+<tr>
+	<td colspan="3">
+		<a href=QaAddCtlr?command=add>질문하기</a>
+	</td>
+</tr>
 </table> 
-
+</form>
 </div>
 
 <!-- search -->
@@ -131,7 +137,7 @@ if(list == null || list.size() == 0){
 </div>
 
 <hr>
-<a href="3Q_write.jsp">글쓰기</a>
+
 
 <script type="text/javascript">
 function searchBbs() {
