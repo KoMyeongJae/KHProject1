@@ -102,7 +102,7 @@ if(list == null || list.size() == 0){
 				<%if(qbs.getDel() == 1){ %>
 					이 글은 작성자에 의해서 삭제되었습니다.
 				<%}else{ %>
-					<a href="3_QA_detailCtlr.jsp?seq=<%=qbs.getSeq() %>">
+					<a href="3_QA_detail.jsp?seq=<%=qbs.getSeq() %>">
 						<%=qbs.getTitle() %>
 					</a>
 				<%} %>
@@ -115,7 +115,7 @@ if(list == null || list.size() == 0){
 %>
 <tr>
 	<td colspan="3">
-		<a href=QaAddCtlr?command=add>질문하기</a>
+		<a href=3_QA_write.jsp>질문하기</a>
 	</td>
 </tr>
 </table> 
@@ -139,6 +139,10 @@ if(list == null || list.size() == 0){
 <hr>
 
 
+
+<a href="1_3MainPage.jsp">돌아가기</a>
+
+
 <script type="text/javascript">
 function searchBbs() {
 	
@@ -152,7 +156,7 @@ function searchBbs() {
 		document.getElementById("choice").value = 'sel';
 	}
 	
-	location.href = "3Q_list.jsp?searchWord=" + word + "&choice=" + choice;
+	location.href = "3_QA_list.jsp?searchWord=" + word + "&choice=" + choice;
 	
 }
 

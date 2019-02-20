@@ -1,3 +1,4 @@
+<%@page import="User.UserDto"%>
 <%@page import="QABbs.QABbsDto"%>
 <%@page import="QABbs.QABbsDao"%>
 <%@page import="QABbs.iQABbsDao"%>
@@ -18,6 +19,10 @@ iQABbsDao dao = QABbsDao.getInstance();
 QABbsDto qbbs = dao.getQbs(seq);
 
 request.setAttribute("_qbbs", qbbs);
+%>
+<%
+Object ologin = session.getAttribute("login");
+UserDto user = (UserDto)ologin;
 %>
 <h1>질문</h1>
 
@@ -63,7 +68,7 @@ request.setAttribute("_qbbs", qbbs);
 	<th>아이디</th>
 	<td>
 		<input type="text" name="id" readonly="readonly" size="50" 
-			value="QQ">
+			value="<%=user.getId()%>">
 	</td>
 </tr>	
 <tr>

@@ -88,15 +88,15 @@ if(qbbs.getId().equals(qbbs.getId())){
 
 </div>
 
-<a href='3Q_list.jsp'>글 목록</a>
+<a href='3_QA_list.jsp'>글 목록</a>
 
 <script type="text/javascript">
 function deletebbs(seq) {
-	alert(seq);	
-	location.href = "QaDeleteCtlr.java?seq=" + seq;
+	
+	location.href = "QaDeleteCtlr?seq=" + seq;
 }
 function updatebbs(seq) {
-	alert(seq);	
+		
 	location.href = "3_QA_update.jsp?seq=" + seq;
 }
 </script>

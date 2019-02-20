@@ -26,7 +26,7 @@ user = (UserDto)ologin;
 %>
 <div class="center">
 
-<form action="QaUpdateCtlr.java" method="post">
+<form action="QaUpdateCtlr" method="get">
 <input type="hidden" name="seq" value="<%=seq %>">
 			
 <table border="1">

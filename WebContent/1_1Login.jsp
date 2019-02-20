@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%	request.setCharacterEncoding("utf-8");	%>
+<%	request.setCharacterEncoding("utf-8"); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,7 +38,7 @@
       <div class="login__check"></div>
       <div class="login__form">
       
-      <form action="UserLoginCtlr" onsubmit="return checkIt()">
+      <form action="UserLoginCtlr" onsubmit="return checkIt()" method="post">
 	        <div class="login__row">
 	          <svg class="login__icon name svg-icon" viewBox="0 0 20 20">
 	            <path d="M0,20 a10,8 0 0,1 20,0z M10,0 a4,4 0 0,1 0,8 a4,4 0 0,1 0,-8" />
