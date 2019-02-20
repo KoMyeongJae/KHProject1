@@ -84,6 +84,7 @@
   	<url-pattern>/FestiUpdateCtlr</url-pattern>
   </servlet-mapping>
   
+  
   <servlet>
   	<servlet-name>InfoCLikeitCtlr</servlet-name>
   	<servlet-class>InfoCntry.Controller.InfoCLikeitCtlr</servlet-class>
@@ -281,6 +282,16 @@
   	<url-pattern>/ReferSearchCtlr</url-pattern>
   </servlet-mapping>
   <servlet>
+  	<servlet-name>ReferLikeCtlr</servlet-name>
+  	<servlet-class>ReferRoom.Controller.ReferLikeCtlr</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ReferLikeCtlr</servlet-name>
+  	<url-pattern>/ReferLikeCtlr</url-pattern>
+  </servlet-mapping>
+
+  
+  <servlet>
   	<servlet-name>ReferUpdateCtlr</servlet-name>
   	<servlet-class>ReferRoom.Controller.ReferUpdateCtlr</servlet-class>
   </servlet>
@@ -329,5 +340,4 @@
   	<servlet-name>UserUpdate</servlet-name>
   	<url-pattern>/UserUpdate</url-pattern>
   </servlet-mapping>
-
 </web-app>

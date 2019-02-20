@@ -7,8 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%
-response.sendRedirect("Login.jsp");
-%>
+<a href="ReferListCtlr">자료실 이동</a>
+
 </body>
 </html>
