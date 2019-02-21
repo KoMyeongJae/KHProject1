@@ -96,10 +96,9 @@ public class QABbsDao implements iQABbsDao {
 	@Override
 	public boolean writeQAB(QABbsDto Qbs) {
 		
-		System.out.println(Qbs.toString());
 		
 		String sql = " INSERT INTO QABBS(SEQ, ID, TITLE, CONTENT, WDATE, READCOUNT, DEL, PBPV, REF, STEP, DEPTH, PARENT) " +
-				" VALUES(SEQ_QABBS.NEXTVAL, ?, ?, ?, SYSDATE, 0, 0, 0, (SELECT NVL(MAX(REF), 0)+1 FROM QABBS), 0, 0, 0) ";
+				" VALUES(SEQ_QABBS.NEXTVAL, ?, ?, ?, SYSDATE, 0, 0, ?, (SELECT NVL(MAX(REF), 0)+1 FROM QABBS), 0, 0, 0) ";
 		
 
 		int count = 0;
@@ -118,6 +117,7 @@ public class QABbsDao implements iQABbsDao {
 			psmt.setString(1, Qbs.getId());
 			psmt.setString(2, Qbs.getTitle());
 			psmt.setString(3, Qbs.getContent());
+			psmt.setInt(4, Qbs.getPbpv());
 			System.out.println("2.5/6 writeQAB Success");
 			
 			count = psmt.executeUpdate();
@@ -220,7 +220,7 @@ public class QABbsDao implements iQABbsDao {
 				+ "(SEQ, ID, TITLE, CONTENT, WDATE, "
 				+ " READCOUNT, DEL, PBPV, REF, STEP, DEPTH, PARENT) "
 				+ " VALUES(SEQ_QABBS.NEXTVAL, ?, ?, ?, SYSDATE, 0, 0, "
-				+ " 0, (SELECT REF FROM QABBS WHERE SEQ=?),"
+				+ " ?, (SELECT REF FROM QABBS WHERE SEQ=?),"
 				+ " (SELECT STEP FROM QABBS WHERE SEQ=?) + 1 , "
 				+ " (SELECT DEPTH FROM QABBS WHERE SEQ=?) + 1, ?) ";
 				
@@ -250,10 +250,11 @@ public class QABbsDao implements iQABbsDao {
 			psmt.setString(1, Qbs.getId());
 			psmt.setString(2, Qbs.getTitle());
 			psmt.setString(3, Qbs.getContent());
-			psmt.setInt(4, seq);
+			psmt.setInt(4, Qbs.getPbpv());
 			psmt.setInt(5, seq);
 			psmt.setInt(6, seq);
 			psmt.setInt(7, seq);
+			psmt.setInt(8, seq);
 			System.out.println("4/6 Q_answer Suc");
 			
 			count = psmt.executeUpdate();

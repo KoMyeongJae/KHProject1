@@ -32,11 +32,16 @@ public class QaAddCtlr extends HttpServlet {
 			String title = req.getParameter("title");
 			String content = req.getParameter("content");
 			
+			String Spbpv = req.getParameter("pbpv"); 
+			int pbpv = Integer.parseInt(Spbpv);
+			 
+			
 			System.out.println(id);
 			System.out.println(title);
 			System.out.println(content);
+			System.out.println(pbpv); 
 			
-			boolean count =dao.writeQAB(new QABbsDto(id, title, content));
+			boolean count =dao.writeQAB(new QABbsDto(id, title, content,pbpv));
 
 			System.out.println("writeQAB 해결 결과 count?t:f = " + count);
 			

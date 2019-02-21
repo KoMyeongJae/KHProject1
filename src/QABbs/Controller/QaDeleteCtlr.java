@@ -24,18 +24,20 @@ public class QaDeleteCtlr extends HttpServlet {
 		String sseq = req.getParameter("seq");
 		int seq = Integer.parseInt(sseq);
 		boolean count = dao.deleteQbs(seq);
+	
 		
 		// db에 입력후 이동
 		 if(count == true) {
 			 
 			req.setAttribute("seq", seq);
+			req.getRequestDispatcher("3_QA_delete.jsp").forward(req, resp);
 			System.out.println("삭제완료");
-			resp.sendRedirect("3_QA_list.jsp");
+			
 		 }
 		else if(count == false) {
 			System.out.println("삭제하지 못했습니다");
 
-			resp.sendRedirect("3_QA_list.jsp");
+			resp.sendRedirect("3_QA_delete.jsp");
 			}
 
 	

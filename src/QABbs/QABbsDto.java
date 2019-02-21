@@ -67,10 +67,6 @@ public class QABbsDto implements Serializable {
 	private int depth;	// 깊이 
 	private int parent;
 	
-	public QABbsDto() {
-	}
-
-	
 	
 	public QABbsDto(int seq, String id, String title, String content, String wdate, int readcount, int del, int pbpv,
 			int ref, int step, int depth, int parent) {
@@ -91,11 +87,12 @@ public class QABbsDto implements Serializable {
 
 
 
-	public QABbsDto(String id,String title,String content) {
+	public QABbsDto(String id,String title,String content, int pbpv) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.content = content;
+		this.pbpv = pbpv; 
 	}
 
 	public int getSeq() {

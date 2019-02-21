@@ -23,18 +23,25 @@ public class QaUpdateCtlr extends HttpServlet {
 		int seq = Integer.parseInt(sseq);
 		String title = req.getParameter("title");
 		String content = req.getParameter("content");
-		req.setAttribute("seq", seq);
-		req.setAttribute("title", title);
-		req.setAttribute("content", content);
+		
+		
+		
 		
 		boolean count = dao.updateQbs(seq, title, content);
 		if(count == false){
 			System.out.println("변경실패");
-			resp.sendRedirect("3_QA_detail.jsp");
+	
+			req.getRequestDispatcher("3_QA_updateAf.jsp").forward(req, resp);
+			
+			
 		}
 			
 			System.out.println("변경완료");
-			resp.sendRedirect("3_QA_list.jsp");
+
+			req.setAttribute("seq", seq);
+			req.setAttribute("title", title);
+			req.setAttribute("content", content);
+			req.getRequestDispatcher("3_QA_updateAf.jsp").forward(req, resp);
 	}
 
 	@Override

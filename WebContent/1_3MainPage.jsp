@@ -1,21 +1,63 @@
+<%@page import="Exchange.U_manager"%>
+<%@page import="Exchange.U_Exchange"%>
+<%@page import="Exchange.j_manager"%>
+<%@page import="Exchange.J_Exchange"%>
+<%@page import="java.util.List"%>
 <%@page import="User.UserDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-Object ologin = session.getAttribute("login");
+	Object ologin = session.getAttribute("login");
 UserDto user = null;
 if(ologin == null){	// session 정보가 사라진 상태
-	%>
+%>
 	<script type="text/javascript">
 	alert("로그인해주세요");
 	location.href = "1_0Start.jsp";
 	</script>
 	<%
-	return;
-}
-user = (UserDto)ologin;
+		return;
+		}
+		user = (UserDto)ologin;
 
-String name = user.getName();
+		String name = user.getName();
+	%>
+<%
+//엔화
+/* List<Exchange.J_Exchange> list = j_manager.getExchange();
+
+String jsonEx = "[";
+
+for(Exchange.J_Exchange jex : list){
+	jsonEx += "현재 일본환율:" + jex.getSpt() + ",";
+}
+
+jsonEx = jsonEx.substring(0, jsonEx.lastIndexOf(","));
+
+jsonEx += "]";
+
+System.out.println(jsonEx);
+
+request.setAttribute("jsonEx", jsonEx); */
+%>
+<%
+//달러
+/* List<U_Exchange> list2 = U_manager.getExchanges();
+
+String UsonEx = "[";
+
+for(U_Exchange uex : list2){
+	jsonEx += "현재 일본환율:" + uex.getSpt() + ",";
+}
+
+UsonEx = UsonEx.substring(0, UsonEx.lastIndexOf(","));
+
+UsonEx += "]";
+
+System.out.println(UsonEx);
+
+request.setAttribute("UsonEx", UsonEx);
+ */
 %>
 <!DOCTYPE HTML>
 <html>
@@ -51,7 +93,7 @@ String name = user.getName();
 										</ul>
 								</li>
 								<li>
-									<a href="#">일본</a>
+									<a href="3_Japan.html">일본</a>
 										<ul>
 											<li><a href="#">도쿄</a></li>
 											<li><a href="#">오사카</a></li>
@@ -149,7 +191,8 @@ String name = user.getName();
 											<!-- Excerpt -->
 												<article class="box excerpt">
 													<header>
-														<span class="date">환율 차트 뿌려주자</span>
+														<span class="date"><%=request.getAttribute("jsonEx") %></span>
+											<%-- 			<span class="date"><%=request.getAttribute("UsonEx") %></span>  --%>
 														<h3><a href="#">Exchange rate</a></h3>
 													</header>
 													<p>You can see the exchange rate here.</p>
