@@ -8,11 +8,8 @@
 </head>
 <body>
 <%
-
-// response.sendRedirect("Login.jsp");
-
-response.sendRedirect("1_1Login.jsp");
-
+session.invalidate();
+response.sendRedirect("1_0Start.jsp");
 %>
 </body>
 </html>

@@ -7,11 +7,13 @@
 <title>Insert title here</title>
 </head>
 <body>
+
 <%
+// User 의 건의사항 등을 저장하는 부분을 작성하자
+String name = request.getParameter("name");
+String email = request.getParameter("email");
+String message = request.getParameter("message");
 
-// response.sendRedirect("Login.jsp");
-
-response.sendRedirect("1_1Login.jsp");
 
 %>
 </body>

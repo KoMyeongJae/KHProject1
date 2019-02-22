@@ -59,7 +59,6 @@ public class ReferAddCtlr extends HttpServlet {
 		int yourMaxRequestSize = 100 * 1024 * 1024;      // 1M
 		int yourMaxMemorySize = 100 * 1024;
 		
-
 		// form field 의 데이터(String)
 		String id = "";
 		String title = "";
@@ -68,11 +67,11 @@ public class ReferAddCtlr extends HttpServlet {
 		// file data
 		String filename = "";
 
-		/*
-		String path = req.getServletContext().getRealPath("/upload");
-		*/
 		
-		String path = "d:\\tmp";
+		String path = req.getServletContext().getRealPath("/upload");
+		
+		
+		// String path = "d:\\tmp";
 		/*
 		System.out.println(path);
 		MultipartRequest mreq = new MultipartRequest(req, path);

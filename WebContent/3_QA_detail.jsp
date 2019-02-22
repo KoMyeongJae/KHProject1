@@ -7,12 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%
 
-// response.sendRedirect("Login.jsp");
-
-response.sendRedirect("1_1Login.jsp");
-
-%>
 </body>
 </html>
