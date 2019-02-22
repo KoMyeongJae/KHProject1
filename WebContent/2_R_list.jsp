@@ -39,10 +39,8 @@ List<ReferRoomDto> list = (List<ReferRoomDto>)request.getAttribute("referlist");
 </form>
 
 <table border="1">
-<col width="50"><col width="100"><col width="400"><col width="50">
-<col width="50"><col width="50"><col width="100">
 
-<tr bgcolor="#00ff00" align="center">
+<tr bgcolor="#CCEEFF" align="center">
 	<td>번호</td>
 	<td>작성자</td>
 	<td>제목</td>
