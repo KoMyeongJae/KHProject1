@@ -9,7 +9,7 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
-  
+   
   <servlet>
   	<servlet-name>CommAddCtlr</servlet-name>
   	<servlet-class>CommentP.Controller.CommAddCtlr</servlet-class>
@@ -231,6 +231,14 @@
   <servlet-mapping>
   	<servlet-name>QaUpdateCtlr</servlet-name>
   	<url-pattern>/QaUpdateCtlr</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>QaAnswerCtlr</servlet-name>
+  	<servlet-class>QABbs.Controller.QaAnswerCtlr</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>QaAnswerCtlr</servlet-name>
+  	<url-pattern>/QaAnswerCtlr</url-pattern>
   </servlet-mapping>
 
   <servlet>

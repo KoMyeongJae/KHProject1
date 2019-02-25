@@ -19,7 +19,7 @@ public class QABbsDao implements iQABbsDao {
 	private static QABbsDao qab = new QABbsDao();
 	
 	private QABbsDao() {
-		
+		DB_Connection.initConnect();
 	}
 	
 	public static QABbsDao getInstance() {
@@ -27,19 +27,20 @@ public class QABbsDao implements iQABbsDao {
 	}
 
 	@Override
-	public List<QABbsDto> getQABbsList(String searchWord, String choice) {
-		String sql = " SELET SEQ, ID, REF, STEP, DEPTH, "
-				+ " TITLE, CONTENT, WDATE, PARENT, "
-				+ " DEL, READCOUNT, PBPV "
-				+ "FROM QABBS ";
+	public List<QABbsDto> getQABbsSearchList(String searchWord, String choice) {
+		String sql =  " SELECT SEQ, ID, TITLE, CONTENT, "
+				+ " WDATE, READCOUNT, DEL, PBPV, REF, STEP, "
+				+ " DEPTH, PARENT "
+				+ " FROM QABBS ";
 		
 		String sqlWord = "";
+		
 		if(choice.equals("title")) {
 			sqlWord = " WHERE TITLE LIKE '%" + searchWord.trim() + "%'";
 		}else if(choice.equals("writer")) {
 			sqlWord = " WHERE ID='" + searchWord.trim() + "'";
 		}else if(choice.equals("content")) {
-			
+			sqlWord = " WHERE CONTENT LIKE '%" + searchWord.trim() + "%'";
 		}
 		sql += sqlWord;
 		
@@ -62,7 +63,7 @@ public class QABbsDao implements iQABbsDao {
 			rs = psmt.executeQuery();
 			System.out.println("3/6 getQABbsList suc");
 			
-			while(rs.next()) {
+			while(rs.next()) {				
 				QABbsDto dto = new QABbsDto(
 						rs.getInt(1),
 						rs.getString(2),
@@ -78,7 +79,7 @@ public class QABbsDao implements iQABbsDao {
 						rs.getInt(12)					
 						);
 				list.add(dto);
-			}
+			}			
 			System.out.println("4/6 getQABbsList suc");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -94,23 +95,19 @@ public class QABbsDao implements iQABbsDao {
 
 	@Override
 	public boolean writeQAB(QABbsDto Qbs) {
-		String sql = " INSERT INTO QABBS "
-				+ " (SEQ, ID, "
-				+ " REF, STEP, DEPTH, "
-				+ " TITLE, CONTENT, WDATE, PARENT "
-				+ " DEL, READCOUNT) "
-				+ " VALUES(SEQ_QABBS.NEXTVAL, ?, "
-				+ "(SELECT NVL(MAX(REF), 0)+1 FROM QABBS), "
-				+ " 0, 0, "
-				+ " ?, ?, SYSDATE, 0, "
-				+ " 0, 0) ";
 		
+		
+		String sql = " INSERT INTO QABBS(SEQ, ID, TITLE, CONTENT, WDATE, READCOUNT, DEL, PBPV, REF, STEP, DEPTH, PARENT) " +
+				" VALUES(SEQ_QABBS.NEXTVAL, ?, ?, ?, SYSDATE, 0, 0, ?, (SELECT NVL(MAX(REF), 0)+1 FROM QABBS), 0, 0, 0) ";
+		
+
 		int count = 0;
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		
 		try {
+			System.out.println("0/6 writeQAB Success");	
 			conn = DB_Connection.getConection();
 			System.out.println("1/6 writeQAB Success");	
 			
@@ -120,10 +117,12 @@ public class QABbsDao implements iQABbsDao {
 			psmt.setString(1, Qbs.getId());
 			psmt.setString(2, Qbs.getTitle());
 			psmt.setString(3, Qbs.getContent());
+			psmt.setInt(4, Qbs.getPbpv());
+			System.out.println("2.5/6 writeQAB Success");
 			
 			count = psmt.executeUpdate();
 			System.out.println("3/6 writeQAB Success");	
-		} catch (SQLException e) {
+		} catch (Exception e) {
 			System.out.println(" writeQAB fail");	
 		}finally {
 			DB_Close.close(conn, psmt, null);
@@ -134,11 +133,9 @@ public class QABbsDao implements iQABbsDao {
 
 	@Override
 	public QABbsDto getQbs(int seq) {
-		String sql = " SELECT SEQ, ID, REF, STEP, DEPTH, "
-				+ " TITLE, CONTENT, WDATE, PARENT,"
-				+ " DEL, READCOUNT "
-				+ " FROM QABBS "
-				+ " WHERE SEQ=? ";
+		String sql = " SELECT SEQ, ID, TITLE, CONTENT, WDATE, "
+				+ " READCOUNT, DEL, PBPV, REF, STEP, DEPTH, PARENT "
+				+ " FROM QABBS WHERE SEQ=? ";
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
@@ -171,6 +168,7 @@ public class QABbsDao implements iQABbsDao {
 				rs.getInt(11),
 				rs.getInt(12)
 				);
+				
 			}
 			System.out.println("4/6 getQbs Success");
 		} catch (SQLException e) {
@@ -218,14 +216,15 @@ public class QABbsDao implements iQABbsDao {
 				+ " WHERE REF=(SELECT REF FROM QABBS WHERE SEQ=?) "
 				+ " AND STEP > (SELECT STEP FROM QABBS WHERE SEQ=?) ";
 		//insert
-		String sql2 = " INSERT INT QABBS "
-				+ " (SEQ, ID, REF, STEP, DEPTE, "
-				+ " TITLE, CONTENT, WDATE, PARENT, DEL, READCOUNT) "
-				+ " VALUES(SEQ_QABBS.NEXTVAL, ?, "
-				+ " (SELECT REF FROM QABBS WHERE SEQ=?), "
-				+ " (SELECT STEP FROM QABBS WHERE SEQ=?) + 1 ,"
-				+ " (SELECT DEPTH FEOM QABBS WHERE SEQ=?) + 1,"
-				+ " ?, ?, SYSDATE, ?, 0, 0) ";
+		String sql2 = " INSERT INTO QABBS "
+				+ "(SEQ, ID, TITLE, CONTENT, WDATE, "
+				+ " READCOUNT, DEL, PBPV, REF, STEP, DEPTH, PARENT) "
+				+ " VALUES(SEQ_QABBS.NEXTVAL, ?, ?, ?, SYSDATE, 0, 0, "
+				+ " ?, (SELECT REF FROM QABBS WHERE SEQ=?),"
+				+ " (SELECT STEP FROM QABBS WHERE SEQ=?) + 1 , "
+				+ " (SELECT DEPTH FROM QABBS WHERE SEQ=?) + 1, ?) ";
+				
+
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		
@@ -249,12 +248,13 @@ public class QABbsDao implements iQABbsDao {
 			
 			psmt = conn.prepareStatement(sql2);
 			psmt.setString(1, Qbs.getId());
-			psmt.setInt(2, seq);
-			psmt.setInt(3, seq);
-			psmt.setInt(4, seq);
-			psmt.setString(5, Qbs.getTitle());
-			psmt.setString(6, Qbs.getContent());
+			psmt.setString(2, Qbs.getTitle());
+			psmt.setString(3, Qbs.getContent());
+			psmt.setInt(4, Qbs.getPbpv());
+			psmt.setInt(5, seq);
+			psmt.setInt(6, seq);
 			psmt.setInt(7, seq);
+			psmt.setInt(8, seq);
 			System.out.println("4/6 Q_answer Suc");
 			
 			count = psmt.executeUpdate();
@@ -344,4 +344,5 @@ public class QABbsDao implements iQABbsDao {
 		}
 		return count>0?true:false;
 	}
+
 }
