@@ -55,144 +55,152 @@ public class QABbsDto implements Serializable {
 	private static final long serialVersionUID = 2513854520872586803L;
 	
 	private int seq;
-	private String id;
-	private String title;
-	private String content;
-	private String wdate;
-	private int readcount;
-	private int ref;	// 그룹번호
-	private int step;	// 행번호
-	private int depth;	// 깊이
-	private int del;
-	private int pbpv; //공개 비공개
-	private int parent;
-	
-	public QABbsDto() {
-	}
+	   private String id;
+	   private String title;
+	   private String content;
+	   private String wdate;
+	   private int readcount;
+	   private int del;
+	   private int pbpv;   //공개 비공개
+	   private int ref;   // 그룹번호
+	   private int step;   // 행번호
+	   private int depth;   // 깊이 
+	   private int parent;
+	   
+	   
+	   public QABbsDto(int seq, String id, String title, String content, String wdate, int readcount, int del, int pbpv,
+	         int ref, int step, int depth, int parent) {
+	      super();
+	      this.seq = seq;
+	      this.id = id;
+	      this.title = title;
+	      this.content = content;
+	      this.wdate = wdate;
+	      this.readcount = readcount;
+	      this.del = del;
+	      this.pbpv = pbpv;
+	      this.ref = ref;
+	      this.step = step;
+	      this.depth = depth;
+	      this.parent = parent;
+	   }
 
-	public QABbsDto(int seq, String id, String title, String content, String wdate, int readcount, int ref, int step,
-			int depth, int del, int pbpv, int parent) {
-		super();
-		this.seq = seq;
-		this.id = id;
-		this.title = title;
-		this.content = content;
-		this.wdate = wdate;
-		this.readcount = readcount;
-		this.ref = ref;
-		this.step = step;
-		this.depth = depth;
-		this.del = del;
-		this.pbpv = pbpv;
-		this.parent = parent;
-	}
 
-	public int getSeq() {
-		return seq;
-	}
 
-	public void setSeq(int seq) {
-		this.seq = seq;
-	}
+	   public QABbsDto(String id,String title,String content, int pbpv) {
+	      super();
+	      this.id = id;
+	      this.title = title;
+	      this.content = content;
+	      this.pbpv = pbpv; 
+	   }
 
-	public String getId() {
-		return id;
-	}
+	   public int getSeq() {
+	      return seq;
+	   }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+	   public void setSeq(int seq) {
+	      this.seq = seq;
+	   }
 
-	public String getTitle() {
-		return title;
-	}
+	   public String getId() {
+	      return id;
+	   }
 
-	public void setTitle(String title) {
-		this.title = title;
-	}
+	   public void setId(String id) {
+	      this.id = id;
+	   }
 
-	public String getContent() {
-		return content;
-	}
+	   public String getTitle() {
+	      return title;
+	   }
 
-	public void setContent(String content) {
-		this.content = content;
-	}
+	   public void setTitle(String title) {
+	      this.title = title;
+	   }
 
-	public String getWdate() {
-		return wdate;
-	}
+	   public String getContent() {
+	      return content;
+	   }
 
-	public void setWdate(String wdate) {
-		this.wdate = wdate;
-	}
+	   public void setContent(String content) {
+	      this.content = content;
+	   }
 
-	public int getReadcount() {
-		return readcount;
-	}
+	   public String getWdate() {
+	      return wdate;
+	   }
 
-	public void setReadcount(int readcount) {
-		this.readcount = readcount;
-	}
+	   public void setWdate(String wdate) {
+	      this.wdate = wdate;
+	   }
 
-	public int getRef() {
-		return ref;
-	}
+	   public int getReadcount() {
+	      return readcount;
+	   }
 
-	public void setRef(int ref) {
-		this.ref = ref;
-	}
+	   public void setReadcount(int readcount) {
+	      this.readcount = readcount;
+	   }
 
-	public int getStep() {
-		return step;
-	}
+	   public int getRef() {
+	      return ref;
+	   }
 
-	public void setStep(int step) {
-		this.step = step;
-	}
+	   public void setRef(int ref) {
+	      this.ref = ref;
+	   }
 
-	public int getDepth() {
-		return depth;
-	}
+	   public int getStep() {
+	      return step;
+	   }
 
-	public void setDepth(int depth) {
-		this.depth = depth;
-	}
+	   public void setStep(int step) {
+	      this.step = step;
+	   }
 
-	public int getDel() {
-		return del;
-	}
+	   public int getDepth() {
+	      return depth;
+	   }
 
-	public void setDel(int del) {
-		this.del = del;
-	}
+	   public void setDepth(int depth) {
+	      this.depth = depth;
+	   }
 
-	public int getPbpv() {
-		return pbpv;
-	}
+	   public int getDel() {
+	      return del;
+	   }
 
-	public void setPbpv(int pbpv) {
-		this.pbpv = pbpv;
-	}
+	   public void setDel(int del) {
+	      this.del = del;
+	   }
 
-	public int getParent() {
-		return parent;
-	}
+	   public int getPbpv() {
+	      return pbpv;
+	   }
 
-	public void setParent(int parent) {
-		this.parent = parent;
-	}
+	   public void setPbpv(int pbpv) {
+	      this.pbpv = pbpv;
+	   }
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+	   public int getParent() {
+	      return parent;
+	   }
 
-	@Override
-	public String toString() {
-		return "QABbsDto [seq=" + seq + ", id=" + id + ", title=" + title + ", content=" + content + ", wdate=" + wdate
-				+ ", readcount=" + readcount + ", ref=" + ref + ", step=" + step + ", depth=" + depth + ", del=" + del
-				+ ", pbpv=" + pbpv + ", parent=" + parent + "]";
-	}
+	   public void setParent(int parent) {
+	      this.parent = parent;
+	   }
+
+	   public static long getSerialversionuid() {
+	      return serialVersionUID;
+	   }
+
+	   @Override
+	   public String toString() {
+	      return "QABbsDto [seq=" + seq + ", id=" + id + ", title=" + title + ", content=" + content + ", wdate=" + wdate
+	            + ", readcount=" + readcount + ", ref=" + ref + ", step=" + step + ", depth=" + depth + ", del=" + del
+	            + ", pbpv=" + pbpv + ", parent=" + parent + "]";
+	   }
 	
 	
 	

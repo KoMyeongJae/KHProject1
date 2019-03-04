@@ -231,6 +231,14 @@
   	<servlet-name>QaUpdateCtlr</servlet-name>
   	<url-pattern>/QaUpdateCtlr</url-pattern>
   </servlet-mapping>
+  <servlet>
+     <servlet-name>QaAnswerCtlr</servlet-name>
+     <servlet-class>QABbs.Controller.QaAnswerCtlr</servlet-class>
+  </servlet>
+  <servlet-mapping>
+     <servlet-name>QaAnswerCtlr</servlet-name>
+     <url-pattern>/QaAnswerCtlr</url-pattern>
+  </servlet-mapping>
 
   <servlet>
   	<servlet-name>ReferAddCtlr</servlet-name>
@@ -288,6 +296,15 @@
   	<servlet-name>ReferUpdateCtlr</servlet-name>
   	<url-pattern>/ReferUpdateCtlr</url-pattern>
   </servlet-mapping>
+  <servlet>
+  	<servlet-name>ReferLikeCtlr</servlet-name>
+  	<servlet-class>ReferRoom.Controller.ReferLikeCtlr</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>ReferLikeCtlr</servlet-name>
+  	<url-pattern>/ReferLikeCtlr</url-pattern>
+  </servlet-mapping>
+
 
   <servlet>
   	<servlet-name>UserAddCtlr</servlet-name>
