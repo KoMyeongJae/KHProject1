@@ -2,11 +2,14 @@ package QABbs;
 
 import java.util.List;
 
+import dto.PagingBean;
+import dto.PagingBean1;
+
 public interface iQABbsDao {
 	
-	public List<QABbsDto> getQABbsList(String searchWord, String choice);
+	public List<QABbsDto> getQABbsSearchList(String searchWord, String choice);
 	public boolean writeQAB(QABbsDto Qbs);
-	
+	 
 	public QABbsDto getQbs(int seq);
 	public void readcount(int seq);
 	
@@ -14,4 +17,6 @@ public interface iQABbsDao {
 	public boolean updateQbs(int seq, String title, String content);
 	public boolean deleteQbs(int seq);
 
+	public List<QABbsDto> getQAPagingList(PagingBean paging, String searchWord, String choice);
+	
 }
