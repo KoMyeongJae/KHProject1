@@ -1468,7 +1468,7 @@ input, select, textarea {
 /* Sections/Article */
 
 	section, article {
-		margin-bottom: 3em;
+		margin-bottom: 0em;
 	}
 
 	section > :last-child,
@@ -2290,7 +2290,7 @@ input, select, textarea {
 		/* Main */
 
 			#main {
-				padding: 4em 0;
+				padding: 1em 0;
 			}
 
 		/* Footer */

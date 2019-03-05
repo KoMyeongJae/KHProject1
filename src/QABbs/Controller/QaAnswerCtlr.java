@@ -1,7 +1,7 @@
 package QABbs.Controller;
 
 import java.io.IOException;
-import java.util.List;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -33,18 +33,17 @@ public class QaAnswerCtlr extends HttpServlet{
 		 
 		boolean count = dao.Q_answer(seq, new QABbsDto(id, title, content, pbpv));
 		
-		if(count == false) { System.out.println("추가되지 못했습니다");
+		if(count == false) { 
+			System.out.println("추가되지 못했습니다");
 		
 		  resp.sendRedirect("3_QA_list.jsp");
 		 
 		 }
-			req.setAttribute("seq", seq);
-			req.setAttribute("id", id);
-			req.setAttribute("title", title);
-			req.setAttribute("content", content);
-			req.setAttribute("pbpv",pbpv);
+			req.setAttribute("count", count);
 			req.getRequestDispatcher("3_QA_answerAf.jsp").forward(req, resp);
+		 
 	}
+	
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

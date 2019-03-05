@@ -15,21 +15,12 @@
 <body>
 <%
 
-String sseq = request.getParameter("seq");
-int seq = Integer.parseInt(sseq);
-
-String id = request.getParameter("id");
-String title = request.getParameter("title");
-String content = request.getParameter("content");
-String Spbpv = request.getParameter("pbpv");
-int pbpv = Integer.parseInt(Spbpv);
-
-System.out.println("pbpv = " + pbpv);
-
 iQABbsDao dao = QABbsDao.getInstance();
 
-boolean isS = dao.Q_answer(seq, new QABbsDto(id,title,content,pbpv));
-if(isS){
+boolean count = (boolean)session.getAttribute("count");
+
+
+if(count == true){
 %>
 	<script type="text/javascript">
 	alert("댓글 입력 성공!");

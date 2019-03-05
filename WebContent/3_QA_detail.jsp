@@ -88,6 +88,7 @@ UserDto user = (UserDto)session.getAttribute("login");
 			</div>
 		</section>
 		
+		
 		<!-- Main -->
 		<section id="main">
 			<div class="container">
@@ -101,12 +102,16 @@ UserDto user = (UserDto)session.getAttribute("login");
 <div class="center">
 
 <table border="2">
-<col width="200"><col width="500">
+<col width="200"><col width="500"><col width="200"><col width="500">
 
 <tr>
 	<td>작성자</td>
 	<td>
 		<%=qbbs.getId() %>
+	</td>
+	<td>작성일</td>
+	<td>
+		<%=qbbs.getWdate() %>
 	</td>
 </tr>
 
@@ -115,26 +120,20 @@ UserDto user = (UserDto)session.getAttribute("login");
 	<td>
 		<%=qbbs.getTitle() %>
 	</td>
+	<td colspan="2"></td>
+	
+	
 </tr>
 <tr>
-	<td>작성일</td>
-	<td>
-		<%=qbbs.getWdate() %>
-	</td>
-</tr>
-<tr>
-	<td>조회수</td>
-	<td>
-		<%=qbbs.getReadcount() %>
-	</td>
-</tr>
-<tr>
-	<td>내용</td>
+	<td></td>	
 <td>
 <textarea rows="10" cols="50" 
 name="content" disabled="disabled"><%=qbbs.getContent() %>	
 </textarea>
 	</td>
+	<td colspan="2"></td>
+
+
 </tr>
 </table>
 
@@ -264,6 +263,7 @@ if(qbbs.getId().equals(user.getId())){
 				</div>
 			</div>
 		</section>
+		</div>
  
 <hr>
 
@@ -281,5 +281,14 @@ function updatebbs(seq) {
 }
 
 </script>
+<!-- Scripts -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jquery.dropotron.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
+
+
 </body>
 </html>

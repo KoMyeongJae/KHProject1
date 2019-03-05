@@ -64,6 +64,7 @@ request.setAttribute("UsonEx", UsonEx);
 <head>
 	<title>MainPage</title>
 	<meta charset="utf-8">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 	<link rel="stylesheet" href="assets/css/main.css">
 </head>
@@ -84,35 +85,20 @@ request.setAttribute("UsonEx", UsonEx);
 						<li>
 							<a href="#" class="icon fa-sitemap"><span>나라 정보</span></a>
 							<ul>
-								<li>
-									<a href="#">미국</a>
-										<ul>
-											<li><a href="#">뉴욕</a></li>
-											<li><a href="#">하와이</a></li>
-											<li><a href="#">LA</a></li>
-										</ul>
+								<li>									
+									<a href="3_Usa.jsp">미국</a>								
 								</li>
 								<li>
-									<a href="3_Japan.html">일본</a>
-										<ul>
-											<li><a href="#">도쿄</a></li>
-											<li><a href="#">오사카</a></li>
-											<li><a href="#">후쿠오카</a></li>
-										</ul>
+									<a href="3_Rusia.jsp">일본</a>
+										
 								</li>
 								<li>
-									<a href="#">베트남</a>
-										<ul>
-											<li><a href="#">하노이</a></li>
-											<li><a href="#">다낭</a></li>
-										</ul>
+									<a href="3_vietnam.jsp">베트남</a>
+										
 								</li>
 								<li>
-									<a href="#">러시아</a>
-									<ul>
-										<li><a href="#">모스크바</a></li>
-										<li><a href="#">블라디보스톡</a></li>
-									</ul>
+									<a href="3_Rusia.jsp">러시아</a>
+									
 								</li>
 							</ul>
 						</li>
@@ -134,36 +120,11 @@ request.setAttribute("UsonEx", UsonEx);
 				
 					<!-- Content banner 제외 부분에 본인코드 부분 작성하면 됩니다 -->
 						<div id="content" class="col-8 col-12-medium">
-							<!-- banner -->
-							<div class="box post">
-								<div id="banner">
-									<div class="container">
-										<p> <strong>Festival Calendar</strong><br>
-										여러 나라의 행사 일정을 확인해보세요.<br>
-										관심이 가는 행사는 찜해두기로 저장하세요.</p>
-									</div>
-								</div>
-							</div>
-							
 							<!-- Post -->
 								<article class="box post">
-									<header>
-										<h2>행사 일정 달력 놓을거야</h2>
-									</header>
-									<a href="#" class="image featured"><img src="images/pic04.jpg" alt="" /></a>
-									<h3>I mean isn't it possible?</h3>
-									<p>Phasellus laoreet massa id justo mattis pharetra. Fusce suscipit
-									ligula vel quam viverra sit amet mollis tortor congue. Sed quis mauris
-									sit amet magna accumsan tristique. Curabitur leo nibh, rutrum eu malesuada
-									in, tristique at erat lorem ipsum dolor sit amet lorem ipsum sed consequat
-									magna tempus veroeros lorem sed tempus aliquam lorem ipsum veroeros
-									consequat magna tempus lorem ipsum consequat Phasellus laoreet massa id
-									justo mattis pharetra. Fusce suscipit ligula vel quam viverra sit amet
-									mollis tortor congue. Sed quis mauris sit amet magna accumsan tristique.
-									Curabitur leo nibh, rutrum eu malesuada in tristique.</p>
-									<ul class="actions">
-										<li><a href="#" class="button icon fa-file">Continue Reading</a></li>
-									</ul>
+									<div id="infoCntry">
+										<%-- <jsp:include page="3_Usa.jsp"></jsp:include> --%>
+									</div>
 								</article>
 						</div>
 
@@ -281,6 +242,17 @@ request.setAttribute("UsonEx", UsonEx);
 <script src="assets/js/util.js"></script>
 <script src="assets/js/main.js"></script>
 
+<!-- <script type="text/javascript">
+
+$(function name() {
+	$("#gotoUSA").click(function name() {
+		alert("aaa");
+	});
+	
+});
+
+
+</script> -->
 
 
 

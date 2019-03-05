@@ -1,3 +1,4 @@
+<%@page import="QABbs.QABbsDto"%>
 <%@page import="QABbs.QABbsDao"%>
 <%@page import="QABbs.iQABbsDao"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
@@ -10,16 +11,18 @@
 </head>
 <body>
 <%
-
-request.getAttribute("seq");
 String sseq = request.getParameter("seq");
-int seq = Integer.parseInt(sseq.trim());
-String title = request.getParameter("title");
-String content = request.getParameter("content");
+int seq = Integer.parseInt(sseq);
 
 iQABbsDao dao = QABbsDao.getInstance();
-boolean isS = dao.updateQbs(seq, title, content);
-if(isS){
+QABbsDto qbbs = dao.getQbs(seq);
+
+request.setAttribute("_qbbs", qbbs);
+%>
+<%
+String title = (String)request.getAttribute("title");
+
+if(title == qbbs.getTitle()){
 	%>
 	<script type="text/javascript">
 	alert("글 수정에 성공했습니다");

@@ -20,8 +20,10 @@ public class j_manager {
 		
 		Elements spt = doc.select("p.no_today em.no_up em.no_up");
 		
+		
+		
 		Element espt = spt.get(0);
-		String text = espt.text();
+		 String text = espt.text(); 
 		
 		System.out.println("text = "+text +"원");
 		

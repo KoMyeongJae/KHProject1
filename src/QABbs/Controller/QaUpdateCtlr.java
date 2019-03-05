@@ -38,9 +38,7 @@ public class QaUpdateCtlr extends HttpServlet {
 			
 			System.out.println("변경완료");
 
-			req.setAttribute("seq", seq);
-			req.setAttribute("title", title);
-			req.setAttribute("content", content);
+			req.setAttribute("title",title);
 			req.getRequestDispatcher("3_QA_updateAf.jsp").forward(req, resp);
 	}
 

@@ -20,12 +20,7 @@ public class QaAddCtlr extends HttpServlet {
 		
 		String command = req.getParameter("command");
 		
-		//view
-		if(command.equals("add")) {
-			resp.sendRedirect("3Q_write.jsp");
-		}
-		// DB에 입력 후 이동
-		else if(command.equals("addAf")) {	
+		 if(command.equals("addAf")) {	
 			
 			System.out.println("QaAddCtlr addAf");
 			String id = req.getParameter("id");

@@ -117,10 +117,6 @@ UserDto user = (UserDto)ologin;
 	<td>${_qbbs.wdate }</td>
 </tr>
 <tr>
-	<td>조회수</td>
-	<td><%=qbbs.getReadcount() %></td>
-</tr>
-<tr>
 	<td>내용</td>
 	<td>
 		<textarea rows="10" cols="50" disabled="disabled"><%=qbbs.getContent() %></textarea>
@@ -194,7 +190,7 @@ UserDto user = (UserDto)ologin;
 											</header>
 											<font size="3">안녕하세요       <%=user.getName() %>님</font><br><br>
 											<!-- 가입일 넣을까? => DB 건드려야되요 -->
-											<a href="#"><font size="2">내 정보 보기</font></a>
+											<a href="UserDetailCtlr?id=<%=user.getId() %>"><font size="2">내 정보 보기</font></a>
 											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 											<a href="1_4Logout.jsp"><font size="2">로그아웃</font></a><br>
 											<a href="#"><font size="2">Wish List</font></a>
@@ -283,8 +279,17 @@ UserDto user = (UserDto)ologin;
 				</div>
 			</div>
 		</section>
+		</div>
  
 <hr>
+<!-- Scripts -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jquery.dropotron.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
+
 
 
 
