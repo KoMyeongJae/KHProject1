@@ -29,6 +29,7 @@ public class ReferLikeCtlr extends HttpServlet {
 		
 		if(b) {
 			dao.del_likeit(seq);
+			dao.del_likeit_table(seq, id);
 			msg = "좋아요 해제!!";
 		}
 		else {

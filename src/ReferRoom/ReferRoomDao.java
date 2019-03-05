@@ -353,10 +353,11 @@ public class ReferRoomDao implements iReferRoomDao {
 	public boolean check_likeit(int seq, String id) {
 		
 		
-		String sql = " SELECT REFLIKE_SEQ FROM LIKE_REFER "
-				   + " WHERE LIKE_ID=? AND ID='" + id.trim() + "' ";
+		String sql = " SELECT * FROM LIKE_REFER "
+				   + " WHERE REFLIKE_SEQ=? AND ID='" + id.trim() + "' ";
 		
 		System.out.println(seq + id);
+		
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
@@ -377,12 +378,9 @@ public class ReferRoomDao implements iReferRoomDao {
 			
 			if(rs.next()) {
 				
-				int i = 1;
-				if(rs.getInt(i) == 1) {
+				System.out.println(rs.getInt(1));
+				System.out.println(rs.getString(2));
 					check = true;
-					System.out.println("오류체크!!" + rs.getInt(1));
-				}
-				
 			}	
 			
 			
@@ -429,15 +427,48 @@ public class ReferRoomDao implements iReferRoomDao {
 	public void add_likeit_table(int seq, String id) {
 
 		
-		String sql = " INSERT INTO LIKE_REFER(LIKE_ID , REFLIKE_SEQ  , ID) "
-				   + " VALUES(?, 1, ?) ";
+		String sql = " INSERT INTO LIKE_REFER(REFLIKE_SEQ  , ID) "
+				   + " VALUES(?, ?) ";
 
-		System.out.println(id);
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		ResultSet rs = null;
 
-		boolean check = false;
+
+		try {
+			conn = DBConnection.getConnection();
+			System.out.println("1/6 add_likeit_table suc");
+
+			psmt = conn.prepareStatement(sql);
+			System.out.println("2/6 add_likeit_table suc");
+
+
+			psmt.setInt(1, seq);
+			psmt.setString(2, id);
+			
+			rs = psmt.executeQuery();
+			System.out.println("3/6 add_likeit_table suc");
+
+			
+		} catch (SQLException e) {
+			System.out.println("like_check fail");
+			e.printStackTrace();
+		} finally {
+			DBClose.close(conn, psmt, rs);
+		}
+
+	}
+
+	@Override
+	public void del_likeit_table(int seq, String id) {
+		
+		String sql = " DELETE FROM LIKE_REFER "
+				   + " WHERE REFLIKE_SEQ=? AND ID=? ";
+
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+
 
 		try {
 			conn = DBConnection.getConnection();

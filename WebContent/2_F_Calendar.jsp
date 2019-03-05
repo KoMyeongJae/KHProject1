@@ -34,7 +34,7 @@ public String showPen(int year, int month, int day){
 	String a;
 	
 	// 아이디 비교해주는 부분
-	if(false){
+	if(true){
 		a = "<a href='%s?year=%d&month=%d&day=%d'>%s</a>";
 	}
 	else{
@@ -63,7 +63,7 @@ public String makeTable(int year, int month, int day, List<FestiCalendarDto> lis
 		if(dto.getRdate().substring(0, 8).equals(dates)){
 			
 			s += "<tr color='red'>";
-			s += "<td><div class='event'><div class='event-desc'>";
+			s += "<td><div class='event-desc'>";
 			
 			String a;
 			
@@ -76,10 +76,10 @@ public String makeTable(int year, int month, int day, List<FestiCalendarDto> lis
 			}
 			
 			s += a;
-			s += dto.getTitle();
+			s += "◆ " + dto.getTitle();
 			s += "</a>";
 			
-			s += "</div></div></td>";
+			s += "</div></td>";
 			s += "</tr>";		
 		}		
 	}
@@ -335,7 +335,7 @@ for(int i = 1;i <= lastDay; i++){
 	/* 
 	if((i + dayOfWeek - 1) % 7 == 0 && i != lastDay){
 	}
-	 */
+	*/
 }
 
 // 밑칸
@@ -346,7 +346,7 @@ for(int i = 0;i < (7 - (dayOfWeek + lastDay - 1) % 7) % 7; i++){
 	<%
 }
 %>
-</tr>
+
 </ul>
 
 </div>

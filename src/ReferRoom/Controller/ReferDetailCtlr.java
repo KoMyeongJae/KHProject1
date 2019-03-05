@@ -27,6 +27,7 @@ public class ReferDetailCtlr extends HttpServlet {
 		int seq = Integer.parseInt(seqq);
 		
 		// Db로 가서 데이터를 갖고 온다
+		
 		ReferRoomDto rfr = dao.detail_ReferR(seq);		
 		
 		String msg = (String)req.getAttribute("msg");

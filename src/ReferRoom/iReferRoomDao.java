@@ -29,4 +29,6 @@ public interface iReferRoomDao {
 	public boolean check_likeit(int seq, String id);
 	
 	public void add_likeit_table(int seq, String id);
+	
+	public void del_likeit_table(int seq, String id);
 }

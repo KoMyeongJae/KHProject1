@@ -74,7 +74,7 @@ public class ReferUpdateCtlr extends HttpServlet {
 
 		// file data
 		String filename = "";
-
+		String filename2 = "";
 		
 		String path = req.getServletContext().getRealPath("/upload");
 		/*
@@ -112,6 +112,7 @@ public class ReferUpdateCtlr extends HttpServlet {
 		}
 		   Iterator<FileItem> it = items.iterator();
 		   
+		 
 		   while(it.hasNext()){
 		      
 		      FileItem item = it.next();
@@ -127,22 +128,36 @@ public class ReferUpdateCtlr extends HttpServlet {
 		         else if(item.getFieldName().equals("content")){
 		            content = item.getString("utf-8");
 		         }
+		         else if(item.getFieldName().equals("_filename")) {
+		        	 filename2 = item.getString("utf-8");
+		        	 
+		        	System.out.println("수정한 파일 " + filename2);
+		        	 
+		         }
 		      }
 		      // file
 		      else{
+		    	  
 		         if(item.getFieldName().equals("fileload")){
 		            filename = processUploadFile(item, path);
-		            System.out.println("path:" + path);
-		         }         
+		            
+		            System.out.println("파일 " + filename);
+		         } 
+		         
+		         
 		      }   
 		   }
 		   
 		   
-		
+		   System.out.println(path);
 		
 		
 	}
 		iReferRoomDao dao = ReferRoomDao.getInstance();
+		
+		if(filename == null || filename == "") {
+			filename = filename2;
+		}
 
 		dao.update_ReferR(new ReferRoomDto(seq, title, content, filename));
 

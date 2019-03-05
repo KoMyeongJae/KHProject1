@@ -118,7 +118,7 @@ request.setAttribute("UsonEx", UsonEx);
 						</li>
 						<!-- class="icon fa-bar-chart-o" -->
 						<li><a class="icon fa-sitemap" href="#"><span>여행 후기</span></a></li>
-						<li><a class="icon fa-retweet" href="#"><span>여행 자료</span></a></li>
+						<li><a class="icon fa-retweet" href="ReferListCtlr"><span>여행 자료</span></a></li>
 						<li><a class="icon fa-sitemap" href="3_QA_list.jsp"><span>Q&A</span></a></li>
 						<li><a class="icon fa-cog" href="#"><span>개인 일정</span></a></li>
 					</ul>
