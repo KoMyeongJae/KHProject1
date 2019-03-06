@@ -19,7 +19,11 @@ public class U_manager {
 				"https://finance.naver.com/marketindex/exchangeDetail.nhn?marketindexCd=FX_USDKRW")
 				.get();
 		
+<<<<<<< HEAD
 		Elements spt = doc.select("p.no_today em.no_down em.no_down");
+=======
+		Elements spt = doc.select("p.no_today em em");
+>>>>>>> branch 'KMJ' of https://github.com/KoMyeongJae/KHProject1.git
 		
 		Element espt = spt.get(0);
 		String text = espt.text();

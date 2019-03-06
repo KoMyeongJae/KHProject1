@@ -78,11 +78,12 @@ String address[] = dto.getAddress();
 <body class="homepage is-preload">
 	<div id="page-wrapper">
 		<!-- Header -->
-		<section id="header">
+		<section id="header" style="background: url(images/header6.jpg)no-repeat; background-size: 100% 100%;">
 			<div class="container">
 				<!-- Logo : Logo 를 누르면 MainPage 로 이동하게 만들기 -->
-				<h1 id="logo"><a href="1_3MainPage.jsp">TRIP</a></h1>
-				<p>Take a Trip to Anywhere you want to go</p>
+				<h1 id="logo"><a href="1_3MainPage.jsp">TRIPLAN</a></h1>
+				<p><strong><font color="white">TRIP & PLAN : </font></strong>
+				<strong><font color="white">Planning Your Trip</font></strong></p>
 				
 				<!-- Nav -->
 				<nav id="nav">
@@ -92,7 +93,7 @@ String address[] = dto.getAddress();
 							<a href="#" class="icon fa-sitemap"><span>나라 정보</span></a>
 							<ul>
 								<li>
-									<a href="#">미국</a>
+									<a href="3_InfoCntryUsa.jsp">미국</a>
 										<ul>
 											<li><a href="#">뉴욕</a></li>
 											<li><a href="#">하와이</a></li>
@@ -100,7 +101,7 @@ String address[] = dto.getAddress();
 										</ul>
 								</li>
 								<li>
-									<a href="#">일본</a>
+									<a href="3_InfoCntryJapan.jsp">일본</a>
 										<ul>
 											<li><a href="#">도쿄</a></li>
 											<li><a href="#">오사카</a></li>
@@ -108,26 +109,28 @@ String address[] = dto.getAddress();
 										</ul>
 								</li>
 								<li>
-									<a href="#">베트남</a>
+									<a href=3_InfoCntryVietnam.jsp>베트남</a>
 										<ul>
 											<li><a href="#">하노이</a></li>
 											<li><a href="#">다낭</a></li>
+											<li><a href="#">호치민</a></li>
 										</ul>
 								</li>
 								<li>
-									<a href="#">러시아</a>
+									<a href="3_InfoCntryRussia.jsp">러시아</a>
 									<ul>
 										<li><a href="#">모스크바</a></li>
+										<li><a href="#">상트페테르부르크</a></li>
 										<li><a href="#">블라디보스톡</a></li>
 									</ul>
 								</li>
 							</ul>
 						</li>
 						<!-- class="icon fa-bar-chart-o" -->
-						<li><a class="icon fa-sitemap" href="#"><span>여행 후기</span></a></li>
-						<li><a class="icon fa-retweet" href="#"><span>여행 자료</span></a></li>
-						<li><a class="icon fa-sitemap" href="QaListCtlr?command=QA_list"><span>Q&A</span></a></li>
-						<li><a class="icon fa-cog" href="#"><span>개인 일정</span></a></li>
+						<li><a class="icon fa-sitemap" href="1_6PicBbsList.jsp"><span>여행 후기</span></a></li>
+						<li><a class="icon fa-retweet" href="2_R_list.jsp"><span>여행 자료</span></a></li>
+						<li><a class="icon fa-sitemap" href="3_QA_list.jsp"><span>Q&A</span></a></li>
+						<li><a class="icon fa-cog" href="4_pc_calendar.jsp"><span>개인 일정</span></a></li>
 					</ul>
 				</nav>
 
@@ -140,51 +143,54 @@ String address[] = dto.getAddress();
 				<div class="row">
 				
 					<!-- Content banner 제외 부분에 본인코드 부분 작성하면 됩니다 -->
+					<div class="content_m">
 					<div id="content" class="col-8 col-12-medium">
 						
 						<!-- Post -->
 						<article class="box post">
 							<header>
-								<h2>기본정보</h2>
+								<h2>내 정보 수정</h2>
 							</header>
-							
+							<div style="width: 90%">
 							<form action="UserUpdate" name="userinput" onsubmit="return checkIt()" method="post">
 								<input type="hidden" name="command" value="update_user">
-								<table>
-									<colgroup>
+								<table style="border: 1px solid; border-color: lightgray; margin-bottom: 1em;">
 										<col width="5%"><col width="15%"><col width="10%">
-									</colgroup>
-									<tr>
-										<th colspan="2" class="subTitle">ID Information</th>
+									<tr style="border-bottom: 1px solid; border-bottom-color: lightgray;">
+										<th colspan="3" class="subTitle">* &nbsp;&nbsp;&nbsp;ID Information</th>
 									</tr>
 									<tr>
 										<th>User ID</th>
-										<td>
-											<input type="text" name="id" value="<%=id %>" readonly="readonly">
+										<td colspan="2">
+											<input type="text" name="id" value="<%=id %>" readonly="readonly" style="width: 50%;">
 										</td>
 									</tr>
-									<tr>
-										<th colspan="2" class="subTitle">Personal Information</th>
+									<tr style="border: 1px solid; border-color: lightgray;">
+										<th colspan="3" class="subTitle">* &nbsp;&nbsp;&nbsp;Personal Information</th>
 									</tr>
 									<tr>
 										<th>NAME</th>
-										<td><input type="text" name="name" value="<%=name %>" maxlength="10"></td>
+										<td colspan="2">
+											<input type="text" name="name" value="<%=name %>" maxlength="10" style="width: 50%;">
+										</td>
 									</tr>
 									<tr>
 										<th>BIRTH</th>
-										<td>
-											<input type="text" id="birth" name="birth" value="<%=birth %>">
+										<td colspan="2">
+											<input type="text" id="birth" name="birth" value="<%=birth %>" style="width: 50%;">
 										</td>
 									</tr>
 									<tr>
 										<th>E-Mail</th>
-										<td>
-											<input type="text" name="email" class="w300" maxlength="30" value="<%=email %>">
+										<td colspan="2">
+											<input type="text" name="email" class="w300" maxlength="30" value="<%=email %>" style="width: 50%;">
 										</td>
 									</tr>
 									<tr>
 										<th>PHONE</th>
-										<td><input type="text" name="phone" class="w300" maxlength="50" value="<%=phone %>"></td>
+										<td colspan="2">
+											<input type="text" name="phone" class="w300" maxlength="50" value="<%=phone %>" style="width: 50%;">
+										</td>
 									</tr>
 									<tr>
 										<th>ADDRESS</th>
@@ -199,9 +205,9 @@ String address[] = dto.getAddress();
 									</tr>
 									<tr>
 										<th></th>
-										<td>
-											<input type="text" id="detailAddress" name="address" value="<%=address[1] %>" size="12">
-											<input type="hidden" id="extraAddress" name="addressnot" placeholder="참고항목" size="8">
+										<td colspan="2">
+											<input type="text" id="detailAddress" name="address" value="<%=address[1] %>" style="width: 50%;">
+											<input type="hidden" id="extraAddress" name="addressnot" placeholder="참고항목">
 										</td>
 									</tr>
 								</table>
@@ -210,8 +216,9 @@ String address[] = dto.getAddress();
 				
 								</div>
 							</form>
-							
+							</div>
 						</article>
+					</div>
 					</div>
 
 					<!-- Sidebar -->
@@ -225,11 +232,11 @@ String address[] = dto.getAddress();
 									<!-- Excerpt -->
 										<article class="box excerpt">
 											<header>
-												<h3>My Information</h3>
+												<font size="6" color="gray">My Information</font>
 											</header>
 											<font size="3">안녕하세요       <%=name %>님</font><br><br>
 											<!-- 가입일 넣을까? => DB 건드려야되요 -->
-											<a href="#"><font size="2">내 정보 보기</font></a>
+											<a href="UserDetailCtlr?id=<%=id%>"><font size="2">내 정보 보기</font></a>
 											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 											<a href="1_4Logout.jsp"><font size="2">로그아웃</font></a><br>
 											<a href="#"><font size="2">Wish List</font></a>
@@ -269,7 +276,7 @@ String address[] = dto.getAddress();
 		<section id="footer">
 			<div class="container">
 				<header>
-					<h2>Request or comments? <strong>Get in touch:</strong></h2>
+					<font size="15" color="lightgray" style="font-family: cursive;">Request or comments? <strong>Get in touch:</strong></font>
 				</header>
 				<div class="row">
 					<div class="col-6 col-12-medium">
@@ -283,7 +290,7 @@ String address[] = dto.getAddress();
 										<input name="email" placeholder="Email" type="text" />
 									</div>
 									<div class="col-12">
-										<textarea name="message" placeholder="Message"></textarea>
+										<textarea name="message" placeholder="Message" style="height: 11em; resize: none;"></textarea>
 									</div>
 									<div class="col-12">
 										<input type="submit" value="Send Message" class="form-button-submit button icon fa-envelope">

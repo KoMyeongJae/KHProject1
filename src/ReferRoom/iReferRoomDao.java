@@ -2,6 +2,12 @@ package ReferRoom;
 
 import java.util.List;
 
+<<<<<<< HEAD
+=======
+import QABbs.QABbsDto;
+import dto.PagingBean;
+
+>>>>>>> branch 'KMJ' of https://github.com/KoMyeongJae/KHProject1.git
 
 public interface iReferRoomDao {
 
@@ -31,4 +37,9 @@ public interface iReferRoomDao {
 	public void add_likeit_table(int seq, String id);
 	
 	public void del_likeit_table(int seq, String id);
+<<<<<<< HEAD
+=======
+	
+	public List<ReferRoomDto> getReferPagingList(PagingBean paging, String searchWord, String choice);
+>>>>>>> branch 'KMJ' of https://github.com/KoMyeongJae/KHProject1.git
 }

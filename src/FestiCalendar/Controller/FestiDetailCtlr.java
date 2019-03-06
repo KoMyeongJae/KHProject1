@@ -14,8 +14,9 @@ import FestiCalendar.iFestiCalendarDao;
 public class FestiDetailCtlr extends HttpServlet {
 	
 	private static final long serialVersionUID = -3728277710618900500L;
-
+	
 	@Override
+<<<<<<< HEAD
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		String sseq = req.getParameter("seq");
@@ -29,12 +30,27 @@ public class FestiDetailCtlr extends HttpServlet {
 		
 		req.getRequestDispatcher("2_F_detail.jsp").forward(req, resp);
 	}
+=======
+	   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+>>>>>>> branch 'KMJ' of https://github.com/KoMyeongJae/KHProject1.git
 
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		super.doPost(req, resp);
-	}
+	      String sseq = req.getParameter("seq");
+	      int seq = Integer.parseInt(sseq);
+
+	      iFestiCalendarDao dao = FestiCalendarDao.getInstance();
+
+	      FestiCalendarDto cal = dao.detailFestList(seq);
+
+	      req.setAttribute("cal", cal);
+	      
+	      req.getRequestDispatcher("2_F_detail.jsp").forward(req, resp);
+	   }
+
+	   @Override
+	   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	      // TODO Auto-generated method stub
+	      super.doPost(req, resp);
+	   }
 	
 	
 }

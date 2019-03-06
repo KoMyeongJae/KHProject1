@@ -1,8 +1,16 @@
+<<<<<<< HEAD
 <%@page import="Exchange.U_manager"%>
 <%@page import="Exchange.U_Exchange"%>
 <%@page import="Exchange.j_manager"%>
 <%@page import="Exchange.J_Exchange"%>
 <%@page import="java.util.List"%>
+=======
+<%@page import="java.util.Calendar"%>
+<%@page import="FestiCalendar.FestiCalendarDto"%>
+<%@page import="java.util.List"%>
+<%@page import="FestiCalendar.FestiCalendarDao"%>
+<%@page import="FestiCalendar.iFestiCalendarDao"%>
+>>>>>>> branch 'KMJ' of https://github.com/KoMyeongJae/KHProject1.git
 <%@page import="User.UserDto"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -59,6 +67,122 @@ System.out.println(UsonEx);
 request.setAttribute("UsonEx", UsonEx);
  */
 %>
+<%!
+// nvl 함수
+public boolean nvl(String msg){	// 요런걸 유틸리티 함수라고 해
+	return msg == null || msg.trim().equals("")?true:false;
+}
+// 날짜 클릭하면 그 날의 일정이 모두 보이게 하는 callist.jsp로 이동시키는 함수
+public String callist(int year, int month, int day){
+	String s = "";
+	
+	s += String.format("<a href='%s?year=%d&month=%d&day=%d'>",
+						"FestiListCtlr", year, month, day);
+	
+	s += String.format("%2d", day);
+	s += "</a>";
+	
+	return s;
+}
+
+// 1 ~ 9 -> 20190101 되야지 201911 로 되면 안되는거야 [ -> 01, 02, 03 으로 만들기]
+public String two(String msg){
+	return msg.trim().length() < 2 ? "0"+msg : msg.trim();
+}
+
+// 각 날짜별로 테이블을 생성하는 함수
+public String makeTable(int year, int month, int day, List<FestiCalendarDto> list){
+	
+	String s = "";
+	String dates = (year + "") + two(month + "") + two(day + "");	// 20190201 이런 형태로 만들어주는 작업
+	
+	s += "<table>";
+	s += "<col width='98'>";
+	
+	for(FestiCalendarDto dto : list){
+		if(dto.getsrdate().substring(0, 8).equals(dates)){	// 시간까지 같이 넘어오니까 day 까지만 뽑아주는 부분이야
+			s += "<tr bgcolor='lightblue'>";
+			s += "<td>";
+			
+			// 이 부분이 연결부분인데, window.open 쓸거야
+			s += "<a href='javascript:openDetail("+dto.getSeq()+")'ss>";
+			s += "<font style='font-size:6; color:black'>'";
+			
+			s += dto.getTitle();
+			
+			s += "</font>";
+			
+			s += "</td>";
+			s += "</tr>";
+		}
+	}
+	s += "</table>";
+	
+	return s;
+}
+
+// 제목이 너무 길면 ... 처리하기 [ ex. 회의 약속이... ]
+public String dot3(String msg){
+	String s = "";
+	if(msg.length() >= 6){
+		s = msg.substring(0, 6);
+		s += "...";
+	}else{
+		s = msg.trim();
+	}
+	return s;
+}
+%>
+<%
+// 오늘 날짜 얻어오기
+Calendar cal = Calendar.getInstance();
+
+cal.set(Calendar.DATE, 1);	// 1일
+
+String syear = request.getParameter("year");
+String smonth = request.getParameter("month");
+
+int year = cal.get(Calendar.YEAR);
+if(nvl(syear) == false){	// 넘어온 parameter 가 있다는거야
+	year = Integer.parseInt(syear);
+}
+
+int month = cal.get(Calendar.MONTH) + 1;	// month 는 0 ~ 11
+if(nvl(smonth) == false){
+	month = Integer.parseInt(smonth);
+}
+
+// 이부분 이해하고 넘어가자
+if(month < 1){
+	month = 12;
+	year--;
+}
+if(month > 12){
+	month = 1;
+	year++;
+}
+
+cal.set(year, month - 1, 1);	// 연 월 일 을 Setting
+
+// 요일 구하기
+int dayOfweek = cal.get(Calendar.DAY_OF_WEEK);	// 1(일) ~ 7(토)
+
+// <<	전 연도 이동
+String pp = String.format("<a href='%s?year=%d&month=%d'>" + "<img src='images/left-arrow.png'></a>",
+							"1_3MainPage.jsp", year-1, month);
+// <	전 달 이동
+String p = String.format("<a href='%s?year=%d&month=%d'>" + "<img src='images/left-arrow.png'></a>",
+							"1_3MainPage.jsp", year, month-1);
+// >	다음 달 이동
+String n = String.format("<a href='%s?year=%d&month=%d'>" + "<img src='images/right-arrow.png'></a>",
+							"1_3MainPage.jsp", year, month+1);
+// >>	다음 연도 이동
+String nn = String.format("<a href='%s?year=%d&month=%d'>" + "<img src='images/right-arrow.png'></a>",
+							"1_3MainPage.jsp", year+1, month);
+
+iFestiCalendarDao dao = FestiCalendarDao.getInstance();
+List<FestiCalendarDto> list = dao.getFestList(year + two(month + ""));
+%>
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -69,13 +193,14 @@ request.setAttribute("UsonEx", UsonEx);
 </head>
 <body class="homepage is-preload">
 	<div id="page-wrapper">
-
+	
 		<!-- Header -->
-		<section id="header">
+		<section id="header" style="background: url(images/header6.jpg)no-repeat; background-size: 100% 100%;">
 			<div class="container">
 				<!-- Logo : Logo 를 누르면 MainPage 로 이동하게 만들기 -->
-				<h1 id="logo"><a href="#">TRIP</a></h1>
-				<p>Take a Trip to Anywhere you want to go</p>
+				<h1 id="logo"><a href="#">TRIPLAN</a></h1>
+				<p><strong><font color="white">TRIP & PLAN : </font></strong>
+				<strong><font color="white">Planning Your Trip</font></strong></p>
 				
 				<!-- Nav -->
 				<nav id="nav">
@@ -85,7 +210,7 @@ request.setAttribute("UsonEx", UsonEx);
 							<a href="#" class="icon fa-sitemap"><span>나라 정보</span></a>
 							<ul>
 								<li>
-									<a href="#">미국</a>
+									<a href="3_InfoCntryUsa.jsp">미국</a>
 										<ul>
 											<li><a href="#">뉴욕</a></li>
 											<li><a href="#">하와이</a></li>
@@ -93,7 +218,11 @@ request.setAttribute("UsonEx", UsonEx);
 										</ul>
 								</li>
 								<li>
+<<<<<<< HEAD
 									<a href="3_Japan.html">일본</a>
+=======
+									<a href="3_InfoCntryJapan.jsp">일본</a>
+>>>>>>> branch 'KMJ' of https://github.com/KoMyeongJae/KHProject1.git
 										<ul>
 											<li><a href="#">도쿄</a></li>
 											<li><a href="#">오사카</a></li>
@@ -101,26 +230,35 @@ request.setAttribute("UsonEx", UsonEx);
 										</ul>
 								</li>
 								<li>
-									<a href="#">베트남</a>
+									<a href=3_InfoCntryVietnam.jsp>베트남</a>
 										<ul>
 											<li><a href="#">하노이</a></li>
 											<li><a href="#">다낭</a></li>
+											<li><a href="#">호치민</a></li>
 										</ul>
 								</li>
 								<li>
-									<a href="#">러시아</a>
+									<a href="3_InfoCntryRussia.jsp">러시아</a>
 									<ul>
 										<li><a href="#">모스크바</a></li>
+										<li><a href="#">상트페테르부르크</a></li>
 										<li><a href="#">블라디보스톡</a></li>
 									</ul>
 								</li>
 							</ul>
 						</li>
 						<!-- class="icon fa-bar-chart-o" -->
+<<<<<<< HEAD
 						<li><a class="icon fa-sitemap" href="#"><span>여행 후기</span></a></li>
 						<li><a class="icon fa-retweet" href="ReferListCtlr"><span>여행 자료</span></a></li>
 						<li><a class="icon fa-sitemap" href="3_QA_list.jsp"><span>Q&A</span></a></li>
 						<li><a class="icon fa-cog" href="#"><span>개인 일정</span></a></li>
+=======
+						<li><a class="icon fa-sitemap" href="1_6PicBbsList.jsp"><span>여행 후기</span></a></li>
+						<li><a class="icon fa-retweet" href="2_R_list.jsp"><span>여행 자료</span></a></li>
+						<li><a class="icon fa-sitemap" href="3_QA_list.jsp"><span>Q&A</span></a></li>
+						<li><a class="icon fa-cog" href="4_pc_calendar.jsp"><span>개인 일정</span></a></li>
+>>>>>>> branch 'KMJ' of https://github.com/KoMyeongJae/KHProject1.git
 					</ul>
 				</nav>
 
@@ -133,39 +271,72 @@ request.setAttribute("UsonEx", UsonEx);
 				<div class="row">
 				
 					<!-- Content banner 제외 부분에 본인코드 부분 작성하면 됩니다 -->
+					<div class="content_m">
 						<div id="content" class="col-8 col-12-medium">
-							<!-- banner -->
-							<div class="box post">
-								<div id="banner">
-									<div class="container">
-										<p> <strong>Festival Calendar</strong><br>
-										여러 나라의 행사 일정을 확인해보세요.<br>
-										관심이 가는 행사는 찜해두기로 저장하세요.</p>
-									</div>
-								</div>
-							</div>
-							
+						
 							<!-- Post -->
+							
 								<article class="box post">
-									<header>
-										<h2>행사 일정 달력 놓을거야</h2>
-									</header>
-									<a href="#" class="image featured"><img src="images/pic04.jpg" alt="" /></a>
-									<h3>I mean isn't it possible?</h3>
-									<p>Phasellus laoreet massa id justo mattis pharetra. Fusce suscipit
-									ligula vel quam viverra sit amet mollis tortor congue. Sed quis mauris
-									sit amet magna accumsan tristique. Curabitur leo nibh, rutrum eu malesuada
-									in, tristique at erat lorem ipsum dolor sit amet lorem ipsum sed consequat
-									magna tempus veroeros lorem sed tempus aliquam lorem ipsum veroeros
-									consequat magna tempus lorem ipsum consequat Phasellus laoreet massa id
-									justo mattis pharetra. Fusce suscipit ligula vel quam viverra sit amet
-									mollis tortor congue. Sed quis mauris sit amet magna accumsan tristique.
-									Curabitur leo nibh, rutrum eu malesuada in tristique.</p>
-									<ul class="actions">
-										<li><a href="#" class="button icon fa-file">Continue Reading</a></li>
-									</ul>
+								<h3>축제 및 행사 일정</h3>
+									<table>
+									<col width="14.285%"><col width="14.285%"><col width="14.285%"><col width="14.285%">
+									<col width="14.285%"><col width="14.285%"><col width="14.285%">
+									<tr height="50">
+										<td colspan="7" align="center">
+											<%=pp %>&nbsp;<%=p %>
+											<font color="black" style="font-size: 30px">
+												<%=String.format("%d년&nbsp;&nbsp;%d월", year, month) %>
+															<!-- 앞에 %d 에는 year, 뒤에 %d 에는 month 를 넣는거야 -->
+											</font>
+											<%=n %>&nbsp;<%=nn %>
+										</td>
+									</tr>
+									<tr style="border: 1px solid; border-color: lightgray; padding-top: 1em;">
+										<th  style="background-color: #E0F8F7; text-align: center;">Sunday</th>
+										<th  style="background-color: #E0F8F7; text-align: center;">Monday</th>
+										<th  style="background-color: #E0F8F7; text-align: center;">Tuesday</th>
+										<th  style="background-color: #E0F8F7; text-align: center;">Wednesday</th>
+										<th  style="background-color: #E0F8F7; text-align: center">Thursday</th>
+										<th  style="background-color: #E0F8F7; text-align: center;">Friday</th>
+										<th  style="background-color: #E0F8F7; text-align: center;">Saturday</th>
+									</tr>
+									<tr height="150" align="left" valign="top">
+										<% // 위쪽 빈칸
+										for(int i = 1; i < dayOfweek; i++){
+										%>
+											<td style="border: 1px solid; border-color: lightgray;">&nbsp;</td>
+											<%
+										}
+										
+										// 날짜
+										int lastDay = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+										for(int i = 1; i <= lastDay; i++){
+											%>
+											<td style="padding-top: 0.5em; border: 1px solid; border-color: lightgray;">
+												<%=callist(year, month, i) %>
+												<%=makeTable(year, month, i, list) %>
+											</td>
+											<%
+											if((i + dayOfweek - 1)%7 == 0 && i != lastDay){
+												%>
+												</tr>
+												<tr height="150" align="left" valign="top">
+												<%
+											}
+										}
+										
+										// 밑칸
+										for(int i = 0; i < (7 - (dayOfweek + lastDay - 1) % 7) % 7; i++){
+											%>
+											<td style="border: 1px solid; border-color: lightgray;">&nbsp;</td>
+											<%
+										}
+										%>
+										</tr>
+									</table>
 								</article>
 						</div>
+					</div>
 
 					<!-- Sidebar -->
 						<div id="sidebar" class="col-4 col-12-medium">
@@ -178,7 +349,7 @@ request.setAttribute("UsonEx", UsonEx);
 											<!-- Excerpt -->
 												<article class="box excerpt">
 													<header>
-														<h3>My Information</h3>
+														<font size="6" color="gray">My Information</font>
 													</header>
 													<font size="3">안녕하세요       <%=name %>님</font><br><br>
 													<!-- 가입일 넣을까? => DB 건드려야되요 -->
@@ -222,7 +393,7 @@ request.setAttribute("UsonEx", UsonEx);
 		<section id="footer">
 			<div class="container">
 				<header>
-					<h2>Request or comments? <strong>Get in touch:</strong></h2>
+					<font size="15" color="lightgray" style="font-family: cursive;">Request or comments? <strong>Get in touch:</strong></font>
 				</header>
 				<div class="row">
 					<div class="col-6 col-12-medium">
@@ -236,7 +407,7 @@ request.setAttribute("UsonEx", UsonEx);
 										<input name="email" placeholder="Email" type="text" />
 									</div>
 									<div class="col-12">
-										<textarea name="message" placeholder="Message"></textarea>
+										<textarea name="message" placeholder="Message" style="height: 11em; resize: none;"></textarea>
 									</div>
 									<div class="col-12">
 										<input type="submit" value="Send Message" class="form-button-submit button icon fa-envelope">
@@ -281,6 +452,11 @@ request.setAttribute("UsonEx", UsonEx);
 <script src="assets/js/util.js"></script>
 <script src="assets/js/main.js"></script>
 
+<script type="text/javascript">
+function openDetail(seq) {
+	window.open("1_8FestiDetail.jsp?seq="+seq, "Festival", "width=900, height=600, scrollbars=yes, resizable=no");
+}
+</script>
 
 
 

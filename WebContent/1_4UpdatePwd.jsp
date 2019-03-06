@@ -36,11 +36,12 @@ String name = dto.getName();
 <body class="homepage is-preload">
 	<div id="page-wrapper">
 		<!-- Header -->
-		<section id="header">
+		<section id="header" style="background: url(images/header6.jpg)no-repeat; background-size: 100% 100%;">
 			<div class="container">
 				<!-- Logo : Logo 를 누르면 MainPage 로 이동하게 만들기 -->
-				<h1 id="logo"><a href="1_3MainPage.jsp">TRIP</a></h1>
-				<p>Take a Trip to Anywhere you want to go</p>
+				<h1 id="logo"><a href="1_3MainPage.jsp">TRIPLAN</a></h1>
+				<p><strong><font color="white">TRIP & PLAN : </font></strong>
+				<strong><font color="white">Planning Your Trip</font></strong></p>
 				
 				<!-- Nav -->
 				<nav id="nav">
@@ -50,7 +51,7 @@ String name = dto.getName();
 							<a href="#" class="icon fa-sitemap"><span>나라 정보</span></a>
 							<ul>
 								<li>
-									<a href="#">미국</a>
+									<a href="3_InfoCntryUsa.jsp">미국</a>
 										<ul>
 											<li><a href="#">뉴욕</a></li>
 											<li><a href="#">하와이</a></li>
@@ -58,7 +59,7 @@ String name = dto.getName();
 										</ul>
 								</li>
 								<li>
-									<a href="#">일본</a>
+									<a href="3_InfoCntryJapan.jsp">일본</a>
 										<ul>
 											<li><a href="#">도쿄</a></li>
 											<li><a href="#">오사카</a></li>
@@ -66,26 +67,28 @@ String name = dto.getName();
 										</ul>
 								</li>
 								<li>
-									<a href="#">베트남</a>
+									<a href=3_InfoCntryVietnam.jsp>베트남</a>
 										<ul>
 											<li><a href="#">하노이</a></li>
 											<li><a href="#">다낭</a></li>
+											<li><a href="#">호치민</a></li>
 										</ul>
 								</li>
 								<li>
-									<a href="#">러시아</a>
+									<a href="3_InfoCntryRussia.jsp">러시아</a>
 									<ul>
 										<li><a href="#">모스크바</a></li>
+										<li><a href="#">상트페테르부르크</a></li>
 										<li><a href="#">블라디보스톡</a></li>
 									</ul>
 								</li>
 							</ul>
 						</li>
 						<!-- class="icon fa-bar-chart-o" -->
-						<li><a class="icon fa-sitemap" href="#"><span>여행 후기</span></a></li>
-						<li><a class="icon fa-retweet" href="#"><span>여행 자료</span></a></li>
-						<li><a class="icon fa-sitemap" href="QaListCtlr?command=QA_list"><span>Q&A</span></a></li>
-						<li><a class="icon fa-cog" href="#"><span>개인 일정</span></a></li>
+						<li><a class="icon fa-sitemap" href="1_6PicBbsList.jsp"><span>여행 후기</span></a></li>
+						<li><a class="icon fa-retweet" href="2_R_list.jsp"><span>여행 자료</span></a></li>
+						<li><a class="icon fa-sitemap" href="3_QA_list.jsp"><span>Q&A</span></a></li>
+						<li><a class="icon fa-cog" href="4_pc_calendar.jsp"><span>개인 일정</span></a></li>
 					</ul>
 				</nav>
 
@@ -98,25 +101,27 @@ String name = dto.getName();
 				<div class="row">
 				
 					<!-- Content banner 제외 부분에 본인코드 부분 작성하면 됩니다 -->
+					<div class="content_m">
 					<div id="content" class="col-8 col-12-medium">
 						
 						<!-- Post -->
 						<article class="box post">
 							<header>
-								<h2>기본정보</h2>
+								<h2>비밀번호 수정</h2>
 							</header>
+							<div style="width: 50%;">
 							<form action="UserUpdate" method="post">
-							<table>
+							<table style="border: 1px solid; border-color: lightgray; margin-bottom: 1em;">
 								<tr>
-									<th>PASSWORD</th>
-									<td>
-										<input type="text" id="pwd1" name="pwd" minlength="6">
+									<th >PASSWORD</th>
+									<td style="padding-top: 1em;">
+										<input type="text" id="pwd1" name="pwd" minlength="6" style="background-color: white; border: 1px solid; border-color: lightgray;">
 									</td>
 								</tr>
 								<tr>
 									<th>RETYPE PASSWORD</th>
-									<td>
-										<input type="text" id="pwd2" minlength="6">
+									<td style="padding-bottom: 1em;">
+										<input type="text" id="pwd2" minlength="6" style="background-color: white; border: 1px solid; border-color: lightgray;">
 									</td>
 								</tr>
 							</table>
@@ -127,7 +132,9 @@ String name = dto.getName();
 								<input type="submit" value="완료">
 							</div>
 							</form>
+							</div>
 						</article>
+					</div>
 					</div>
 
 					<!-- Sidebar -->
@@ -141,11 +148,11 @@ String name = dto.getName();
 									<!-- Excerpt -->
 										<article class="box excerpt">
 											<header>
-												<h3>My Information</h3>
+												<font size="6" color="gray">My Information</font>
 											</header>
 											<font size="3">안녕하세요       <%=name %>님</font><br><br>
 											<!-- 가입일 넣을까? => DB 건드려야되요 -->
-											<a href="#"><font size="2">내 정보 보기</font></a>
+											<a href="UserDetailCtlr?id=<%=id%>"><font size="2">내 정보 보기</font></a>
 											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 											<a href="1_4Logout.jsp"><font size="2">로그아웃</font></a><br>
 											<a href="#"><font size="2">Wish List</font></a>
@@ -185,7 +192,7 @@ String name = dto.getName();
 		<section id="footer">
 			<div class="container">
 				<header>
-					<h2>Request or comments? <strong>Get in touch:</strong></h2>
+					<font size="15" color="lightgray" style="font-family: cursive;">Request or comments? <strong>Get in touch:</strong></font>
 				</header>
 				<div class="row">
 					<div class="col-6 col-12-medium">
@@ -199,7 +206,7 @@ String name = dto.getName();
 										<input name="email" placeholder="Email" type="text" />
 									</div>
 									<div class="col-12">
-										<textarea name="message" placeholder="Message"></textarea>
+										<textarea name="message" placeholder="Message" style="height: 11em; resize: none;"></textarea>
 									</div>
 									<div class="col-12">
 										<input type="submit" value="Send Message" class="form-button-submit button icon fa-envelope">

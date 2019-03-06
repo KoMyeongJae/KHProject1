@@ -14,9 +14,15 @@ import QABbs.iQABbsDao;
 public class QaDetailCtlr extends HttpServlet {
 	
 	private static final long serialVersionUID = 7833045086108262029L;
+<<<<<<< HEAD
 
 
+=======
+	
+	
+>>>>>>> branch 'KMJ' of https://github.com/KoMyeongJae/KHProject1.git
 	@Override
+<<<<<<< HEAD
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
 		iQABbsDao dao = QABbsDao.getInstance();
@@ -37,12 +43,34 @@ public class QaDetailCtlr extends HttpServlet {
 			resp.sendRedirect("3_QA_detail.jsp");
 		
 	}
+=======
+	   protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	      
+	      iQABbsDao dao = QABbsDao.getInstance();
+	            
+	      String sseq = req.getParameter("seq");
+	      int seq = Integer.parseInt(sseq);
+	      System.out.println(seq);
+	      
+	      QABbsDto count = dao.getQbs(seq);
+	      req.setAttribute("seq", seq);
+	      
+	      if(count == null){
+	         System.out.println("Detail 출력 실패");
+	         resp.sendRedirect("3_QA_list.jsp");
+	      }
+	         
+	         System.out.println("Detail 출력 성공");
+	         resp.sendRedirect("3_QA_detail.jsp");
+	      
+	   }
+>>>>>>> branch 'KMJ' of https://github.com/KoMyeongJae/KHProject1.git
 
-	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		super.doPost(req, resp);
-	}
+	   @Override
+	   protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	      // TODO Auto-generated method stub
+	      super.doPost(req, resp);
+	   }
 	
 	
 }

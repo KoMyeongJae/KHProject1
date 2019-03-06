@@ -18,10 +18,19 @@ public class j_manager {
 				"https://finance.naver.com/marketindex/exchangeDetail.nhn?marketindexCd=FX_JPYKRW")
 				.get();
 		
+<<<<<<< HEAD
 		Elements spt = doc.select("p.no_today em.no_up em.no_up");
 		
 		Element espt = spt.get(0);
 		String text = espt.text();
+=======
+		Elements spt = doc.select("p.no_today em em");
+		
+		
+		
+		Element espt = spt.get(0);
+		 String text = espt.text(); 
+>>>>>>> branch 'KMJ' of https://github.com/KoMyeongJae/KHProject1.git
 		
 		System.out.println("text = "+text +"원");
 		
