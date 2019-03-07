@@ -34,9 +34,10 @@ public class UserLoginCtlr extends HttpServlet {
 		
 		iUserDao dao = UserDao.getInstance();
 		UserDto dto = dao.login_User(new UserDto(id, pwd, null, null, null, null, null, 0, 0, null));
-		System.out.println("Auth : " + dto.getAuth());
+
 		
 		if(dto != null && !dto.getId().equals("")) {
+			System.out.println("Auth : " + dto.getAuth());
 			HttpSession session = null;
 			session = req.getSession();
 			session.setAttribute("login", dto);
@@ -52,6 +53,7 @@ public class UserLoginCtlr extends HttpServlet {
 			pw.println("history.back()");
 			pw.println("</script>");
 			pw.close();
+			return;
 			
 		}
 	}

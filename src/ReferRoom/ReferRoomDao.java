@@ -26,7 +26,7 @@ public class ReferRoomDao implements iReferRoomDao {
 	public static ReferRoomDao getInstance() {
 		return refr;
 	}
-
+	
 	@Override
 	public List<ReferRoomDto> get_ReferRoomList() {
 		
@@ -494,7 +494,6 @@ public class ReferRoomDao implements iReferRoomDao {
 		} finally {
 			DB_Close.close(conn, psmt, rs);
 		}
-
 	}
 
 	@Override
@@ -512,8 +511,13 @@ public class ReferRoomDao implements iReferRoomDao {
 		}else if(choice.equals("writer")) {	// 작성자
 			sWord = " WHERE ID='" + searchWord.trim() + "' ";
 		}else if(choice.equals("content")) { // 내용
-			
-		} 
+	         sWord = " WHERE CONTENT LIKE '%" + searchWord.trim() + "%'";
+	    }else if (choice.equals("multi")) {
+	         sWord = " WHERE TITLE LIKE '%" + searchWord.trim() + "%'"
+	                + " OR ID LIKE '%" + searchWord.trim() + "%'"
+	                + " OR CONTENT LIKE '%" + searchWord.trim() + "%'";
+         }
+		
 		
 		try {
 			conn = DB_Connection.getConection();
@@ -539,7 +543,7 @@ public class ReferRoomDao implements iReferRoomDao {
 					+ " (SELECT * FROM "
 					+ "		(SELECT * FROM REFERROOM "
 					+ "		" + sWord	
-					+ "		ORDER BY SEQ DESC) "		
+					+ "		ORDER BY SEQ) "
 					+ " WHERE ROWNUM <=" + paging.getStartNum() + ""	// 시작번호
 					+ " ORDER BY SEQ DESC) "	
 					+ " WHERE ROWNUM <=" + paging.getCountPerPage();	// 10개까지

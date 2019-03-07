@@ -221,7 +221,7 @@ String nn = String.format("<a href='%s?year=%d&month=%d'>" +
 						<li><a class="icon fa-sitemap" href="1_6PicBbsList.jsp"><span>여행 후기</span></a></li>
 						<li><a class="icon fa-retweet" href="2_R_list.jsp"><span>여행 자료</span></a></li>
 						<li><a class="icon fa-sitemap" href="3_QA_list.jsp"><span>Q&A</span></a></li>
-						<li><a class="icon fa-cog" href="#"><span>개인 일정</span></a></li>
+						<li><a class="icon fa-cog" href="4_pc_calendar.jsp"><span>개인 일정</span></a></li>
 					</ul>
 				</nav>
 
@@ -326,7 +326,7 @@ String nn = String.format("<a href='%s?year=%d&month=%d'>" +
 											</header>
 											<font size="3">안녕하세요       <%=user.getName() %>님</font><br><br>
 											<!-- 가입일 넣을까? => DB 건드려야되요 -->
-											<a href="#"><font size="2">내 정보 보기</font></a>
+											<a href="UserDetailCtlr?id=<%=user.getId() %>"><font size="2">내 정보 보기</font></a>
 											&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 											<a href="1_4Logout.jsp"><font size="2">로그아웃</font></a><br>
 											<a href="#"><font size="2">Wish List</font></a>
@@ -348,10 +348,11 @@ String nn = String.format("<a href='%s?year=%d&month=%d'>" +
 									<!-- Excerpt -->
 										<article class="box excerpt">
 											<header>
-												<span class="date">뭘 또 뿌려줄까나</span>
-												<h3><a href="#">Whatever you want</a></h3>
+												<span class="date">Book your trip now!</span>
+												<h3><a href="javascript:openSkyS()">
+														<img alt="x" src="images/skyscanner.jpg">
+												</a></h3>
 											</header>
-											<p>Tell me what you want to add here.</p>
 										</article>
 
 								</li>
@@ -417,5 +418,20 @@ String nn = String.format("<a href='%s?year=%d&month=%d'>" +
 		</section>
  </div>
 <hr>
+
+<!-- Scripts -->
+<script src="assets/js/jquery.min.js"></script>
+<script src="assets/js/jquery.dropotron.min.js"></script>
+<script src="assets/js/browser.min.js"></script>
+<script src="assets/js/breakpoints.min.js"></script>
+<script src="assets/js/util.js"></script>
+<script src="assets/js/main.js"></script>
+
+<script type="text/javascript">
+function openSkyS() {
+	window.open("https://www.skyscanner.co.kr/?ksh_id=_k_Cj0KCQiAtvPjBRDPARIsAJfZz0rlc5Nr_PqnGIkjyDBuew7pBjJnRwxq4Yx8UZIYwTSf03dZyXW3YZkaAq_fEALw_wcB_k_&associateID=SEM_GGT_00065_00021&utm_source=google&utm_medium=cpc&utm_campaign=KR-Travel-Search-Brand-Exact&utm_term=%EC%8A%A4%EC%B9%B4%EC%9D%B4%EC%8A%A4%EC%BA%90%EB%84%88&kpid=google_438310576_23048128696_331009635267_aud-326758276298:kwd-51820162295_c_&gclid=Cj0KCQiAtvPjBRDPARIsAJfZz0rlc5Nr_PqnGIkjyDBuew7pBjJnRwxq4Yx8UZIYwTSf03dZyXW3YZkaAq_fEALw_wcB")
+}
+</script>
+
 </body>
 </html>

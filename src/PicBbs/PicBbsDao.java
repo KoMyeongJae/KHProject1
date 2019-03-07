@@ -302,7 +302,7 @@ public class PicBbsDao implements iPicBbsDao {
 					+ " (SELECT * FROM "
 					+ "		(SELECT * FROM PIC_BBS "
 					+ "		" + sWord1	
-					+ "		ORDER BY SEQ DESC) "		
+					+ "		ORDER BY SEQ) "
 					+ " WHERE ROWNUM <=" + paging.getStartNum() + ""	// 시작번호
 					+ " ORDER BY SEQ DESC) "	
 					+ " WHERE ROWNUM <=" + paging.getCountPerPage();	// 9개까지

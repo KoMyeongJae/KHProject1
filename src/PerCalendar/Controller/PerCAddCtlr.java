@@ -34,6 +34,10 @@ public class PerCAddCtlr extends HttpServlet {
 	  String rstartdate = req.getParameter("rstartdate");
 	  String renddate = req.getParameter("renddate");
 	  
+	  if(renddate == null || renddate == "") {
+		  renddate = rstartdate;
+	  }
+	  
 	  System.out.println(id+" "+title+" "+content);
 	  System.out.println("rstartdate = " + rstartdate +"renddate = "+renddate);
 	  

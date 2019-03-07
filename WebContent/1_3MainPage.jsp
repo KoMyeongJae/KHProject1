@@ -44,7 +44,17 @@ public String callist(int year, int month, int day){
 public String two(String msg){
 	return msg.trim().length() < 2 ? "0"+msg : msg.trim();
 }
-
+//제목이 너무 길면 ... 처리하기 [ ex. 회의 약속이... ]
+public String dot3(String msg){
+	String s = "";
+	if(msg.length() >= 6){
+		s = msg.substring(0, 6);
+		s += "...";
+	}else{
+		s = msg.trim();
+	}
+	return s;
+}
 // 각 날짜별로 테이블을 생성하는 함수
 public String makeTable(int year, int month, int day, List<FestiCalendarDto> list){
 	
@@ -76,17 +86,7 @@ public String makeTable(int year, int month, int day, List<FestiCalendarDto> lis
 	return s;
 }
 
-// 제목이 너무 길면 ... 처리하기 [ ex. 회의 약속이... ]
-public String dot3(String msg){
-	String s = "";
-	if(msg.length() >= 6){
-		s = msg.substring(0, 6);
-		s += "...";
-	}else{
-		s = msg.trim();
-	}
-	return s;
-}
+
 %>
 <%
 // 오늘 날짜 얻어오기
@@ -281,7 +281,7 @@ List<FestiCalendarDto> list = dao.getFestList(year + two(month + ""));
 								</article>
 						</div>
 					</div>
-
+					
 					<!-- Sidebar -->
 						<div id="sidebar" class="col-4 col-12-medium">
 						
@@ -318,10 +318,11 @@ List<FestiCalendarDto> list = dao.getFestList(year + two(month + ""));
 											<!-- Excerpt -->
 												<article class="box excerpt">
 													<header>
-														<span class="date">뭘 또 뿌려줄까나</span>
-														<h3><a href="#">Whatever you want</a></h3>
+														<span class="date">Book your trip now!</span>
+														<h3><a href="javascript:openSkyS()">
+																<img alt="x" src="images/skyscanner.jpg">
+														</a></h3>
 													</header>
-													<p>Tell me what you want to add here.</p>
 												</article>
 
 										</li>
@@ -397,7 +398,10 @@ List<FestiCalendarDto> list = dao.getFestList(year + two(month + ""));
 
 <script type="text/javascript">
 function openDetail(seq) {
-	window.open("1_8FestiDetail.jsp?seq="+seq, "Festival", "width=900, height=600, scrollbars=yes, resizable=no");
+	window.open("1_8FestiDetail.jsp?seq="+seq, "Festival", "width=750, height=550, scrollbars=yes, resizable=no, left=100, top=30");
+}
+function openSkyS() {
+	window.open("https://www.skyscanner.co.kr/?ksh_id=_k_Cj0KCQiAtvPjBRDPARIsAJfZz0rlc5Nr_PqnGIkjyDBuew7pBjJnRwxq4Yx8UZIYwTSf03dZyXW3YZkaAq_fEALw_wcB_k_&associateID=SEM_GGT_00065_00021&utm_source=google&utm_medium=cpc&utm_campaign=KR-Travel-Search-Brand-Exact&utm_term=%EC%8A%A4%EC%B9%B4%EC%9D%B4%EC%8A%A4%EC%BA%90%EB%84%88&kpid=google_438310576_23048128696_331009635267_aud-326758276298:kwd-51820162295_c_&gclid=Cj0KCQiAtvPjBRDPARIsAJfZz0rlc5Nr_PqnGIkjyDBuew7pBjJnRwxq4Yx8UZIYwTSf03dZyXW3YZkaAq_fEALw_wcB")
 }
 </script>
 

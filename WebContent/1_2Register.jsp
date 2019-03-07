@@ -218,6 +218,7 @@ $(function () {
 					"7월", "8월", "9월", "10월", "11월", "12월"],
 		changeMonth: true, 
 		changeYear: true,
+		yearRange: '1940:2020',
 		nextText: '다음 달',
 		prevText: '이전 달',
 		

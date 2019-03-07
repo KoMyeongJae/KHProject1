@@ -148,17 +148,20 @@ List<FestiCalendarDto> list = (List<FestiCalendarDto>)request.getAttribute("list
 										FestiCalendarDto dto = list.get(i);
 									%>
 									<tr style="border-bottom: 1px solid; border-color: lightgray;">
+										<th scope="row"><%=i+1 %></th>
 										<td class="title">
-									   		<a onclick="javascript:openDetail(<%=dto.getSeq() %>)"><%=dto.getTitle() %></a>
+									   		<a href="#" onclick="javascript:openDetail(<%=dto.getSeq() %>)"><%=dto.getTitle() %></a>
 										</td>
-									  <th scope="row"><%=i+1 %></th>
 									  <td><%=toDates(dto.getsrdate()) %></td>
 									  <%if(dto.geterdate() != null){ %>
 									  <td><%=toDates(dto.geterdate()) %></td>
+									  <%} else{%>
+									  <td>&nbsp;</td>
 									  <%} %>
 									  <td>
 									    <form action="FestiZzimCtlr" method="get">
 									      <input type="hidden" name="seq" value="<%=dto.getSeq()%>">
+									      <input type="hidden" name="id" value="<%=user.getId() %>">
 									      <input type="submit" value="찜">
 									    </form>
 									  </td>
@@ -211,10 +214,11 @@ List<FestiCalendarDto> list = (List<FestiCalendarDto>)request.getAttribute("list
 											<!-- Excerpt -->
 												<article class="box excerpt">
 													<header>
-														<span class="date">뭘 또 뿌려줄까나</span>
-														<h3><a href="#">Whatever you want</a></h3>
+														<span class="date">Book your trip now!</span>
+														<h3><a href="javascript:openSkyS()">
+																<img alt="x" src="images/skyscanner.jpg">
+														</a></h3>
 													</header>
-													<p>Tell me what you want to add here.</p>
 												</article>
 
 										</li>
@@ -290,7 +294,10 @@ List<FestiCalendarDto> list = (List<FestiCalendarDto>)request.getAttribute("list
 
 <script type="text/javascript">
 function openDetail(seq) {
-	window.open("1_8FestiDetail.jsp?seq="+seq, "Festival", "width=800, height=700, scrollbars=yes, resizable=no");
+	window.open("1_8FestiDetail.jsp?seq="+seq, "Festival", "width=900, height=600, scrollbars=yes, resizable=no, left=100, top=30");
+}
+function openSkyS() {
+	window.open("https://www.skyscanner.co.kr/?ksh_id=_k_Cj0KCQiAtvPjBRDPARIsAJfZz0rlc5Nr_PqnGIkjyDBuew7pBjJnRwxq4Yx8UZIYwTSf03dZyXW3YZkaAq_fEALw_wcB_k_&associateID=SEM_GGT_00065_00021&utm_source=google&utm_medium=cpc&utm_campaign=KR-Travel-Search-Brand-Exact&utm_term=%EC%8A%A4%EC%B9%B4%EC%9D%B4%EC%8A%A4%EC%BA%90%EB%84%88&kpid=google_438310576_23048128696_331009635267_aud-326758276298:kwd-51820162295_c_&gclid=Cj0KCQiAtvPjBRDPARIsAJfZz0rlc5Nr_PqnGIkjyDBuew7pBjJnRwxq4Yx8UZIYwTSf03dZyXW3YZkaAq_fEALw_wcB")
 }
 </script>
 
