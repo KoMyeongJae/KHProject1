@@ -201,46 +201,41 @@ List<ReferRoomDto> list = dao.getReferPagingList(paging, findWord, choice);
 								else{
 									for(int i = 0; i < list.size(); i++){
 										ReferRoomDto rfr = list.get(i);
-										String bgcolor = "";
-										if(i % 2 == 0){
-											bgcolor= "white";
-										}else{
-											bgcolor= "white";
-										}
 										
-										if(rfr.getDel() == 1){
-											int a = 0;
-											a++;
-											
-											if(a == list.size()){%>
-												<tr bgcolor="#f6f6f6" style="border-bottom: 1px solid; border-color: lightgray;">
-													<td colspan="8" align="center">자료가 존재하지 않습니다</td>
-												</tr>
-												<%
-											}
-										}
-										else{
 										%>
 										<tr style="border-bottom: 1px solid; border-color: lightgray;">
 											<th style="text-align: center;"><%=rfr.getSeq() %></th>
+										<%
+										
+										if(rfr.getDel() == 0){
+										%>
 											<td scope="row">
 												<a href="ReferDetailCtlr?seq=<%=rfr.getSeq() %>">
-													<%= dot3(rfr.getTitle()) %>
+												<%= dot3(rfr.getTitle()) %>
 												</a>
 											</td>
-											<td scope="row"><%=rfr.getId() %></td>
+										<%
+										}
+										else{
+											%>
+											<td scope="row">
+												이글은 작성자에 의해 삭제되었습니다.</td>
+											<%
+											} 
+										
+										
+										%>
+										<td scope="row"><%=rfr.getId() %></td>
 											<td scope="row"><%=rfr.getWdate().substring(0,10) %></td>
 											<td style="text-align: center;"><%=rfr.getReadcount() %></td>
 											<td style="text-align: center;"><%=rfr.getLikeit() %></td>
-											
 										</tr>
+										
 										<%
 										}
 									}
-								}
+								
 								%>
-								<tr>
-								</tr>
 								</table> 
 								</form>
 								<div align="right">
@@ -263,6 +258,7 @@ List<ReferRoomDto> list = dao.getReferPagingList(paging, findWord, choice);
 						<div align="center">
 							<select id="choice">
 								<option value="sel">선택</option>
+								<option value="multi">전체검색</option>
 								<option value="title">제목</option>
 								<option value="writer">작성자</option>
 								<option value="content">내용</option>
@@ -408,7 +404,7 @@ function searchBbs() {
 //   alert("word = " + word);
 
    if(word == ""){
-      alert("choice = " + choice);
+     
       document.getElementById("choice").value = 'sel';
    }
    

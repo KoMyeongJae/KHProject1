@@ -279,7 +279,8 @@ public String arrow(int depth){
 function doWrite() {
 	
 	var frm = document.frm;
-	alert(frm.title.value.length);
+//	alert(frm.title.value.length);
+	
 	var errorMsg = null;
 	var objFocus = null;
 	
@@ -302,6 +303,7 @@ function doWrite() {
 		objFocus.focus();
 		return false;
 	}
+	alert("입력되었습니다");
 	console.log(frm);
 	frm.submit();
 }

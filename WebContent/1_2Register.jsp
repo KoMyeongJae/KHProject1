@@ -65,7 +65,6 @@
 <div class="cont">
 	<div align="Center">
 		<div id="wrap">
-			<form action="UserAddCtlr" name="userinput" onsubmit="return checkIt()" method="post">
 				<input type="hidden" name="command" value="addAf">
 				<div id="body">
 						<table>
@@ -141,7 +140,6 @@
 					<input type="reset" name="reset" class="inputBtn" value="Retype">
 					<input type="button" value="Cancle" class="inputBtn" onclick="javascript:window.location='1_1Login.jsp'">
 				</div>
-			</form>
 		</div>
 	</div>
 </div>

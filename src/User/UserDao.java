@@ -297,6 +297,94 @@ public class UserDao implements iUserDao {
 			DB_Close.close(conn, psmt, null);
 		}
 	}
+
+	@Override
+	public String check_id(String name, String phone, String email) {
+
+		String sql = " SELECT ID FROM MEMBER "
+				+ " WHERE NAME = ? AND PHONE = ? AND EMAIL = ?";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		
+		String id = null;
+		
+		try {
+			conn = DB_Connection.getConection();
+			System.out.println("1/6 check_id Suc");
+			
+			psmt = conn.prepareStatement(sql);
+			
+			psmt.setString(1, name);
+			psmt.setString(2, phone);
+			psmt.setString(3, email);
+			
+			System.out.println("2/6 check_id Suc");
+			
+			rs = psmt.executeQuery();
+			System.out.println("3/6 check_id Suc");
+			
+			
+			if(rs.next()) {
+			id = rs.getString(1);
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("check_id Fail");
+			e.printStackTrace();
+		} finally {
+			DB_Close.close(conn, psmt, rs);
+		}
+		
+		return id;
+	}
+
+	@Override
+	public String check_pw(String id, String name, String email) {
+
+		String sql = " SELECT PWD FROM MEMBER "
+				+ " WHERE ID = ? AND NAME = ? AND EMAIL = ?";
+		
+		
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		
+		String pwd = null;
+		
+		try {
+			conn = DB_Connection.getConection();
+			System.out.println("1/6 check_pw Suc");
+			
+			psmt = conn.prepareStatement(sql);
+			
+			psmt.setString(1, id);
+			psmt.setString(2, name);
+			psmt.setString(3, email);
+			
+			System.out.println("2/6 check_pw Suc");
+			
+			rs = psmt.executeQuery();
+			System.out.println("3/6 check_pw Suc");
+			
+			if(rs.next()) {
+			pwd = rs.getString(1);
+			}
+			
+		} catch (SQLException e) {
+			System.out.println("check_pw Fail");
+			e.printStackTrace();
+		} finally {
+			DB_Close.close(conn, psmt, rs);
+		}
+		
+		return pwd;
+		
+	}
 	
 	
 }

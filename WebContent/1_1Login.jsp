@@ -56,14 +56,13 @@
         	<input type="checkbox" id="chk_save_id"> <font size="3" color="darkgray">Save ID</font>
         	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         	&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        	<a href="findpwd.jsp" style="text-decoration: none">
-        		<font size="3" color="darkgray">Find Password</font>
-        	</a>
+        	
+        		<font onclick='openDetail()' size="3" color="darkgray">Find Password</font>
+        	
 	         
 	        <input type="submit" value="Sign in" class="login__submit">
 	  </form>
 	        <p class="login__signup">Don't have an account? &nbsp;<a href="UserAddCtlr?command=add">Sign up</a></p>
-	        
       </div>
     </div>
   </div>
@@ -95,6 +94,10 @@ $(document).ready(function () {
 		}
 	});
 });
+
+function openDetail() {
+	window.open("1_1findpwd.jsp" ,"비밀번호 찾기", 'width=330, height=480, scrolling="no"');
+}
 </script>
 
 </body>

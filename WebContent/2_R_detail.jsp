@@ -48,13 +48,8 @@ System.out.println("좋아요여부 = " + msg);
 iReferRoomDao dao = ReferRoomDao.getInstance();
 dao.readCount(dto.getSeq());
 %>
-<script type="text/javascript">
-if(<%=msg %> != null && <%=msg %> != "")
-{
 
-	alert(msg);
-}
-</script>
+
 <!DOCTYPE HTML>
 <html>
 <head>
@@ -318,7 +313,7 @@ function updatebbs(seq) {
 	location.href = "ReferDetailCtlr?seq=" + seq + "&command=update";
 }
 function likeit(seq) {
-	location.href = "ReferLikeCtlr?seq=" + seq + "&id=" + "<%=dto.getId()%>";
+	location.href = "ReferLikeCtlr?seq=" + seq + "&id=" + "<%=user.getId()%>";
 }
 </script>
 <script type="text/javascript">
@@ -336,6 +331,7 @@ function searchBbs() {
 	
 	location.href = "3_QA_list.jsp?searchWord=" + word + "&choice=" + choice;
 	
+	alert(msg);
 }
 </script>
 
