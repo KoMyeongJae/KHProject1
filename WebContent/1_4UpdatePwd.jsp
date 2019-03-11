@@ -198,9 +198,10 @@ String name = dto.getName();
 				<div class="row">
 					<div class="col-6 col-12-medium">
 						<section>
-							<form method="post" action="1_5Request.jsp">
+							<form method="get" action="UserRequestCtlr">
 								<div class="row gtr-50">
 									<div class="col-6 col-12-small">
+										<input type="hidden" name="id" value="<%=user.getId() %>">
 										<input name="name" placeholder="Name" type="text" />
 									</div>
 									<div class="col-6 col-12-small">

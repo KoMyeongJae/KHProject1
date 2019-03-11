@@ -162,6 +162,172 @@ public class FestiCalendarDao implements iFestiCalendarDao {
 		}
 		return dto;
 	}
+
+	@Override
+	public boolean addZzimlist(int seq, String id) {
+		
+		String sql1 = " SELECT SEQ, ID, FESTI_SEQ "
+					+ " FROM FESTI_ZZIM "
+					+ " WHERE ID=? AND FESTI_SEQ=? ";
+		
+		
+		String sql2 = " INSERT INTO FESTI_ZZIM(SEQ, ID, FESTI_SEQ) "
+					+ " VALUES(SEQ_FESTI_ZZIM.NEXTVAL, ?, ?) ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		int count = 0;
+		
+		try {
+			conn = DB_Connection.getConection();
+			System.out.println("1/6 zzimlist Suc");
+			
+			psmt = conn.prepareStatement(sql1);
+			psmt.setString(1, id);
+			psmt.setInt(2, seq);
+			
+			rs = psmt.executeQuery();
+			if(rs.next()) {
+				count = 0;
+				return count>0?true:false;
+			}else {
+				psmt.clearParameters();
+				psmt = conn.prepareStatement(sql2);
+				psmt.setString(1, id);
+				psmt.setInt(2, seq);
+				count = psmt.executeUpdate();
+				System.out.println("2/6 zzimlist Suc");
+			}
+		} catch (SQLException e) {
+			System.out.println("zzimlist Fail");
+			e.printStackTrace();
+		} finally {
+			DB_Close.close(conn, psmt, null);
+			System.out.println("5/6 zzimlist Suc");
+		}
+		System.out.println("6/6 zzimlist Suc");
+		return count>0?true:false;
+	}
+
+	
+	@Override
+	public List<FestiCalendarDto> getZzimList(String id) {
+		String sql = " SELECT SEQ, CNTRY_CODE, TITLE,  ZZIM, CONTENT, SRDATE, ERDATE "
+					+ " FROM FESTIVALCALENDAR "
+					+ " WHERE SEQ IN (SELECT FESTI_SEQ FROM FESTI_ZZIM WHERE ID=?) ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		List<FestiCalendarDto> list = new ArrayList<>();
+		
+		try {
+			conn = DB_Connection.getConection();
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, id);
+			System.out.println("2/6 getZzimList Suc");
+			rs = psmt.executeQuery();
+			System.out.println("3/6 getZzimList Suc");
+			
+			while(rs.next()) {
+				FestiCalendarDto dto = new FestiCalendarDto(rs.getInt(1),
+															rs.getInt(2),
+															rs.getString(3),
+															0,
+															rs.getString(5),
+															rs.getString(6),
+															rs.getString(7));
+				list.add(dto);
+			}
+		} catch (SQLException e) {
+			System.out.println("getZzimList Fail");
+			e.printStackTrace();
+		} finally {
+			DB_Close.close(conn, psmt, rs);
+		}
+		
+		
+		return list;
+	}
+
+	
+	@Override
+	public List<FestiCalendarDto> getDayZzim(String id, String srdate) {
+		String sql = " SELECT SEQ, CNTRY_CODE, TITLE,  ZZIM, CONTENT, SRDATE, ERDATE "
+				+ " FROM FESTIVALCALENDAR "
+				+ " WHERE SEQ IN (SELECT FESTI_SEQ FROM FESTI_ZZIM WHERE ID=?) "
+				+ " AND SRDATE=? ";
+	
+	Connection conn = null;
+	PreparedStatement psmt = null;
+	ResultSet rs = null;
+	
+	List<FestiCalendarDto> list = new ArrayList<>();
+	
+	try {
+		conn = DB_Connection.getConection();
+		psmt = conn.prepareStatement(sql);
+		psmt.setString(1, id);
+		psmt.setString(2, srdate);
+		System.out.println("2/6 getDayZzim Suc");
+		rs = psmt.executeQuery();
+		System.out.println("3/6 getDayZzim Suc");
+		
+		while(rs.next()) {
+			FestiCalendarDto dto = new FestiCalendarDto(rs.getInt(1),
+														rs.getInt(2),
+														rs.getString(3),
+														0,
+														rs.getString(5),
+														rs.getString(6),
+														rs.getString(7));
+			list.add(dto);
+		}
+	} catch (SQLException e) {
+		System.out.println("getDayZzim Fail");
+		e.printStackTrace();
+	} finally {
+		DB_Close.close(conn, psmt, rs);
+	}
+	
+	
+	return list;
+	}
+
+
+	@Override
+	public boolean delZzim(int seq, String id) {
+		String sql = " DELETE FROM FESTI_ZZIM "
+					+ " WHERE FESTI_SEQ=? AND ID=? ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		int count = 0;
+		
+		try {
+			conn = DB_Connection.getConection();
+			System.out.println("1/6 delZzim Suc");
+			
+			psmt = conn.prepareStatement(sql);
+			psmt.setInt(1, seq);
+			psmt.setString(2, id);
+			
+			count = psmt.executeUpdate();
+			System.out.println("2/6 delZzim Suc");
+
+		} catch (SQLException e) {
+			System.out.println("delZzim Fail");
+			e.printStackTrace();
+		} finally {
+			DB_Close.close(conn, psmt, null);
+			System.out.println("6/6 delZzim Suc");
+		}
+		
+		return count>0?true:false;
+	}
+	
 	
 	
 	

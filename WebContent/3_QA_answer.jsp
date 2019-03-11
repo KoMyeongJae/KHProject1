@@ -233,22 +233,23 @@ UserDto user = (UserDto)ologin;
             <div class="row">
                <div class="col-6 col-12-medium">
                   <section>
-                     <form method="post" action="1_5Request.jsp">
-                        <div class="row gtr-50">
-                           <div class="col-6 col-12-small">
-                              <input name="name" placeholder="Name" type="text" />
-                           </div>
-                           <div class="col-6 col-12-small">
-                              <input name="email" placeholder="Email" type="text" />
-                           </div>
-                           <div class="col-12">
-                              <textarea name="message" placeholder="Message"></textarea>
-                           </div>
-                           <div class="col-12">
-                              <input type="submit" value="Send Message" class="form-button-submit button icon fa-envelope">
-                           </div>
-                        </div>
-                     </form>
+                     <form method="get" action="UserRequestCtlr">
+								<div class="row gtr-50">
+									<div class="col-6 col-12-small">
+										<input type="hidden" name="id" value="<%=user.getId() %>">
+										<input name="name" placeholder="Name" type="text" />
+									</div>
+									<div class="col-6 col-12-small">
+										<input name="email" placeholder="Email" type="text" />
+									</div>
+									<div class="col-12">
+										<textarea name="message" placeholder="Message" style="height: 11em; resize: none;"></textarea>
+									</div>
+									<div class="col-12">
+										<input type="submit" value="Send Message" class="form-button-submit button icon fa-envelope">
+									</div>
+								</div>
+							</form>s
                   </section>
                </div>
                <div class="col-6 col-12-medium">

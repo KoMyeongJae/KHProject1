@@ -47,7 +47,7 @@ String title = dto.getTitle();
 String content = dto.getContent();
 
 iCommentPDao comDao = CommentPDao.getInstance();
-List<CommentPDto> list = comDao.getCommentList();
+List<CommentPDto> list = comDao.getCommentList("pic");
 
 
 %>
@@ -135,20 +135,29 @@ List<CommentPDto> list = comDao.getCommentList();
 				
 					<!-- 이곳에 리스트를 뿌려줄겁니다 -->
 					<div class="content_m">
-						<table>
+						<h3>후기 게시판</h3>
+						<table style="margin-top: 2em;">
 						<col width="37.5%"><col width="62.5%">
-						<tr style="border: 1px solid; border-bottom: dashed; border-color: lightgray">
-							<td>
-								제목 : <%=title %>
+						<tr>
+							<td colspan="2" style="padding: 1em 0em 1em 0em;">
+								<font color="black" size="10">
+									&nbsp;&nbsp;&nbsp;<%=title %>
+								</font>
 								<input type="hidden" name="title" style="width: 100%" value="<%=title %>" readonly="readonly">
 							</td>
-							<td align="right"> 작성일: <%=dto.getWdate() %> </td>
 						</tr>
-						<tr style="border: 1px solid; border-bottom: hidden; border-color: lightgray">
-							<td colspan="2">작성자 : <%=dto.getId() %></td>
+						<tr style="border-bottom: double; border-color: lightgray;">
+							<td style="padding-bottom: 1em;">
+							<i class="fa fa-user-o" aria-hidden="true"></i> <%=dto.getId() %>
+							&nbsp;&nbsp;&nbsp;
+							<%=dto.getWdate() %>
+							 </td>
+							<td align="right" >
+							URL http://localhost:8090/KHProject1/1_6PicBbsDetail.jsp?seq=<%=seq %>
+							</td>
 						</tr>
-						<tr style="border: 1px solid; border-color: lightgray">
-							<td colspan="2">
+						<tr>
+							<td colspan="2" style="padding-top: 2em;">
 								<%=content %>	
 							</td>
 						</tr>
@@ -172,7 +181,7 @@ List<CommentPDto> list = comDao.getCommentList();
 					</form>
 					
 						<form action="CommUpdateCtlr">
-							<input type="hidden" name="command" value="upd">
+							<input type="hidden" name="command" value="updPIC">
 							<table >
 							<%for(int i = 0; i < list.size(); i++){ 
 								CommentPDto comDto = list.get(i);
@@ -293,9 +302,10 @@ List<CommentPDto> list = comDao.getCommentList();
 				<div class="row">
 					<div class="col-6 col-12-medium">
 						<section>
-							<form method="post" action="1_5Request.jsp">
+							<form method="get" action="UserRequestCtlr">
 								<div class="row gtr-50">
 									<div class="col-6 col-12-small">
+										<input type="hidden" name="id" value="<%=user.getId() %>">
 										<input name="name" placeholder="Name" type="text" />
 									</div>
 									<div class="col-6 col-12-small">

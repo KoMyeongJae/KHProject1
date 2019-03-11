@@ -1,3 +1,6 @@
+<%@page import="FestiCalendar.FestiCalendarDao"%>
+<%@page import="FestiCalendar.iFestiCalendarDao"%>
+<%@page import="FestiCalendar.FestiCalendarDto"%>
 <%@page import="PerCalendar.PerCalendarDao"%>
 <%@page import="PerCalendar.iPerCalendarDao"%>
 <%@page import="User.UserDto"%>
@@ -92,6 +95,7 @@ public String makeTable(int year, int month, int day, List<PerCalendarDto> list)
 	
 	return s;
 }
+/**/
 %>
 <%
 //로인그인한 정보 취득
@@ -136,6 +140,13 @@ if(month < 1){
 //리스트 불러오기
 iPerCalendarDao dao = PerCalendarDao.getInstance();
 List<PerCalendarDto> list = dao.getPerCaledatList(user.getId(), year+two(month+""));
+
+System.out.println("listF : ");
+//축제일정 가져오기
+iFestiCalendarDao daoF = FestiCalendarDao.getInstance();
+List<FestiCalendarDto> listF = daoF.getZzimList(user.getId());
+System.out.println("listF : " + listF);
+
 //달력 날짜 세팅
 cal.set(year, month-1, 1);
 int dayOfweek = cal.get(Calendar.DAY_OF_WEEK);
@@ -155,6 +166,37 @@ String n = String.format("<a href='%s?year=%d&month=%d'>" +
 String nn = String.format("<a href='%s?year=%d&month=%d'>" + 
         "<img src='images/right-arrow.png'></a>", 
         "4_pc_calendar.jsp", year+1, month);
+%>
+<%!
+public String makeTableFesti(int year, int month, int day, List<FestiCalendarDto> listF){
+	
+	String s = "";
+	String dates = (year + "") + two(month + "") + two(day + "");	// 20190201 이런 형태로 만들어주는 작업
+	
+	s += "<table>";
+	s += "<col width='98'>";
+	
+	for(FestiCalendarDto dto : listF){
+		if(dto.getsrdate().substring(0, 8).equals(dates)){	// 시간까지 같이 넘어오니까 day 까지만 뽑아주는 부분이야
+			s += "<tr bgcolor='lightblue'>";
+			s += "<td>";
+			
+			// 이 부분이 연결부분인데, window.open 쓸거야
+			s += "<a href='javascript:openDetail("+dto.getSeq()+")'>";
+			s += "<font style='font-size:6; color:black'>'";
+			
+			s += dto.getTitle();
+			
+			s += "</font>";
+			
+			s += "</td>";
+			s += "</tr>";
+		}
+	}
+	s += "</table>";
+	
+	return s;
+}
 %>
 <!DOCTYPE html>
 <html>
@@ -285,6 +327,7 @@ String nn = String.format("<a href='%s?year=%d&month=%d'>" +
 					    <%=showPen(year, month, i) %>
 					      <!-- 3.일정테이블 출력(불러온리스트출력)-->
 					    <%=makeTable(year, month, i, list) %>
+					    <%=makeTableFesti(year, month, i, listF) %>
 					</td>	
 						<%
 						if((i + dayOfweek - 1) % 7 == 0 && i != lastDay){
@@ -372,16 +415,17 @@ String nn = String.format("<a href='%s?year=%d&month=%d'>" +
 				<div class="row">
 					<div class="col-6 col-12-medium">
 						<section>
-							<form method="post" action="1_5Request.jsp">
+							<form method="get" action="UserRequestCtlr">
 								<div class="row gtr-50">
 									<div class="col-6 col-12-small">
+										<input type="hidden" name="id" value="<%=user.getId() %>">
 										<input name="name" placeholder="Name" type="text" />
 									</div>
 									<div class="col-6 col-12-small">
 										<input name="email" placeholder="Email" type="text" />
 									</div>
 									<div class="col-12">
-										<textarea name="message" placeholder="Message"></textarea>
+										<textarea name="message" placeholder="Message" style="height: 11em; resize: none;"></textarea>
 									</div>
 									<div class="col-12">
 										<input type="submit" value="Send Message" class="form-button-submit button icon fa-envelope">
@@ -428,6 +472,10 @@ String nn = String.format("<a href='%s?year=%d&month=%d'>" +
 <script src="assets/js/main.js"></script>
 
 <script type="text/javascript">
+function openDetail(seq) {
+	window.open("1_8FestiDetail.jsp?seq="+seq, "Festival", "width=750, height=550, scrollbars=yes, resizable=no, left=100, top=30");
+}
+
 function openSkyS() {
 	window.open("https://www.skyscanner.co.kr/?ksh_id=_k_Cj0KCQiAtvPjBRDPARIsAJfZz0rlc5Nr_PqnGIkjyDBuew7pBjJnRwxq4Yx8UZIYwTSf03dZyXW3YZkaAq_fEALw_wcB_k_&associateID=SEM_GGT_00065_00021&utm_source=google&utm_medium=cpc&utm_campaign=KR-Travel-Search-Brand-Exact&utm_term=%EC%8A%A4%EC%B9%B4%EC%9D%B4%EC%8A%A4%EC%BA%90%EB%84%88&kpid=google_438310576_23048128696_331009635267_aud-326758276298:kwd-51820162295_c_&gclid=Cj0KCQiAtvPjBRDPARIsAJfZz0rlc5Nr_PqnGIkjyDBuew7pBjJnRwxq4Yx8UZIYwTSf03dZyXW3YZkaAq_fEALw_wcB")
 }

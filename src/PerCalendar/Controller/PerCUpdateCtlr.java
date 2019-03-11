@@ -45,6 +45,16 @@ public class PerCUpdateCtlr extends HttpServlet {
 			System.out.println("rstartdate ="+ rstartdate);
 			System.out.println("renddate ="+ renddate);
 			
+			 if(rstartdate.length()>8) {
+		            rstartdate = rstartdate.substring(0, 4) + rstartdate.substring(6,8) + rstartdate.substring(10,12);
+		         }
+		         if(renddate.length()>8) {
+		            renddate = renddate.substring(0, 4) + renddate.substring(6,8) + renddate.substring(10,12);
+		         }
+		         
+		         System.out.println("rstartdate ="+ rstartdate);
+		         System.out.println("renddate ="+ renddate);
+		         
 			boolean isS = dao.updatePerCalendar(new PerCalendarDto(seq,"",title,content,"",rstartdate,renddate));
 			
 			 if(!isS) {

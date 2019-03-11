@@ -1,4 +1,7 @@
 
+<%@page import="FestiCalendar.FestiCalendarDao"%>
+<%@page import="FestiCalendar.iFestiCalendarDao"%>
+<%@page import="FestiCalendar.FestiCalendarDto"%>
 <%@page import="User.UserDto"%>
 <%@page import="java.sql.Date"%>
 <%@page import="java.text.SimpleDateFormat"%>
@@ -21,6 +24,29 @@
 
 } 
 %>
+<%
+//로인그인한 정보 취득
+Object ologin = session.getAttribute("login");
+UserDto user = null;
+if(ologin == null){
+%>
+  <script type="text/javascript">
+     alert("로그인 해 주십시오");
+     location.href = "1_0Start.jsp";
+  </script>
+<%
+  return;
+}
+user = (UserDto)ologin;
+String id = user.getId();
+%>
+<%
+List<PerCalendarDto> list = (List<PerCalendarDto>)request.getAttribute("list");
+iFestiCalendarDao daoF = FestiCalendarDao.getInstance();
+String srdate = request.getAttribute("srdate")+"";
+List<FestiCalendarDto> listF = daoF.getDayZzim(user.getId(), srdate);
+
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -31,10 +57,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%
-List<PerCalendarDto> list = (List<PerCalendarDto>)request.getAttribute("list");
-UserDto user = (UserDto)session.getAttribute("login");
-%>
 	<div id="page-wrapper">
 		<!-- Header -->
 		<section id="header" style="background: url(images/header6.jpg)no-repeat; background-size: 100% 100%;">
@@ -145,8 +167,39 @@ UserDto user = (UserDto)session.getAttribute("login");
 					    </form>
 					  </td>
 					</tr>
+					<tr style="border: 1px solid; border-color: lightgray;"><td colspan="5">&nbsp;</td></tr>
 					<%
 					 }
+					}
+					if(listF.size() != 0){
+						for(int j = 0; j < listF.size(); j++){
+							FestiCalendarDto dtoF = listF.get(j);
+							%>
+						<tr style="border-bottom: 1px solid; border-color: lightgray;">
+						  <th scope="row"><%=j+1 %></th>
+						  <td><%=dtoF.getsrdate() %></td>
+						  <%String erdate = "";
+						  if(dtoF.geterdate() == null || dtoF.geterdate() == ""){
+								erdate = dtoF.geterdate();
+								erdate = dtoF.getsrdate();
+						  }
+							  %>
+						  
+						  <td><%=erdate %></td>
+						  <td class="title">
+						    <a href="javascript:openDetail(<%=dtoF.getSeq()%>)"><%=dtoF.getTitle() %></a>
+						  </td>
+						  <td>
+						    <form action="FestiZzimCtlr" method="get">
+						    	<input type="hidden" name="command" value="delZzim">
+						    	<input type="hidden" name="id" value="<%=id %>">
+						    	<input type="hidden" name="seq" value="<%=dtoF.getSeq()%>">
+						    	<input type="submit" value="삭제">
+						    </form>
+						  </td>
+						</tr>
+						<%
+						}
 					}
 					%>
 					</table>
@@ -219,16 +272,17 @@ UserDto user = (UserDto)session.getAttribute("login");
 				<div class="row">
 					<div class="col-6 col-12-medium">
 						<section>
-							<form method="post" action="1_5Request.jsp">
+							<form method="get" action="UserRequestCtlr">
 								<div class="row gtr-50">
 									<div class="col-6 col-12-small">
+										<input type="hidden" name="id" value="<%=user.getId() %>">
 										<input name="name" placeholder="Name" type="text" />
 									</div>
 									<div class="col-6 col-12-small">
 										<input name="email" placeholder="Email" type="text" />
 									</div>
 									<div class="col-12">
-										<textarea name="message" placeholder="Message"></textarea>
+										<textarea name="message" placeholder="Message" style="height: 11em; resize: none;"></textarea>
 									</div>
 									<div class="col-12">
 										<input type="submit" value="Send Message" class="form-button-submit button icon fa-envelope">
@@ -276,6 +330,12 @@ UserDto user = (UserDto)session.getAttribute("login");
 <script src="assets/js/main.js"></script>
 
 <script type="text/javascript">
+
+
+function openDetail(seq) {
+	window.open("1_8FestiDetail.jsp?seq="+seq, "Festival", "width=750, height=550, scrollbars=yes, resizable=no, left=100, top=30");
+}
+
 function openSkyS() {
 	window.open("https://www.skyscanner.co.kr/?ksh_id=_k_Cj0KCQiAtvPjBRDPARIsAJfZz0rlc5Nr_PqnGIkjyDBuew7pBjJnRwxq4Yx8UZIYwTSf03dZyXW3YZkaAq_fEALw_wcB_k_&associateID=SEM_GGT_00065_00021&utm_source=google&utm_medium=cpc&utm_campaign=KR-Travel-Search-Brand-Exact&utm_term=%EC%8A%A4%EC%B9%B4%EC%9D%B4%EC%8A%A4%EC%BA%90%EB%84%88&kpid=google_438310576_23048128696_331009635267_aud-326758276298:kwd-51820162295_c_&gclid=Cj0KCQiAtvPjBRDPARIsAJfZz0rlc5Nr_PqnGIkjyDBuew7pBjJnRwxq4Yx8UZIYwTSf03dZyXW3YZkaAq_fEALw_wcB")
 }

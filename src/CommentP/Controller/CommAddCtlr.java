@@ -30,14 +30,46 @@ public class CommAddCtlr extends HttpServlet {
 		System.out.println("id:" + id);
 		System.out.println("content:" + content_ba);
 		
-		if(command.equals("addComment")) {			
+		if(command.equals("addCommentPIC")) {			
 			iCommentPDao dao = CommentPDao.getInstance();
-			boolean isS = dao.addComment(new CommentPDto(0, id, content_ba, bbs_seq, "", 0));
+			boolean isS = dao.addComment(new CommentPDto(0, id, content_ba, bbs_seq, "", 0), "pic");
 			
 			if(isS) {
-//				req.setAttribute("seq", bbs_seq);
-//				req.getRequestDispatcher("bbsDetail.jsp").forward(req, resp);
 				resp.sendRedirect("1_6PicBbsDetail.jsp?seq=" + bbs_seq);
+			}else {
+				PrintWriter pw = null;
+				pw = resp.getWriter();
+				pw.println("<script>");
+				pw.println("alert(\"댓글 입력에 실패\")");
+				pw.println("history.back()");
+				pw.println("</script>");
+				pw.close();
+				
+				return;
+			}
+		}else if(command.equals("addCommentQA")) {
+			iCommentPDao dao = CommentPDao.getInstance();
+			boolean isS = dao.addComment(new CommentPDto(0, id, content_ba, bbs_seq, "", 0), "qa");
+			
+			if(isS) {
+				resp.sendRedirect("3_QA_detail.jsp?seq=" + bbs_seq);
+			}else {
+				PrintWriter pw = null;
+				pw = resp.getWriter();
+				pw.println("<script>");
+				pw.println("alert(\"댓글 입력에 실패\")");
+				pw.println("history.back()");
+				pw.println("</script>");
+				pw.close();
+				
+				return;
+			}
+		}else if(command.equals("addCommentREFER")) {
+			iCommentPDao dao = CommentPDao.getInstance();
+			boolean isS = dao.addComment(new CommentPDto(0, id, content_ba, bbs_seq, "", 0), "refer");
+			
+			if(isS) {
+				resp.sendRedirect("ReferDetailCtlr?seq=" + bbs_seq);
 			}else {
 				PrintWriter pw = null;
 				pw = resp.getWriter();

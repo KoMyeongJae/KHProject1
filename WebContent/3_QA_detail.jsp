@@ -1,3 +1,7 @@
+<%@page import="CommentP.CommentPDto"%>
+<%@page import="java.util.List"%>
+<%@page import="CommentP.CommentPDao"%>
+<%@page import="CommentP.iCommentPDao"%>
 <%@page import="QABbs.QABbsDao"%>
 <%@page import="QABbs.iQABbsDao"%>
 <%@page import="QABbs.QABbsDto"%>
@@ -29,6 +33,10 @@ iQABbsDao dao = QABbsDao.getInstance();
 dao.readcount(seq);
 
 QABbsDto qbbs = dao.getQbs(seq);
+
+iCommentPDao comdao = CommentPDao.getInstance();
+List<CommentPDto> list = comdao.getCommentList("qa");
+
 %>
 
 <!DOCTYPE html>
@@ -143,8 +151,56 @@ QABbsDto qbbs = dao.getQbs(seq);
 								</td>
 							</tr>
 							</table>
-							<hr>
 							
+							<font>댓글 입력</font>
+					<form action="CommAddCtlr">
+						<input type="hidden" name="command" value="addCommentQA">
+						<input type="hidden" name="id" value="<%=user.getId() %>">
+						<input type="hidden" name="bbs_seq" value="<%=seq %>">
+						<table style="margin-bottom: 0em;">
+						<tr>
+							<th><%=user.getId() %></th>
+							<td>
+								<textarea rows="1" cols="80" name="content" style="resize: none; background-color: white; border: 1px solid; border-color: lightgray;"></textarea>
+							</td>
+							<td>
+								<input type="submit" value="입력">
+							</td>
+						</tr>
+						</table>
+					</form>
+					
+						<table style="margin-bottom: 1em;">
+						<col width="10%"><col width="56%"><col width="18%"><col width="8%"><col width="8%">
+						<%for(int i = 0; i < list.size(); i++){ 
+							CommentPDto comDto = list.get(i);
+							if(seq==comDto.getBbs_seq()){
+						%>
+						<tr style="border-bottom: 1px solid; border-color: lightgray">
+							<th><%=comDto.getId() %></th>
+							<%if(comDto.getDel() != 0){ %>
+								<td style="padding-top: 0em;">
+									작성자에 의해 삭제된 댓글입니다.
+								</td>
+							<%}else{ %>
+								<td style="padding-top: 0em;">
+									<%=comDto.getContent() %>
+								</td>
+							<%} %>
+							<td><%=comDto.getWdate() %></td>
+							<%if(user.getId().equals(comDto.getId())){ 
+								if(comDto.getDel() != 0){
+							%>
+							<%}else{ %>
+							<td> <a href="CommUpdateCtlr?command=upd_viewQA&seq=<%=comDto.getSeq() %>&bbs_seq=<%=comDto.getBbs_seq()%>"> 수정 </a> </td>
+							<td> <a href="CommDeleteCtlr?command=delQA&seq=<%=comDto.getSeq() %>&bbs_seq=<%=comDto.getBbs_seq()%>"> 삭제 </a> </td>
+							<%} } %>
+						</tr>
+						<%}
+						}%>
+						</table>
+					
+														
 							
 							<div align="center">
 							<%
@@ -232,22 +288,23 @@ QABbsDto qbbs = dao.getQbs(seq);
             <div class="row">
                <div class="col-6 col-12-medium">
                   <section>
-                     <form method="post" action="1_5Request.jsp">
-                        <div class="row gtr-50">
-                           <div class="col-6 col-12-small">
-                              <input name="name" placeholder="Name" type="text" />
-                           </div>
-                           <div class="col-6 col-12-small">
-                              <input name="email" placeholder="Email" type="text" />
-                           </div>
-                           <div class="col-12">
-                              <textarea name="message" placeholder="Message"></textarea>
-                           </div>
-                           <div class="col-12">
-                              <input type="submit" value="Send Message" class="form-button-submit button icon fa-envelope">
-                           </div>
-                        </div>
-                     </form>
+                     <form method="get" action="UserRequestCtlr">
+								<div class="row gtr-50">
+									<div class="col-6 col-12-small">
+										<input type="hidden" name="id" value="<%=user.getId() %>">
+										<input name="name" placeholder="Name" type="text" />
+									</div>
+									<div class="col-6 col-12-small">
+										<input name="email" placeholder="Email" type="text" />
+									</div>
+									<div class="col-12">
+										<textarea name="message" placeholder="Message" style="height: 11em; resize: none;"></textarea>
+									</div>
+									<div class="col-12">
+										<input type="submit" value="Send Message" class="form-button-submit button icon fa-envelope">
+									</div>
+								</div>
+							</form>
                   </section>
                </div>
                <div class="col-6 col-12-medium">

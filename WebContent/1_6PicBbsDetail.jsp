@@ -43,7 +43,7 @@ String title = dto.getTitle();
 String content = dto.getContent();
 
 iCommentPDao comDao = CommentPDao.getInstance();
-List<CommentPDto> list = comDao.getCommentList();
+List<CommentPDto> list = comDao.getCommentList("pic");
 
 %>
 <!DOCTYPE HTML>
@@ -161,7 +161,7 @@ List<CommentPDto> list = comDao.getCommentList();
 						</table>
 					<font>댓글 입력</font>
 					<form action="CommAddCtlr">
-						<input type="hidden" name="command" value="addComment">
+						<input type="hidden" name="command" value="addCommentPIC">
 						<input type="hidden" name="id" value="<%=user.getId() %>">
 						<input type="hidden" name="bbs_seq" value="<%=seq %>">
 						<table style="margin-bottom: 0em;">
@@ -199,8 +199,8 @@ List<CommentPDto> list = comDao.getCommentList();
 								if(comDto.getDel() != 0){
 							%>
 							<%}else{ %>
-							<td> <a href="CommUpdateCtlr?command=upd_view&seq=<%=comDto.getSeq() %>&bbs_seq=<%=comDto.getBbs_seq()%>"> 수정 </a> </td>
-							<td> <a href="CommDeleteCtlr?command=del&seq=<%=comDto.getSeq() %>&bbs_seq=<%=comDto.getBbs_seq()%>"> 삭제 </a> </td>
+							<td> <a href="CommUpdateCtlr?command=upd_viewPIC&seq=<%=comDto.getSeq() %>&bbs_seq=<%=comDto.getBbs_seq()%>"> 수정 </a> </td>
+							<td> <a href="CommDeleteCtlr?command=delPIC&seq=<%=comDto.getSeq() %>&bbs_seq=<%=comDto.getBbs_seq()%>"> 삭제 </a> </td>
 							<%} } %>
 						</tr>
 						<%}
@@ -283,9 +283,10 @@ List<CommentPDto> list = comDao.getCommentList();
 				<div class="row">
 					<div class="col-6 col-12-medium">
 						<section>
-							<form method="post" action="1_5Request.jsp">
+							<form method="get" action="UserRequestCtlr">
 								<div class="row gtr-50">
 									<div class="col-6 col-12-small">
+										<input type="hidden" name="id" value="<%=user.getId() %>">
 										<input name="name" placeholder="Name" type="text" />
 									</div>
 									<div class="col-6 col-12-small">

@@ -24,10 +24,17 @@ public class CommentPDao implements iCommentPDao {
 	}
 	
 	@Override
-	public List<CommentPDto> getCommentList() {
-		String sql = " SELECT SEQ, ID, CONTENT, BBS_SEQ, WDATE, DEL "
-					+ " FROM PICBBS_COMMENT "
-					+ " ORDER BY WDATE ";
+	public List<CommentPDto> getCommentList(String bbsType) {
+		String sql = " SELECT SEQ, ID, CONTENT, BBS_SEQ, WDATE, DEL ";
+		
+		if(bbsType.equals("pic")) {
+			sql += " FROM PICBBS_COMMENT ";
+		}else if(bbsType.equals("qa")) {
+			sql += " FROM QABBS_COMMENT ";
+		}else if(bbsType.equals("refer")) {
+			sql += " FROM REFER_COMMENT ";
+		}
+		sql += " ORDER BY WDATE ";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -61,10 +68,18 @@ public class CommentPDao implements iCommentPDao {
 	}
 
 	@Override
-	public boolean addComment(CommentPDto dto) {
-		String sql = " INSERT INTO PICBBS_COMMENT "
-					+ " VALUES(SEQ_PICBCOMM.NEXTVAL, ?, ?, ?, SYSDATE, 0)";
-		
+	public boolean addComment(CommentPDto dto, String bbsType) {
+		String sql = "";
+		if(bbsType.equals("pic")) {
+			sql = " INSERT INTO PICBBS_COMMENT "
+				+ "  VALUES(SEQ_PICBCOMM.NEXTVAL, ?, ?, ?, SYSDATE, 0) ";
+		}else if(bbsType.equals("qa")) {
+			sql = " INSERT INTO QABBS_COMMENT "
+				+ " VALUES(SEQ_QABCOMM.NEXTVAL, ?, ?, ?, SYSDATE, 0) ";
+		}else if(bbsType.equals("refer")) {
+			sql = " INSERT INTO REFER_COMMENT "
+				+ " VALUES(SEQ_REFERCOMM.NEXTVAL, ?, ?, ?, SYSDATE, 0) ";
+		}
 		Connection conn = null;
 		PreparedStatement psmt = null;
 		
@@ -93,10 +108,19 @@ public class CommentPDao implements iCommentPDao {
 	}
 
 	@Override
-	public boolean deleteComment(int seq) {
-		String sql = " UPDATE PICBBS_COMMENT "
-					+ " SET DEL=1 "
-					+ " WHERE SEQ=? ";
+	public boolean deleteComment(int seq, String bbsType) {
+		String sql = "";
+					
+		if(bbsType.equals("pic")) {
+			sql += " UPDATE PICBBS_COMMENT ";
+		}else if(bbsType.equals("qa")) {
+			sql += " UPDATE QABBS_COMMENT ";
+		}else if(bbsType.equals("refer")) {
+			sql += " UPDATE REFER_COMMENT ";
+		}
+		
+		sql += " SET DEL=1 "
+				+ " WHERE SEQ=? ";
 		
 		Connection conn = null;
 		PreparedStatement psmt = null;
@@ -124,35 +148,44 @@ public class CommentPDao implements iCommentPDao {
 	}
 
 	@Override
-	public boolean updateComment(int seq, String content) {
-		String sql = " UPDATE PICBBS_COMMENT "
-				+ " SET CONTENT=? "
+	public boolean updateComment(int seq, String content, String bbsType) {
+		String sql = "";
+		
+		if(bbsType.equals("pic")) {
+			sql += " UPDATE PICBBS_COMMENT ";
+		}else if(bbsType.equals("qa")) {
+			sql += " UPDATE QABBS_COMMENT ";
+		}else if(bbsType.equals("refer")) {
+			sql += " UPDATE REFER_COMMENT ";
+		}
+		
+		sql += " SET CONTENT=? "
 				+ " WHERE SEQ=? ";
-	
-	Connection conn = null;
-	PreparedStatement psmt = null;
-	
-	int count = 0;
-	
-	try {
-		conn = DB_Connection.getConection();
-		System.out.println("1/6 updateComment Suc");
 		
-		psmt = conn.prepareStatement(sql);
-		psmt.setString(1, content);
-		psmt.setInt(2, seq);
-		System.out.println("2/6 updateComment Suc");
+		Connection conn = null;
+		PreparedStatement psmt = null;
 		
-		count = psmt.executeUpdate();
-		System.out.println("3/6 updateComment Suc");
+		int count = 0;
 		
-	} catch (SQLException e) {
-		System.out.println("updateComment Fail");
-		e.printStackTrace();
-	} finally {
-		DB_Close.close(conn, psmt, null);
-	}
-	return count>0?true:false;
-	}
+		try {
+			conn = DB_Connection.getConection();
+			System.out.println("1/6 updateComment Suc");
+			
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, content);
+			psmt.setInt(2, seq);
+			System.out.println("2/6 updateComment Suc");
+			
+			count = psmt.executeUpdate();
+			System.out.println("3/6 updateComment Suc");
+			
+		} catch (SQLException e) {
+			System.out.println("updateComment Fail");
+			e.printStackTrace();
+		} finally {
+			DB_Close.close(conn, psmt, null);
+		}
+		return count>0?true:false;
+		}
 	
 }

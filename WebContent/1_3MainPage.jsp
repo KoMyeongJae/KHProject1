@@ -21,6 +21,15 @@ if(ologin == null){	// session 정보가 사라진 상태
 user = (UserDto)ologin;
 
 String name = user.getName();
+
+String msg = request.getParameter("msg");
+if(msg != null || msg == ""){
+	%>
+	<script type="text/javascript">
+	alert("소중한 의견 감사합니다");
+	</script>
+	<%
+}
 %>
 <%!
 // nvl 함수
@@ -210,9 +219,9 @@ List<FestiCalendarDto> list = dao.getFestList(year + two(month + ""));
 		</section>
 		
 		<!-- Main -->
-		<section id="main">
-			<div class="container">
-				<div class="row">
+		<section id="main" style="background-image: url('images/aa.jpg');">
+			<div class="container" >
+				<div class="row" style="background-color: white !important;">
 				
 					<!-- Content banner 제외 부분에 본인코드 부분 작성하면 됩니다 -->
 					<div class="content_m">
@@ -342,9 +351,10 @@ List<FestiCalendarDto> list = dao.getFestList(year + two(month + ""));
 				<div class="row">
 					<div class="col-6 col-12-medium">
 						<section>
-							<form method="post" action="1_5Request.jsp">
+							<form method="get" action="UserRequestCtlr">
 								<div class="row gtr-50">
 									<div class="col-6 col-12-small">
+										<input type="hidden" name="id" value="<%=user.getId() %>">
 										<input name="name" placeholder="Name" type="text" />
 									</div>
 									<div class="col-6 col-12-small">

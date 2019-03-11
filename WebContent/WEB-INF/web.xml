@@ -83,6 +83,14 @@
   	<servlet-name>FestiUpdateCtlr</servlet-name>
   	<url-pattern>/FestiUpdateCtlr</url-pattern>
   </servlet-mapping>
+  <servlet>
+  	<servlet-name>FestiZzimCtlr</servlet-name>
+  	<servlet-class>FestiCalendar.Controller.FestiZzimCtlr</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>FestiZzimCtlr</servlet-name>
+  	<url-pattern>/FestiZzimCtlr</url-pattern>
+  </servlet-mapping>
   
   <servlet>
   	<servlet-name>InfoCLikeitCtlr</servlet-name>
@@ -345,6 +353,14 @@
   <servlet-mapping>
   	<servlet-name>UserUpdate</servlet-name>
   	<url-pattern>/UserUpdate</url-pattern>
+  </servlet-mapping>
+  <servlet>
+  	<servlet-name>UserRequestCtlr</servlet-name>
+  	<servlet-class>User.Controller.UserRequestCtlr</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>UserRequestCtlr</servlet-name>
+  	<url-pattern>/UserRequestCtlr</url-pattern>
   </servlet-mapping>
 
 </web-app>

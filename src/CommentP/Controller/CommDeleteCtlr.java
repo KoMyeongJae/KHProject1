@@ -23,10 +23,40 @@ public class CommDeleteCtlr extends HttpServlet {
 		
 		iCommentPDao dao = CommentPDao.getInstance();
 		
-		if(command.equals("del")) {
-			boolean isS = dao.deleteComment(seq);
+		if(command.equals("delPIC")) {
+			boolean isS = dao.deleteComment(seq, "pic");
 			if(isS) {
 				resp.sendRedirect("1_6PicBbsDetail.jsp?seq=" + bbs_seq);
+			}else {
+				PrintWriter pw = null;
+				pw = resp.getWriter();
+				pw.println("<script>");
+				pw.println("alert(\"댓글 삭제 실패\")");
+				pw.println("history.back()");
+				pw.println("</script>");
+				pw.close();
+				
+				return;
+			}
+		}else if(command.equals("delQA")) {
+			boolean isS = dao.deleteComment(seq, "qa");
+			if(isS) {
+				resp.sendRedirect("3_QA_detail.jsp?seq=" + bbs_seq);
+			}else {
+				PrintWriter pw = null;
+				pw = resp.getWriter();
+				pw.println("<script>");
+				pw.println("alert(\"댓글 삭제 실패\")");
+				pw.println("history.back()");
+				pw.println("</script>");
+				pw.close();
+				
+				return;
+			}
+		}else if(command.equals("delREFER")) {
+			boolean isS = dao.deleteComment(seq, "refer");
+			if(isS) {
+				resp.sendRedirect("ReferDetailCtlr?seq=" + bbs_seq + "&command=");
 			}else {
 				PrintWriter pw = null;
 				pw = resp.getWriter();

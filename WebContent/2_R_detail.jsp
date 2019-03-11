@@ -1,3 +1,6 @@
+<%@page import="CommentP.CommentPDto"%>
+<%@page import="CommentP.CommentPDao"%>
+<%@page import="CommentP.iCommentPDao"%>
 <%@page import="ReferRoom.ReferRoomDao"%>
 <%@page import="ReferRoom.iReferRoomDao"%>
 <%@page import="ReferRoom.ReferRoomDto"%>
@@ -44,9 +47,14 @@ ReferRoomDto dto = (ReferRoomDto)request.getAttribute("rfr");
 
 String msg = (String)request.getAttribute("msg");
 System.out.println("좋아요여부 = " + msg);
+int seq = dto.getSeq();
 
 iReferRoomDao dao = ReferRoomDao.getInstance();
 dao.readCount(dto.getSeq());
+
+iCommentPDao comdao = CommentPDao.getInstance();
+List<CommentPDto> list = comdao.getCommentList("refer");
+
 %>
 <script type="text/javascript">
 if(<%=msg %> != null && <%=msg %> != "")
@@ -175,6 +183,54 @@ if(<%=msg %> != null && <%=msg %> != "")
 									<tr>
 										<td><%=dto.getContent() %></td>
 									</tr>
+									</table>									
+									
+									<font>댓글 입력</font>
+									<form action="CommAddCtlr">
+										<input type="hidden" name="command" value="addCommentREFER">
+										<input type="hidden" name="id" value="<%=user.getId() %>">
+										<input type="hidden" name="bbs_seq" value="<%=seq %>">
+										<table style="margin-bottom: 0em;">
+										<tr>
+											<th><%=user.getId() %></th>
+											<td>
+												<textarea rows="1" cols="80" name="content" style="resize: none; background-color: white; border: 1px solid; border-color: lightgray;"></textarea>
+											</td>
+											<td>
+												<input type="submit" value="입력">
+											</td>
+										</tr>
+										</table>
+									</form>
+									
+									<table style="margin-bottom: 0em;">
+									<col width="10%"><col width="56%"><col width="18%"><col width="8%"><col width="8%">
+									<%for(int i = 0; i < list.size(); i++){ 
+										CommentPDto comDto = list.get(i);
+										if(seq==comDto.getBbs_seq()){
+									%>
+									<tr style="border-bottom: 1px solid; border-color: lightgray">
+										<th><%=comDto.getId() %></th>
+										<%if(comDto.getDel() != 0){ %>
+											<td style="padding-top: 0em;">
+												작성자에 의해 삭제된 댓글입니다.
+											</td>
+										<%}else{ %>
+											<td style="padding-top: 0em;">
+												<%=comDto.getContent() %>
+											</td>
+										<%} %>
+										<td><%=comDto.getWdate() %></td>
+										<%if(user.getId().equals(comDto.getId())){ 
+											if(comDto.getDel() != 0){
+										%>
+										<%}else{ %>
+										<td> <a href="CommUpdateCtlr?command=upd_viewREFER&seq=<%=comDto.getSeq() %>&bbs_seq=<%=comDto.getBbs_seq()%>"> 수정 </a> </td>
+										<td> <a href="CommDeleteCtlr?command=delREFER&seq=<%=comDto.getSeq() %>&bbs_seq=<%=comDto.getBbs_seq()%>"> 삭제 </a> </td>
+										<%} } %>
+									</tr>
+									<%}
+									}%>
 									</table>
 									
 									<div align="right" style="padding-bottom: 1em;">
@@ -193,6 +249,8 @@ if(<%=msg %> != null && <%=msg %> != "")
 									%>
 									</div>
 								</article>
+								
+								
 						</div>
 					</div>
 
@@ -256,9 +314,10 @@ if(<%=msg %> != null && <%=msg %> != "")
 				<div class="row">
 					<div class="col-6 col-12-medium">
 						<section>
-							<form method="post" action="1_5Request.jsp">
+							<form method="get" action="UserRequestCtlr">
 								<div class="row gtr-50">
 									<div class="col-6 col-12-small">
+										<input type="hidden" name="id" value="<%=user.getId() %>">
 										<input name="name" placeholder="Name" type="text" />
 									</div>
 									<div class="col-6 col-12-small">

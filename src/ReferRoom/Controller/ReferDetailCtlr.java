@@ -35,14 +35,16 @@ public class ReferDetailCtlr extends HttpServlet {
 		if(msg != null) {
 			req.setAttribute("msg", msg);
 		}
-		
+			
 		// 짐싸!
-		req.setAttribute("rfr", rfr);		
+		req.setAttribute("rfr", rfr);	
 		
 		// 잘가
 		if( command != null && !"".equals(command) ){
+
 			req.getRequestDispatcher("2_R_update.jsp").forward(req, resp);
 		}else {
+			
 			req.getRequestDispatcher("2_R_detail.jsp").forward(req, resp);
 		}
 		

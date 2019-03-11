@@ -10,4 +10,12 @@ public interface iFestiCalendarDao {
 	
 	public FestiCalendarDto detailFestList(int seq);
 	
+	public boolean addZzimlist(int seq, String id);
+	
+	public List<FestiCalendarDto> getZzimList(String id);
+	
+	public List<FestiCalendarDto> getDayZzim(String id, String srdate);
+	
+	
+	public boolean delZzim(int seq, String id);
 }

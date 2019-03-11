@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import db.DB_Close;
 import db.DB_Connection;
@@ -298,5 +300,173 @@ public class UserDao implements iUserDao {
 		}
 	}
 	
+	@Override
+	public String check_id(String name, String phone, String email) {
+
+	      String sql = " SELECT ID FROM MEMBER "
+	            + " WHERE NAME = ? AND PHONE = ? AND EMAIL = ?";
+	      
+	      Connection conn = null;
+	      PreparedStatement psmt = null;
+	      ResultSet rs = null;
+	      
+	      
+	      String id = null;
+	      
+	      try {
+	         conn = DB_Connection.getConection();
+	         System.out.println("1/6 check_id Suc");
+	         
+	         psmt = conn.prepareStatement(sql);
+	         
+	         psmt.setString(1, name);
+	         psmt.setString(2, phone);
+	         psmt.setString(3, email);
+	         
+	         System.out.println("2/6 check_id Suc");
+	         
+	         rs = psmt.executeQuery();
+	         System.out.println("3/6 check_id Suc");
+	         
+	         
+	         if(rs.next()) {
+	         id = rs.getString(1);
+	         }
+	         
+	      } catch (SQLException e) {
+	         System.out.println("check_id Fail");
+	         e.printStackTrace();
+	      } finally {
+	         DB_Close.close(conn, psmt, rs);
+	      }
+	      
+	      return id;
+	   }
+
+	@Override
+	public String check_pw(String id, String name, String email) {
+
+	      String sql = " SELECT PWD FROM MEMBER "
+	            + " WHERE ID = ? AND NAME = ? AND EMAIL = ?";
+	      
+	      
+	      
+	      Connection conn = null;
+	      PreparedStatement psmt = null;
+	      ResultSet rs = null;
+	      
+	      
+	      String pwd = null;
+	      
+	      try {
+	         conn = DB_Connection.getConection();
+	         System.out.println("1/6 check_pw Suc");
+	         
+	         psmt = conn.prepareStatement(sql);
+	         
+	         psmt.setString(1, id);
+	         psmt.setString(2, name);
+	         psmt.setString(3, email);
+	         
+	         System.out.println("2/6 check_pw Suc");
+	         
+	         rs = psmt.executeQuery();
+	         System.out.println("3/6 check_pw Suc");
+	         
+	         if(rs.next()) {
+	         pwd = rs.getString(1);
+	         }
+	         
+	      } catch (SQLException e) {
+	         System.out.println("check_pw Fail");
+	         e.printStackTrace();
+	      } finally {
+	         DB_Close.close(conn, psmt, rs);
+	      }
+	      
+	      return pwd;
+	      
+	   }
+	
+	@Override
+	public List<RequestDto> getRequestList() {
+		
+		String sql = " SELECT SEQ, ID, NAME, EMAIL, MESSAGE, WDATE " +
+		             " FROM REQUEST " +
+				     " ORDER BY SYSDATE ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		ResultSet rs = null;
+		
+		List<RequestDto> list = new ArrayList<>();
+		
+		try {
+			conn = DB_Connection.getConection();
+			System.out.println("1/6 getRequestList Suc");
+			
+			psmt = conn.prepareStatement(sql);
+			System.out.println("2/6 getRequestList Suc");
+			
+			rs = psmt.executeQuery();
+			System.out.println("3/6 getRequestList Suc");
+			
+			while(rs.next()) {
+				RequestDto dto = new RequestDto();
+				dto.setSeq(rs.getInt(1));
+				dto.setId(rs.getString(2));
+				dto.setName(rs.getString(3));
+				dto.setEmail(rs.getString(4));
+				dto.setMessage(rs.getString(5));
+				dto.setWdate(rs.getString(6));
+				
+				list.add(dto);
+			}
+			
+			
+		} catch (SQLException e) {
+			System.out.println(" getRequestList fail");
+			e.printStackTrace();
+		} finally {
+			DB_Close.close(conn, psmt, rs);
+		}
+		return list;
+	}
+
+	@Override
+	public boolean addRequset(RequestDto rqd) {
+		
+		String sql = " INSERT INTO REQUEST(SEQ, ID, NAME, EMAIL, MESSAGE, WDATE) " +
+		             " VALUES(SEQ_REQ.NEXTVAL, ?, ?, ?, ? , SYSDATE) ";
+		
+		Connection conn = null;
+		PreparedStatement psmt = null;
+		
+		int count = 0;
+		
+		try {
+			conn = DB_Connection.getConection();
+			System.out.println("1/6 addRequset Suc");
+			
+			psmt = conn.prepareStatement(sql);
+			psmt.setString(1, rqd.getId());
+			psmt.setString(2, rqd.getName());
+			psmt.setString(3, rqd.getEmail());
+			psmt.setString(4, rqd.getMessage());
+			System.out.println("2/6 addRequset Suc");
+			
+			count = psmt.executeUpdate();
+			System.out.println("3/6 addRequset Suc");
+		} catch (SQLException e) {
+			System.out.println(" addRequset fail");
+			e.printStackTrace();
+		} finally {
+			DB_Close.close(conn, psmt, null);
+		}
+		
+		return count>0?true:false;
+	}
+	
+
 	
 }

@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import CommentP.CommentPDao;
 import CommentP.iCommentPDao;
+import ReferRoom.ReferRoomDao;
+import ReferRoom.ReferRoomDto;
+import ReferRoom.iReferRoomDao;
 
 public class CommUpdateCtlr extends HttpServlet {
 	
@@ -34,21 +37,61 @@ public class CommUpdateCtlr extends HttpServlet {
 		
 		iCommentPDao dao = CommentPDao.getInstance();
 		
-		if(command.equals("upd_view")) {
+		if(command.equals("upd_viewPIC")) {
 			req.setAttribute("seq", bbs_seq); // seq : detail seq (41)
 			req.setAttribute("bbs_seq", seq); // bbs_seq : comment seq (20)
 			req.getRequestDispatcher("1_7CommetnUpdatePicBbs.jsp").forward(req, resp);
 		}
-		else if(command.equals("upd")) {
-//			int seq1 = Integer.parseInt(req.getParameter("seq1"));
-//			String bbs_seq1 = req.getParameter("bbs_seq1");
-			
+		else if(command.equals("updPIC")) {
 			
 			System.out.println("seq : " + seq + ", bbs_seq : " + bbs_seq + ", content : " + content);
 			
-			boolean isS = dao.updateComment(seq, content);
+			boolean isS = dao.updateComment(seq, content, "pic");
 			if(isS) {
 				resp.sendRedirect("1_6PicBbsDetail.jsp?seq=" + bbs_seq);
+			}else {
+				PrintWriter pw = null;
+				pw = resp.getWriter();
+				pw.println("<script>");
+				pw.println("alert(\"댓글 수정 실패\")");
+				pw.println("history.back()");
+				pw.println("</script>");
+				pw.close();
+				
+				return;
+			}
+		}else if(command.equals("upd_viewQA")) {
+			req.setAttribute("seq", bbs_seq); // seq : detail seq (41)
+			req.setAttribute("bbs_seq", seq); // bbs_seq : comment seq (20)
+			req.getRequestDispatcher("1_7CommetnUpdateQA.jsp").forward(req, resp);
+		}else if(command.equals("updQA")) {
+			boolean isS = dao.updateComment(seq, content, "qa");
+			if(isS) {
+				resp.sendRedirect("3_QA_detail.jsp?seq=" + bbs_seq);
+			}else {
+				PrintWriter pw = null;
+				pw = resp.getWriter();
+				pw.println("<script>");
+				pw.println("alert(\"댓글 수정 실패\")");
+				pw.println("history.back()");
+				pw.println("</script>");
+				pw.close();
+				
+				return;
+			}
+		}else if(command.equals("upd_viewREFER")) {
+			iReferRoomDao daoR = ReferRoomDao.getInstance();
+			ReferRoomDto dtoR = daoR.detail_ReferR(bbs_seq);
+			
+			req.setAttribute("rfr", dtoR);
+			req.setAttribute("seq", bbs_seq); // seq : detail seq (41)
+			req.setAttribute("bbs_seq", seq); // bbs_seq : comment seq (20)
+			
+			req.getRequestDispatcher("1_7CommetnUpdateREFER.jsp").forward(req, resp);
+		}else if(command.equals("updREFER")) {
+			boolean isS = dao.updateComment(seq, content, "refer");
+			if(isS) {
+				resp.sendRedirect("ReferDetailCtlr?seq=" + bbs_seq + "&command=");
 			}else {
 				PrintWriter pw = null;
 				pw = resp.getWriter();

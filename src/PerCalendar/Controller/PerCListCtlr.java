@@ -45,6 +45,7 @@ public class PerCListCtlr extends HttpServlet {
 		List<PerCalendarDto> list = dao.getDayList(user.getId(), rdate);
 		
 		req.setAttribute("list", list);
+		req.setAttribute("srdate", rdate);
 		req.getRequestDispatcher("4_pc_callist.jsp").forward(req, resp);
 		
 		
